@@ -20,10 +20,12 @@ Schrijf hier een user story (`Als gebruiker wil ik dit kunnen doen zodat ...`).
 Wanneer is deze functionaliteit afgemaakt en klaar om opgenomen te worden in het programma?
 
 **Risico**
-Hoe impactvol is deze feature en hoe groot schat je de kans op fouten?
+Hoog/gemiddeld/laag
+Hoe impactvol is deze feature en hoe groot schat je de kans op fouten? Haal weg wat niet van toepassing is.
 
 **MoSCoW-prioriteit**
 Must-have/Should-have/Could-have/Won't have
+Geef aan welke prioriteit deze feature heeft volgens de MoSCoW-principes. Haal weg wat niet van toepassing is.
 
 **Geschatte tijdsduur**
 Noem hoeveel tijd je vermoedelijk kwijt bent om deze feature te implementeren.
