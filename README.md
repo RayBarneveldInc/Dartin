@@ -1,2 +1,2 @@
 # Dartin
-A usefull app for tracking darting matches. 
+A useful app for tracking darting matches. 
