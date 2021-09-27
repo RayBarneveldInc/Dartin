@@ -6,6 +6,6 @@ namespace MVVM.Models
 {
     public class Leg
     {
-
+        public List<Turn> Turns;
     }
 }

@@ -6,6 +6,7 @@ namespace MVVM.Models
 {
     public class Turn
     {
-        
+        public Player Player;
+        public List<Throw> throws;
     }
 }
