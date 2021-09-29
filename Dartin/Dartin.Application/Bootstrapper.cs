@@ -1,11 +1,11 @@
 ﻿using Caliburn.Micro;
-using MVVM.ViewModels;
+using Dartin.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 
-namespace MVVM
+namespace Dartin
 {
     public class Bootstrapper : BootstrapperBase
     {

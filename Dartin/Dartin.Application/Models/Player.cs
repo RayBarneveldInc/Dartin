@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MVVM.Models
+namespace Dartin.Models
 {
     public class Player
     {

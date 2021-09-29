@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MVVM
+namespace Dartin
 {
     public static class Constants
     {
