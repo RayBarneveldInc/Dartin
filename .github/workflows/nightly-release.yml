@@ -25,10 +25,8 @@ jobs:
       run: dotnet restore
       
     - name: Build
-      run: dotnet publish --configuration Release --self-contained True --runtime win-x64 --verbosity Normal /property:PublishSingleFile=True /property:IncludeNativeLibrariesForSelfExtract=True /propert
-y:DebugType=None /property:DebugSymbols=False ./Dartin/Dartin.Application --no-restore
+      run: dotnet publish --configuration Release --self-contained True --runtime win-x64 --verbosity Normal /property:PublishSingleFile=True /property:IncludeNativeLibrariesForSelfExtract=True /property:DebugType=None /property:DebugSymbols=False ./Dartin/Dartin.Application --no-restore
 
-      
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
