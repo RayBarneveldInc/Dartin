@@ -8,7 +8,7 @@ namespace UnitTests
         [Fact]
         public void ExampleTest()
         {
-            Assert.Equal(1,2);
+            Assert.Equal(1,1);
         }
     }
 }
