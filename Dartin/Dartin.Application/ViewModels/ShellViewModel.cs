@@ -1,5 +1,5 @@
 ﻿using Caliburn.Micro;
-using MVVM.Models;
+using Dartin.Models;
 using Newtonsoft.Json;
 using System;
 using System.Windows;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-namespace MVVM.ViewModels
+namespace Dartin.ViewModels
 {
     public class ShellViewModel : Screen
     {
