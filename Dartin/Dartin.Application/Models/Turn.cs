@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Dartin.Abstracts;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,14 +8,13 @@ using System.Text;
 
 namespace Dartin.Models
 {
-    public class Turn : INotifyPropertyChanged
+    public class Turn : APropertyChanged, INotifyPropertyChanged
     {
         private Player _player;
         private Throw _throw1;
         private Throw _throw2;
         private Throw _throw3;
 
-        [JsonProperty("player")]
         public Player Player
         {
             get => _player;
@@ -25,7 +25,6 @@ namespace Dartin.Models
             }
         }
 
-        [JsonProperty("throw1")]
         public Throw Throw1
         {
             get => _throw1;
@@ -36,7 +35,6 @@ namespace Dartin.Models
             }
         }
 
-        [JsonProperty("throw2")]
         public Throw Throw2
         {
             get => _throw2;
@@ -47,7 +45,6 @@ namespace Dartin.Models
             }
         }
 
-        [JsonProperty("throw3")]
         public Throw Throw3
         {
             get => _throw3;
@@ -56,14 +53,6 @@ namespace Dartin.Models
                 _throw3 = value;
                 NotifyPropertyChanged();
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
         [JsonConstructor]
@@ -82,8 +71,8 @@ namespace Dartin.Models
 
             Player = player;
             Throw1 = throws[0];
-            Throw1 = throws[1];
-            Throw1 = throws[2];
+            Throw2 = throws[1];
+            Throw3 = throws[2];
         }
     }
 }

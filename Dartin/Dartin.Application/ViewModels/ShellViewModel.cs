@@ -22,6 +22,9 @@ namespace Dartin.ViewModels
                 state = JsonConvert.DeserializeObject<State>(File.ReadAllText(Path.Combine(Constants.SavePath, Constants.SaveFileName)));
             else
                 state = new State();
+
+            var thimo = new Player("Thimo");
+            state.Players.Add(thimo);
         }
 
         public void Exit()

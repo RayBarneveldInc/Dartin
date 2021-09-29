@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Dartin.Abstracts;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,13 +8,10 @@ using System.Text;
 
 namespace Dartin.Models
 {
-    public class Player : INotifyPropertyChanged
+    public class Player : APropertyChanged
     {
         private string _name;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [JsonProperty("name")]
         public string Name
         {
             get => _name;
@@ -24,13 +22,6 @@ namespace Dartin.Models
             }
         }
 
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        [JsonConstructor]
         public Player(string name)
         {
             Name = name;

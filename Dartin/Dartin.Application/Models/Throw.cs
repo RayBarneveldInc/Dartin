@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Dartin.Abstracts;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,14 +8,11 @@ using System.Text;
 
 namespace Dartin.Models
 {
-    public class Throw : INotifyPropertyChanged
+    public class Throw : APropertyChanged
     {
         private int _score;
         private int _multiplier;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [JsonProperty("score")]
         public int Score
         {
             get => _score;
@@ -29,7 +27,6 @@ namespace Dartin.Models
             }
         }
 
-        [JsonProperty("multiplier")]
         public int Multiplier
         {
             get => _multiplier;
@@ -43,12 +40,6 @@ namespace Dartin.Models
                 else throw new Exception("Cannot set a multiplier below 1 or above 3.");
 
             }
-        }
-
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
         [JsonConstructor]

@@ -1,4 +1,5 @@
-﻿using Dartin.Models;
+﻿using Dartin.Abstracts;
+using Dartin.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,11 @@ using System.Threading.Tasks;
 
 namespace Dartin
 {
-    public class State : INotifyPropertyChanged
+    public class State : APropertyChanged
     {
         private BindingList<Match> _matches;
         private BindingList<Player> _players;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [JsonProperty("matches")]
         public BindingList<Match> Matches
         {
             get => _matches;
@@ -30,7 +28,6 @@ namespace Dartin
             }
         }
 
-        [JsonProperty("players")]
         public BindingList<Player> Players {
             get => _players;
             private set
@@ -38,12 +35,6 @@ namespace Dartin
                 _players = value;
                 NotifyPropertyChanged();
             }
-        }
-
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void Save(object sender, EventArgs e) => File.WriteAllText(Path.Combine(Constants.SavePath, Constants.SaveFileName), JsonConvert.SerializeObject(this, Formatting.Indented));

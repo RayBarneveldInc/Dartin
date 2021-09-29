@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Dartin.Abstracts;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,19 +9,10 @@ using System.Text;
 
 namespace Dartin.Models
 {
-    public class Leg : INotifyPropertyChanged
+    public class Leg : APropertyChanged
     {
         private BindingList<Turn> _turns;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        [JsonProperty("turns")]
         public BindingList<Turn> Turns
         {
             get => _turns;
@@ -30,8 +22,6 @@ namespace Dartin.Models
                 NotifyPropertyChanged();
             }
         }
-
-        [JsonConstructor]
         public Leg(IList<Turn> turns)
         {
             Turns = new BindingList<Turn>(turns);
