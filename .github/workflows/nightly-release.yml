@@ -25,15 +25,17 @@ jobs:
       run: dotnet restore
       
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet publish --configuration Release --self-contained True --runtime win-x64 --verbosity Normal /property:PublishSingleFile=True /property:IncludeNativeLibrariesForSelfExtract=True /propert
+y:DebugType=None /property:DebugSymbols=False ./Dartin/Dartin.Application --no-restore
+
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
-    
+
     - name: Get current date
       id: date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-    
+      
     - name: Deploy
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
@@ -41,4 +43,4 @@ jobs:
         prerelease: false
         automatic_release_tag: "${{ steps.date.outputs.date }}"
         files: |
-          ./Dartin/Dartin.Application/bin/Debug/net5.0-windows
+          ./Dartin/Dartin.Application/bin/Release/net5.0-windows/win-x64/publish/
