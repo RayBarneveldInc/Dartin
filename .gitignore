@@ -1,3 +1,6 @@
+# rider
+.idea
+bin
 # Application save & load states
 Memory/*.sav
 Memory/*.xml
