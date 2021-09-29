@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Dartin.MVVM\Dartin.MVVM.csproj" />
+      <ProjectReference Include="..\Dartin.Application\Dartin.Application.csproj" />
     </ItemGroup>
 
 </Project>

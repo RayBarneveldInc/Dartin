@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dartin.UnitTests", "Dartin\Dartin.UnitTests\Dartin.UnitTests.csproj", "{689DF85C-897C-4BA3-9BAC-05D1BE9D3F8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dartin.Application", "Dartin\Dartin.Application\Dartin.Application.csproj", "{1C85B28B-FEFA-4151-B2D8-5F4534C5A945}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{689DF85C-897C-4BA3-9BAC-05D1BE9D3F8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{689DF85C-897C-4BA3-9BAC-05D1BE9D3F8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{689DF85C-897C-4BA3-9BAC-05D1BE9D3F8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{689DF85C-897C-4BA3-9BAC-05D1BE9D3F8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C85B28B-FEFA-4151-B2D8-5F4534C5A945}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C85B28B-FEFA-4151-B2D8-5F4534C5A945}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C85B28B-FEFA-4151-B2D8-5F4534C5A945}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C85B28B-FEFA-4151-B2D8-5F4534C5A945}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2ED41328-ADFD-4D21-A0D6-00F273F15A10}
+	EndGlobalSection
+EndGlobal
