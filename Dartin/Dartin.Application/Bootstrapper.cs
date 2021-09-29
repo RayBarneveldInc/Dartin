@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using MVVM.ViewModels;
+using MVVM.Views;
 
 namespace Dartin
 {
@@ -16,7 +18,7 @@ namespace Dartin
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            DisplayRootViewFor<ShellViewModel>();
+            DisplayRootViewFor<MatchDefinitionViewModel>();
         }
     }
 }
