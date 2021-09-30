@@ -3,8 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
-    <RootNamespace>MVVM</RootNamespace>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <RootNamespace>Dartin</RootNamespace>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
