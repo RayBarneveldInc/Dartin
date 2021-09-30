@@ -26,12 +26,16 @@ namespace Dartin.ViewModels
             Players = new BindableCollection<Player>();
             FirstName = "First Name";
             Surname = "Surname";
-
         }
 
-        public void AddPlayer()
+        public void AddPlayer(string firstName, string surname)
         {
-            Player newPlayer = new Player { Name = FirstName + " " + Surname };
+            var fullName = firstName + " " + surname;
+            if (Players.Any(p => p.Name == fullName))
+            {
+                return;
+            }
+            var newPlayer = new Player { Name = fullName};
             Players.Add(newPlayer);
         }
 
