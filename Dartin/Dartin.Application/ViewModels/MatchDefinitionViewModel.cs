@@ -11,8 +11,13 @@ using Dartin.ViewModels;
 namespace Dartin.ViewModels
 {
     public class MatchDefinitionViewModel
+
     {
+
         public MatchDefinition CurrentObject { get; set; }
+
+        //public bool IsOpen { get; set; }
+
 
         public MatchDefinitionViewModel(/*MatchDefinition currentMatch*/)
         {
@@ -24,8 +29,19 @@ namespace Dartin.ViewModels
             test.Players.Add(testPlayer);
             test.Name = "Hallo";
             CurrentObject = test;
+
+
+
         }
 
+        public void AddPlayer()
+        {
+            Debug.WriteLine("Player added");
+        }
+        public void Cancel()
+        {
+            Debug.WriteLine("pressed cancel button");
+        }
         public void Exit()
         {
             Debug.WriteLine("pressed exit button");

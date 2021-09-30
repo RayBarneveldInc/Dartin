@@ -6,46 +6,72 @@
         xmlns:local="clr-namespace:Dartin.Views"
         mc:Ignorable="d"
         Title="MatchDefinitionView" Height="450" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
 
-        <Label x:Uid="Label_0" Content="Match date" Grid.Row="0" Grid.Column="0"/> <!--TODO ResourceStrings aanmaken-->
-        <DatePicker x:Uid="DatePicker_0" SelectedDate="{Binding CurrentObject.Date}" Grid.Row="0" Grid.Column="1"/>
+		<Label x:Uid="Label_0" Content="Match date" Grid.Row="0" Grid.Column="0"/>
+		<!--TODO ResourceStrings aanmaken-->
+		<DatePicker x:Uid="DatePicker_0" SelectedDate="{Binding CurrentObject.Date}" Grid.Row="0" Grid.Column="1"/>
 
-        <Button x:Name="ActivateAddPlayerDialogBox" Content="Add player" Grid.Row="0" Grid.Column="3" />
+		<Button x:Name="ActivateAddPlayerDialogBox" Content="Add player" Grid.Row="0" Grid.Column="3" />
 
-        <ComboBox ItemsSource="{Binding CurrentObject.Players}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="0"/>
+		<ComboBox ItemsSource="{Binding CurrentObject.Players}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="0"/>
 
-        <Label x:Uid="Label_1" Content="Versus" Grid.Row="1" Grid.Column="1"/>
-        <ComboBox ItemsSource="{Binding CurrentObject.Players}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="2"/>
+		<Label x:Uid="Label_1" Content="Versus" Grid.Row="1" Grid.Column="1"/>
+		<ComboBox ItemsSource="{Binding CurrentObject.Players}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="2"/>
 
-        <Label x:Uid="Label_0" Content="Sets to win" Grid.Row="2" Grid.Column="0"/>
-        <TextBox Text="{Binding CurrentObject.SetsToWin, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1"/>
+		<Label x:Uid="Label_0" Content="Sets to win" Grid.Row="2" Grid.Column="0"/>
+		<TextBox Text="{Binding CurrentObject.SetsToWin, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1"/>
 
-        <Label x:Uid="Label_0" Content="Legs to win set" Grid.Row="3" Grid.Column="0"/>
-        <TextBox Text="{Binding CurrentObject.LegsToWinSet, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"/>
+		<Label x:Uid="Label_0" Content="Legs to win set" Grid.Row="3" Grid.Column="0"/>
+		<TextBox Text="{Binding CurrentObject.LegsToWinSet, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"/>
 
-        <Label x:Uid="Label_0" Content="Score to win leg" Grid.Row="4" Grid.Column="0"/>
-        <TextBox Text="{Binding CurrentObject.ScoreToWinLeg, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"/>
+		<Label x:Uid="Label_0" Content="Score to win leg" Grid.Row="4" Grid.Column="0"/>
+		<TextBox Text="{Binding CurrentObject.ScoreToWinLeg, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"/>
 
-        <Button x:Name="Exit" Content="Exit" Grid.Row="5" Grid.Column="0"/>
-        
-        <Button x:Name="SaveGameAndExit" Content="Save game and exit" Grid.Row="5" Grid.Column="1"/>
-        
-        <Button x:Name="SaveAndStartGame" Content="Save and start game" Grid.Row="5" Grid.Column="2"/>
-    </Grid>
+		<Button x:Name="Exit" Content="Exit" Grid.Row="5" Grid.Column="0"/>
+
+		<Button x:Name="SaveGameAndExit" Content="Save game and exit" Grid.Row="5" Grid.Column="1"/>
+
+		<Button x:Name="SaveAndStartGame" Content="Save and start game" Grid.Row="5" Grid.Column="2"/>
+
+		<Popup x:Uid="Popup" IsOpen="True" StaysOpen="True" Height="225" Width="400" PlacementTarget="{Binding ElementName=MatchDefinitionView}" Placement="Center">
+			<Grid Background="Gray">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="1*" />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1*" />
+					<RowDefinition Height="1*" />
+					<RowDefinition Height="1*" />
+					<RowDefinition Height="1*" />
+					<RowDefinition Height="1*" />
+				</Grid.RowDefinitions>
+				
+				<Label x:Uid="Label_1" Content="Add player" Grid.Column="0" Grid.ColumnSpan="1"/>
+				<Label x:Uid="Label_0" Content="First name" Grid.Column="0" Grid.Row="1"/>
+				<Label x:Uid="Label_1" Content="Surname" Grid.Column="0" Grid.Row="2"/>
+				
+				<TextBox Grid.Column="1" Grid.Row="1"/>
+				<TextBox Grid.Column="1" Grid.Row="2"/>
+				
+				<Button x:Name="Cancel" Content="Cancel" Grid.Column="0" Grid.Row="5"/>
+				<Button x:Name="AddPlayer" Content="Add player" Grid.Column="1" Grid.Row="5"/>
+			</Grid>
+		</Popup>
+	</Grid>
 </Window>
-    
