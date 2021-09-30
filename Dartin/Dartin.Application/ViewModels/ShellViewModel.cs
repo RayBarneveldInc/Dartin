@@ -14,12 +14,6 @@ namespace Dartin.ViewModels
     {
         public ShellViewModel()
         {
-            // on start
-        }
-
-        public void Exit()
-        {
-            Application.Current.Shutdown();
         }
     }
 }
