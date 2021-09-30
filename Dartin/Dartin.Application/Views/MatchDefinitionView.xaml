@@ -25,7 +25,7 @@
         <Label x:Uid="Label_0" Content="Match date" Grid.Row="0" Grid.Column="0"/> <!--TODO ResourceStrings aanmaken-->
         <DatePicker x:Uid="DatePicker_0" SelectedDate="{Binding CurrentObject.Date}" Grid.Row="0" Grid.Column="1"/>
 
-        <Button x:Name="ActivateAddPlayerDialogBox" Content="Add player" />
+        <Button x:Name="ActivateAddPlayerDialogBox" Content="Add player" Grid.Row="0" Grid.Column="3" />
 
         <ComboBox ItemsSource="{Binding CurrentObject.Players}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="0"/>
 
