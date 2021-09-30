@@ -10,38 +10,31 @@ using Dartin.ViewModels;
 
 namespace Dartin.ViewModels
 {
-    public class MatchDefinitionViewModel
+    public class MatchDefinitionViewModel : Screen
 
     {
+        private BindableCollection<Player> players;
 
-        public MatchDefinition CurrentObject { get; set; }
+        public string FirstName { get; set; }
 
-        //public bool IsOpen { get; set; }
+        public string Surname { get; set; }
 
+        public BindableCollection<Player> Players { get => players; set { players = value; NotifyOfPropertyChange(() => Players); } }
 
-        public MatchDefinitionViewModel(/*MatchDefinition currentMatch*/)
+        public MatchDefinitionViewModel()
         {
-            MatchDefinition test = new MatchDefinition();
-            Player testPlayer = new Player();
-            testPlayer.Name = "Tycho";
-            List<Player> t = new List<Player>();
-            t.Add(testPlayer);
-            test.Players.Add(testPlayer);
-            test.Name = "Hallo";
-            CurrentObject = test;
-
-
+            Players = new BindableCollection<Player>();
+            FirstName = "First Name";
+            Surname = "Surname";
 
         }
 
         public void AddPlayer()
         {
-            Debug.WriteLine("Player added");
+            Player newPlayer = new Player { Name = FirstName + " " + Surname };
+            Players.Add(newPlayer);
         }
-        public void Cancel()
-        {
-            Debug.WriteLine("pressed cancel button");
-        }
+
         public void Exit()
         {
             Debug.WriteLine("pressed exit button");
