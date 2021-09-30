@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Dartin.Models;
+using Dartin.ViewModels;
 
-namespace MVVM.ViewModels
+namespace Dartin.ViewModels
 {
-    class MatchDefinitionViewModel : Screen
+    public class MatchDefinitionViewModel
     {
         public MatchDefinition CurrentObject { get; set; }
 

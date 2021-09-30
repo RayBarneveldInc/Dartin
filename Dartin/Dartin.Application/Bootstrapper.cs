@@ -4,8 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
-using MVVM.ViewModels;
-using MVVM.Views;
+using Dartin.Views;
 
 namespace Dartin
 {
