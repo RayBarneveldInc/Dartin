@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using Dartin.Models;
 
 namespace MVVM.ViewModels
@@ -21,6 +22,26 @@ namespace MVVM.ViewModels
             test.Players.Add(testPlayer);
             test.Name = "Hallo";
             CurrentObject = test;
+        }
+
+        public void Exit()
+        {
+            Debug.WriteLine("pressed exit button");
+        }
+
+        public void SaveGameAndExit()
+        {
+            Debug.WriteLine("saved game and exited");
+        }
+
+        public void SaveAndStartGame()
+        {
+            Debug.WriteLine("saved and started game");
+        }
+
+        public void ActivateAddPlayerDialogBox()
+        {
+            Debug.WriteLine("activate add player dialog box");
         }
     }
 }

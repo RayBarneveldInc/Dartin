@@ -21,5 +21,14 @@ namespace Dartin.ViewModels
         {
             Application.Current.Shutdown();
         }
+
+        private string _name;
+
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+
     }
 }

@@ -18,19 +18,34 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Label x:Uid="Label_0" Content="Match date" Grid.Row="0" Grid.Column="0"/> <!--TODO ResourceStrings aanmaken-->
         <DatePicker x:Uid="DatePicker_0" SelectedDate="{Binding CurrentObject.Date}" Grid.Row="0" Grid.Column="1"/>
 
+        <Button x:Name="ActivateAddPlayerDialogBox" Content="Add player" />
+
         <ComboBox ItemsSource="{Binding CurrentObject.Players}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="0"/>
+
         <Label x:Uid="Label_1" Content="Versus" Grid.Row="1" Grid.Column="1"/>
         <ComboBox ItemsSource="{Binding CurrentObject.Players}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="2"/>
 
         <Label x:Uid="Label_0" Content="Sets to win" Grid.Row="2" Grid.Column="0"/>
         <TextBox Text="{Binding CurrentObject.SetsToWin, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1"/>
 
+        <Label x:Uid="Label_0" Content="Legs to win set" Grid.Row="3" Grid.Column="0"/>
+        <TextBox Text="{Binding CurrentObject.LegsToWinSet, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"/>
+
+        <Label x:Uid="Label_0" Content="Score to win leg" Grid.Row="4" Grid.Column="0"/>
+        <TextBox Text="{Binding CurrentObject.ScoreToWinLeg, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"/>
+
+        <Button x:Name="Exit" Content="Exit" Grid.Row="5" Grid.Column="0"/>
+        
+        <Button x:Name="SaveGameAndExit" Content="Save game and exit" Grid.Row="5" Grid.Column="1"/>
+        
+        <Button x:Name="SaveAndStartGame" Content="Save and start game" Grid.Row="5" Grid.Column="2"/>
     </Grid>
 </Window>
     
