@@ -11,7 +11,7 @@
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="Auto"/>
 			<ColumnDefinition Width="*"/>
-		</Grid.ColumnDefinitions>
+		</Grid.ColumnDefinitions>	
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
@@ -26,7 +26,19 @@
 		<!--TODO ResourceStrings aanmaken-->
 		<DatePicker x:Uid="DatePicker_0" SelectedDate="{Binding CurrentObject.Date}" Grid.Row="0" Grid.Column="1"/>
 
-		<Button x:Name="ActivateAddPlayerDialogBox" Content="Add player" Grid.Row="0" Grid.Column="3" />
+		<!-- <Button x:Name="ActivateAddPlayerDialogBox" Content="Add player" Grid.Row="0" Grid.Column="3" /> -->
+		
+		<Grid Grid.Row="0" Grid.Column="2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<TextBox Grid.Column="0">test</TextBox>
+		</Grid>
 
 		<ComboBox ItemsSource="{Binding CurrentObject.Players}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="0"/>
 
@@ -46,32 +58,34 @@
 
 		<Button x:Name="SaveGameAndExit" Content="Save game and exit" Grid.Row="5" Grid.Column="1"/>
 
-		<Button x:Name="SaveAndStartGame" Content="Save and start game" Grid.Row="5" Grid.Column="2"/>
+		<!-- <Button x:Name="SaveAndStartGame" Content="Save and start game" Grid.Row="5" Grid.Column="2"/> -->
+		
+		<Button x:Name="UpdateTest" Content="Save and start game" Grid.Row="5" Grid.Column="2"/>
 
-		<Popup x:Uid="Popup" IsOpen="True" StaysOpen="True" Height="225" Width="400" PlacementTarget="{Binding ElementName=MatchDefinitionView}" Placement="Center">
-			<Grid Background="Gray">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="1*" />
-					<ColumnDefinition Width="1*" />
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="1*" />
-					<RowDefinition Height="1*" />
-					<RowDefinition Height="1*" />
-					<RowDefinition Height="1*" />
-					<RowDefinition Height="1*" />
-				</Grid.RowDefinitions>
-				
-				<Label x:Uid="Label_1" Content="Add player" Grid.Column="0" Grid.ColumnSpan="1"/>
-				<Label x:Uid="Label_0" Content="First name" Grid.Column="0" Grid.Row="1"/>
-				<Label x:Uid="Label_1" Content="Surname" Grid.Column="0" Grid.Row="2"/>
-				
-				<TextBox Grid.Column="1" Grid.Row="1"/>
-				<TextBox Grid.Column="1" Grid.Row="2"/>
-				
-				<Button x:Name="Cancel" Content="Cancel" Grid.Column="0" Grid.Row="5"/>
-				<Button x:Name="AddPlayer" Content="Add player" Grid.Column="1" Grid.Row="5"/>
-			</Grid>
-		</Popup>
+		<!-- <Popup x:Uid="Popup" IsOpen="True" StaysOpen="True" Height="225" Width="400" PlacementTarget="{Binding ElementName=MatchDefinitionView}" Placement="Center"> -->
+		<!-- 	<Grid Background="Gray"> -->
+		<!-- 		<Grid.ColumnDefinitions> -->
+		<!-- 			<ColumnDefinition Width="1*" /> -->
+		<!-- 			<ColumnDefinition Width="1*" /> -->
+		<!-- 		</Grid.ColumnDefinitions> -->
+		<!-- 		<Grid.RowDefinitions> -->
+		<!-- 			<RowDefinition Height="1*" /> -->
+		<!-- 			<RowDefinition Height="1*" /> -->
+		<!-- 			<RowDefinition Height="1*" /> -->
+		<!-- 			<RowDefinition Height="1*" /> -->
+		<!-- 			<RowDefinition Height="1*" /> -->
+		<!-- 		</Grid.RowDefinitions> -->
+		<!-- 		 -->
+		<!-- 		<Label x:Uid="Label_1" Content="Add player" Grid.Column="0" Grid.ColumnSpan="1"/> -->
+		<!-- 		<Label x:Uid="Label_0" Content="First name" Grid.Column="0" Grid.Row="1"/> -->
+		<!-- 		<Label x:Uid="Label_1" Content="Surname" Grid.Column="0" Grid.Row="2"/> -->
+		<!-- 		 -->
+		<!-- 		<TextBox Grid.Column="1" Grid.Row="1"/> -->
+		<!-- 		<TextBox Grid.Column="1" Grid.Row="2"/> -->
+		<!-- 		 -->
+		<!-- 		<Button x:Name="Cancel" Content="Cancel" Grid.Column="0" Grid.Row="5"/> -->
+		<!-- 		<Button x:Name="AddPlayer" Content="Add player" Grid.Column="1" Grid.Row="5"/> -->
+		<!-- 	</Grid> -->
+		<!-- </Popup> -->
 	</Grid>
 </Window>
