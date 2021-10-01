@@ -1,31 +1,17 @@
-﻿using Dartin.Abstracts;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Dartin.Models
+namespace MVVM.Models
 {
-    public class Player : APropertyChanged
+    public class Player
     {
         private string _name;
 
         public string Name
         {
-            get => _name;
-            set
-            {
-                _name = value;
-                NotifyPropertyChanged();
-            }
+            get { return _name; }
+            set { _name = value; }
         }
-
-        public Player(string name)
-        {
-            Name = name;
-        }
-
     }
 }
