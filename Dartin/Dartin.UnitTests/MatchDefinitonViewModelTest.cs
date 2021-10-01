@@ -27,7 +27,7 @@ namespace UnitTests
 
             vm.CurrentObject = new MatchDefinition
             {
-                Date = new DateTime(),
+                Date = DateTime.Now,
                 Name = "Match name",
                 SetsToWin = 1,
                 LegsToWinSet = 5,

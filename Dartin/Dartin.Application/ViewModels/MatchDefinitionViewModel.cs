@@ -44,6 +44,7 @@ namespace Dartin.ViewModels
             Matches = new List<MatchDefinition>();
             CurrentObject = new MatchDefinition
             {
+                Date = DateTime.Now,
                 Name = "Match name",
                 SetsToWin = 1,
                 LegsToWinSet = 5,
