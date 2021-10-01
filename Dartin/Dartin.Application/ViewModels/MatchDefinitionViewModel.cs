@@ -100,7 +100,9 @@ namespace Dartin.ViewModels
         {
             Matches.Add(CurrentObject);
         }
-        
+
+        public string ViewName { get; }
+
         public void OnExit()
         {
             throw new NotImplementedException();
