@@ -53,7 +53,7 @@ namespace Dartin
             Players.ListChanged += Save;
         }
 
-        public void Save(object sender, EventArgs e)
+        private void Save(object sender, EventArgs e)
         {
             lock (Locker)
             {
