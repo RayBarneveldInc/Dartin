@@ -15,10 +15,13 @@ namespace Dartin
 {
     public class State : APropertyChanged
     {
-        private BindingList<Match> _matches;
+        private static object Locker = new object();
+        private BindingList<MatchDefinition> _matches;
         private BindingList<Player> _players;
 
-        public BindingList<Match> Matches
+        private static readonly Lazy<State> _lazy = new Lazy<State>(() => new State());
+        public static State Instance => _lazy.Value;
+        public BindingList<MatchDefinition> Matches
         {
             get => _matches;
             private set
@@ -38,19 +41,28 @@ namespace Dartin
             }
         }
 
-        private void Save(object sender, EventArgs e) => File.WriteAllText(Path.Combine(Constants.SavePath, Constants.SaveFileName), JsonConvert.SerializeObject(this, Formatting.Indented));
-
-        [JsonConstructor]
-        public State()
+        private State()
         {
             if (!Directory.Exists(Constants.SavePath))
                 Directory.CreateDirectory(Constants.SavePath);
 
-            Matches = new BindingList<Match>();
+            Matches = new BindingList<MatchDefinition>();
             Players = new BindingList<Player>();
 
             Matches.ListChanged += Save;
             Players.ListChanged += Save;
+        }
+
+        public void Save(object sender, EventArgs e)
+        {
+            lock (Locker)
+            {
+                using (FileStream file = new FileStream(Constants.SaveFilePath, FileMode.Append, FileAccess.Write, FileShare.Read))
+                using (StreamWriter writer = new StreamWriter(file, Encoding.Unicode))
+                {
+                    writer.Write(JsonConvert.SerializeObject(this, Formatting.Indented));
+                }
+            }
         }
     }
 }

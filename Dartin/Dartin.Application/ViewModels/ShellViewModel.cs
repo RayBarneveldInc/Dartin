@@ -7,7 +7,6 @@ using System.Net;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using System.IO;
 
 namespace Dartin.ViewModels
 {
@@ -16,15 +15,6 @@ namespace Dartin.ViewModels
         public ShellViewModel()
         {
             // on start
-
-            State state;
-            if (File.Exists(Path.Combine(Constants.SavePath, Constants.SaveFileName)))
-                state = JsonConvert.DeserializeObject<State>(File.ReadAllText(Path.Combine(Constants.SavePath, Constants.SaveFileName)));
-            else
-                state = new State();
-
-            var thimo = new Player("Thimo");
-            state.Players.Add(thimo);
         }
 
         public void Exit()
