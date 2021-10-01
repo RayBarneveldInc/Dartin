@@ -12,12 +12,12 @@ namespace Dartin
     {
         public Bootstrapper()
         {
-            Initialize();  
+            Initialize();
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            DisplayRootViewFor<MainMenuViewModel>();
+            DisplayRootViewFor<ShellViewModel>();
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿<Window x:Class="Dartin.Views.MatchDefinitionView"
+﻿<UserControl x:Class="Dartin.Views.MatchDefinitionView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dartin.Views" xmlns:viewmodels="clr-namespace:Dartin.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ShellViewModel}"
 		mc:Ignorable="d"
-        Title="MatchDefinitionView" Height="450" Width="800">
+        >
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
@@ -40,27 +40,22 @@
 			<Button x:Name="AddPlayer" Grid.Column="2" Content="Add player"/>
 		</Grid>
 
-		<ComboBox ItemsSource="{Binding Players,Mode=OneWay}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="0"/>
+        <ComboBox ItemsSource="{Binding Players, Mode=OneWay}" SelectedItem="{Binding Path=SelectedPlayerOne, Mode=OneWayToSource}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="0"/>
 
-		<Label x:Uid="Label_1" Content="Versus" Grid.Row="1" Grid.Column="1"/>
-		<ComboBox ItemsSource="{Binding Players,Mode=OneWay}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="2"/>
+		<Label Content="Versus" Grid.Row="1" Grid.Column="1"/>
+        <ComboBox ItemsSource="{Binding Players, Mode=OneWay}" SelectedItem="{Binding Path=SelectedPlayerTwo, Mode=OneWayToSource}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="2"/>
 
-		<Label x:Uid="Label_0" Content="Sets to win" Grid.Row="2" Grid.Column="0"/>
-		<TextBox Text="{Binding SetsToWin, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1"/>
+		<Label Content="Sets to win" Grid.Row="2" Grid.Column="0"/>
+        <TextBox Text="{Binding CurrentObject.SetsToWin, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1"/>
 
-		<Label x:Uid="Label_0" Content="Legs to win set" Grid.Row="3" Grid.Column="0"/>
-		<TextBox Text="{Binding LegsToWinSet, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"/>
+		<Label Content="Legs to win set" Grid.Row="3" Grid.Column="0"/>
+        <TextBox Text="{Binding CurrentObject.LegsToWinSet, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"/>
 
-		<Label x:Uid="Label_0" Content="Score to win leg" Grid.Row="4" Grid.Column="0"/>
-		<TextBox Text="{Binding ScoreToWinLeg, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"/>
+		<Label Content="Score to win leg" Grid.Row="4" Grid.Column="0"/>
+        <TextBox Text="{Binding CurrentObject.ScoreToWinLeg, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"/>
 
 		<Button x:Name="Exit" Content="Exit" Grid.Row="5" Grid.Column="0"/>
-
 		<Button x:Name="SaveGameAndExit" Content="Save game and exit" Grid.Row="5" Grid.Column="1"/>
-
-		 <Button x:Name="SaveAndStartGame" Content="Save and start game" Grid.Row="5" Grid.Column="2"/> 
-		
-		<Button x:Name="UpdateTest" Content="Save and start game" Grid.Row="5" Grid.Column="2"/>
-
+		<Button x:Name="SaveAndStartGame" Content="Save and start game" Grid.Row="5" Grid.Column="2"/> 
 	</Grid>
-</Window>
+</UserControl>

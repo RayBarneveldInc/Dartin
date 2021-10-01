@@ -11,13 +11,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Caliburn.Micro;
 
 namespace Dartin.Views
 {
     /// <summary>
     /// Interaction logic for MatchDefinitionView.xaml
     /// </summary>
-    public partial class MatchDefinitionView : Window
+    public partial class MatchDefinitionView : UserControl
     {
         public MatchDefinitionView()
         {
