@@ -28,7 +28,8 @@ namespace Dartin
             }
         }
 
-        public BindingList<Player> Players {
+        public BindingList<Player> Players
+        {
             get => _players;
             private set
             {
