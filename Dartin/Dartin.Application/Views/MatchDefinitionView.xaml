@@ -1,11 +1,11 @@
-﻿<Window x:Class="Dartin.Views.MatchDefinitionView"
+﻿<UserControl x:Class="Dartin.Views.MatchDefinitionView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dartin.Views" xmlns:viewmodels="clr-namespace:Dartin.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ShellViewModel}"
 		mc:Ignorable="d"
-        Title="MatchDefinitionView" Height="450" Width="800">
+        >
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
@@ -58,4 +58,4 @@
 		<Button x:Name="SaveGameAndExit" Content="Save game and exit" Grid.Row="5" Grid.Column="1"/>
 		<Button x:Name="SaveAndStartGame" Content="Save and start game" Grid.Row="5" Grid.Column="2"/> 
 	</Grid>
-</Window>
+</UserControl>

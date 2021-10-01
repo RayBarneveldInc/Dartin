@@ -5,13 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Dartin.Managers;
 using Dartin.Models;
 using Dartin.ViewModels;
 using System.Windows;
 
 namespace Dartin.ViewModels
 {
-    public class MatchDefinitionViewModel : Screen
+    public class MatchDefinitionViewModel : Screen, IViewModel
+
     {
         private BindableCollection<Player> _players;
         private Player _selectedPlayerOne;
@@ -68,6 +70,8 @@ namespace Dartin.ViewModels
             }
             var newPlayer = new Player { Name = fullName};
             Players.Add(newPlayer);
+            
+
         }
 
         /// <summary>
@@ -96,5 +100,19 @@ namespace Dartin.ViewModels
         {
             Matches.Add(CurrentObject);
         }
+
+        public string ViewName { get; }
+
+        public void OnExit()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMatch()
+        {
+            
+        }
+        
+        public int CurrentContextObject { get; set; }
     }
 }
