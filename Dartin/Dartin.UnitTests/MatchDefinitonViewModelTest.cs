@@ -21,6 +21,31 @@ namespace UnitTests
         }
 
         [Fact]
+        public void SaveGameAndExit()
+        {
+            var vm = new MatchDefinitionViewModel();
+
+            vm.CurrentObject = new MatchDefinition
+            {
+                Date = DateTime.Now,
+                Name = "Match name",
+                SetsToWin = 1,
+                LegsToWinSet = 5,
+                ScoreToWinLeg = 501
+            };
+
+            vm.SelectedPlayerOne = new Player { Name = "PlayerOne" };
+            vm.SelectedPlayerTwo = new Player { Name = "PlayerTwo" };
+
+            vm.SaveGameAndExit();
+            
+            Assert.Equal(vm.SelectedPlayerOne, vm.CurrentObject.Players.First());
+            Assert.Equal(vm.SelectedPlayerTwo, vm.CurrentObject.Players.Skip(1).First());
+            Assert.Equal(2, vm.CurrentObject.Players.Count());
+            Assert.Single(vm.Matches);
+        }
+
+        [Fact]
         public void HasNoDuplicates()
         {
             var vm = new MatchDefinitionViewModel();
