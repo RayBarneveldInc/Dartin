@@ -5,16 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Dartin.Managers;
 using Dartin.Models;
 using Dartin.ViewModels;
 
 namespace Dartin.ViewModels
 {
-    public class MatchDefinitionViewModel : Screen
+    public class MatchDefinitionViewModel : Screen, IViewModel
 
     {
         private BindableCollection<Player> players;
 
+        public MatchDefinition voorbeeld { get; set; }
+        
+        public string ViewName => "MatchDefinition";
+        
         public string FirstName { get; set; }
 
         public string Surname { get; set; }
@@ -58,5 +63,17 @@ namespace Dartin.ViewModels
         {
             Debug.WriteLine("activate add player dialog box");
         }
+        
+        public void OnExit()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMatch()
+        {
+            
+        }
+        
+        public int CurrentContextObject { get; set; }
     }
 }
