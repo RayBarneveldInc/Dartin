@@ -15,7 +15,7 @@ namespace Dartin
 {
     public class State : APropertyChanged
     {
-        private static object Locker = new object();
+        private static object _locker = new object();
         private BindingList<MatchDefinition> _matches;
         private BindingList<Player> _players;
 
@@ -24,7 +24,7 @@ namespace Dartin
         public BindingList<MatchDefinition> Matches
         {
             get => _matches;
-            private set
+            set
             {
                 _matches = value;
                 NotifyPropertyChanged();
@@ -56,7 +56,7 @@ namespace Dartin
 
         private void Save(object sender, EventArgs e)
         {
-            lock (Locker)
+            lock (_locker)
             {
                 using (FileStream file = new FileStream(Constants.SaveFilePath, FileMode.Append, FileAccess.Write, FileShare.Read))
                 using (StreamWriter writer = new StreamWriter(file, Encoding.Unicode))
