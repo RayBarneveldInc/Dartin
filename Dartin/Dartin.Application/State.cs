@@ -19,7 +19,7 @@ namespace Dartin
         private BindingList<MatchDefinition> _matches;
         private BindingList<Player> _players;
 
-        private static readonly Lazy<State> _lazy = new Lazy<State>(() => new State());
+        private static readonly Lazy<State> _lazy = new Lazy<State>(() => CreateStateOrLoadSaved());
         public static State Instance => _lazy.Value;
         public BindingList<MatchDefinition> Matches
         {
@@ -41,6 +41,7 @@ namespace Dartin
             }
         }
 
+        private static State CreateStateOrLoadSaved() => File.Exists(Constants.SaveFilePath) ? JsonConvert.DeserializeObject<State>(File.ReadAllText(Constants.SaveFilePath)) : new State();
         private State()
         {
             if (!Directory.Exists(Constants.SavePath))
