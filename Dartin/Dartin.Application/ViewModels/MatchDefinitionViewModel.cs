@@ -16,8 +16,6 @@ namespace Dartin.ViewModels
     {
         private BindableCollection<Player> players;
 
-        public MatchDefinition voorbeeld { get; set; }
-        
         public string ViewName => "MatchDefinition";
         
         public string FirstName { get; set; }
@@ -42,6 +40,8 @@ namespace Dartin.ViewModels
             }
             var newPlayer = new Player { Name = fullName};
             Players.Add(newPlayer);
+            
+
         }
 
         public void Exit()
