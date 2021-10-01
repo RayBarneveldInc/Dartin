@@ -6,6 +6,13 @@ namespace MVVM.Models
 {
     public class Leg
     {
-        public List<Turn> Turns;
+        // 501 of 301
+        public int TurnScoreToWin { get; set; }
+        public List<Turn> Turns { get; set; }
+
+        public Leg()
+        {
+            Turns = new List<Turn>();
+        }
     }
 }
