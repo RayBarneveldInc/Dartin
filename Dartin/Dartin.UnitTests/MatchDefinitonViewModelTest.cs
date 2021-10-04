@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Dartin.ViewModels;
 using Dartin.Models;
+using Dartin;
 
 namespace UnitTests
 {
@@ -14,6 +15,7 @@ namespace UnitTests
         [Fact]
         public void AddPlayer()
         {
+            State.Instance.Players.Clear();
             var vm = new MatchDefinitionViewModel();
             vm.AddPlayer("New", "Player");
             vm.AddPlayer("Yo", "Bama");
