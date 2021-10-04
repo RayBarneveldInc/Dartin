@@ -58,11 +58,7 @@ namespace Dartin
         {
             lock (_locker)
             {
-                using (FileStream file = new FileStream(Constants.SaveFilePath, FileMode.Append, FileAccess.Write, FileShare.Read))
-                using (StreamWriter writer = new StreamWriter(file, Encoding.Unicode))
-                {
-                    writer.Write(JsonConvert.SerializeObject(this, Formatting.Indented));
-                }
+                File.WriteAllText(Constants.SaveFilePath, JsonConvert.SerializeObject(this, Formatting.Indented));
             }
         }
     }
