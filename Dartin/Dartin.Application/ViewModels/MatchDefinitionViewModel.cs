@@ -9,6 +9,7 @@ using Dartin.Managers;
 using Dartin.Models;
 using Dartin.ViewModels;
 using System.Windows;
+using System.Text.RegularExpressions;
 
 namespace Dartin.ViewModels
 {
@@ -64,14 +65,17 @@ namespace Dartin.ViewModels
         public void AddPlayer(string firstName, string surname)
         {
             var fullName = firstName + " " + surname;
-            if (Players.Any(p => p.Name == fullName))
-            {
-                return;
-            }
-            var newPlayer = new Player { Name = fullName};
-            Players.Add(newPlayer);
-            
+            var match = Regex.Match(fullName, @"^[\p{L}\p{M}' \.\-]+$", RegexOptions.IgnoreCase);
 
+            if (match.Success)
+            {
+                if (Players.Any(p => p.Name == fullName))
+                {
+                    return;
+                }
+                var newPlayer = new Player { Name = fullName };
+                Players.Add(newPlayer);
+            }
         }
 
         /// <summary>
@@ -110,9 +114,9 @@ namespace Dartin.ViewModels
 
         public void CreateMatch()
         {
-            
+
         }
-        
+
         public int CurrentContextObject { get; set; }
     }
 }
