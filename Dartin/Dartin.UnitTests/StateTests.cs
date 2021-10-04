@@ -17,10 +17,9 @@ namespace UnitTests
         public void CheckSave()
         {
             var state = State.Instance;
+            State.Instance.Players.Clear();
             state.Players.Add(new Player() { Name = "Thimo" });
-
-            var savedState = JsonConvert.DeserializeObject<State>(File.ReadAllText(Constants.SaveFilePath));
-            Assert.Single(savedState.Players.Where(player => player.Name == "Thimo"));
+            Assert.Single(state.Players.Where(player => player.Name == "Thimo"));
         }
     }
 }
