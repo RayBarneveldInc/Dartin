@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dartin.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,22 +10,22 @@ namespace Dartin.Managers
 {
     public static class Parser
     {
-        public static int ParseThrow(string _throw)
+        public static Toss ParseThrow(string _throw)
         {
             if (_throw.ToLower() == "bull")
             {
-                return 50;
+                return new Toss { Score = 50, Multiplier = 1 };
             }
             else if (_throw.ToLower() == "obull")
             {
-                return 25;
+                return new Toss { Score = 25, Multiplier = 1 };
             }
             else
             {
                 var score = Regex.Match(_throw, @"^(d|t|D|T)?(\d*)$", RegexOptions.IgnoreCase);
                 if (!score.Success)
                 {
-                    return -1;
+                    return null;
                 }
 
                 var multiplier = score.Groups[1].ToString().ToLower();
@@ -32,20 +33,20 @@ namespace Dartin.Managers
 
                 if (points > 20)
                 {
-                    return -1;
+                    return null;
                 }
 
                 if (multiplier == "d") 
                 {
-                    return points * 2; 
+                    return new Toss { Score = points, Multiplier = 2 };
                 }
 
                 else if (multiplier == "t") 
                 {
-                    return points * 3; 
+                    return new Toss { Score = points, Multiplier = 3 };
                 }
 
-                return points;
+                return new Toss { Score = points, Multiplier = 1 };
             }
         }
     }

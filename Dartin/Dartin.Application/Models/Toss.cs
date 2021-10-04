@@ -4,9 +4,8 @@ using System.Text;
 
 namespace Dartin.Models
 {
-    public class Throw
+    public class Toss
     {
-        public string Notation;
         public int Score;
         public int Multiplier;
     }
