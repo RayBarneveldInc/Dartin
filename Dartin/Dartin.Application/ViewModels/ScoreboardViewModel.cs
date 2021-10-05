@@ -17,6 +17,17 @@ namespace Dartin.ViewModels
         public int Player1LegScore => GetLegScore(Player1);
         public int Player2LegScore => GetLegScore(Player2);
 
+        private string _input;
+
+        public string Input
+        {
+            get { return _input; }
+            set { 
+                _input = value;
+                NotifyOfPropertyChange(() => Input);
+            }
+        }
+
         public string BestOf => $"Best of {Match.SetsToWin} sets ({Match.LegsToWinSet} legs per set)";
         public MatchDefinition Match { get; }
         public string CurrentLeg {
@@ -47,9 +58,12 @@ namespace Dartin.ViewModels
         }
         public BindableCollection<string> Logs { get; set; } = new BindableCollection<string>() { "Thimo de Zwart gooide T20 + T20 + T20 (180).", "Jasper van der Lugt gooide T20 + T20 + D20 (160).", "Einde leg; gewonnen door Jasper van der Lugt." };
 
-        public void TestMethod()
+        /// <summary>
+        /// Submit score.
+        /// </summary>
+        public void Submit()
         {
-            Console.WriteLine("abracadabra");
+
         }
 
         public void OnExit()

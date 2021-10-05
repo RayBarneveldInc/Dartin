@@ -18,9 +18,9 @@ namespace Dartin.Views
     /// <summary>
     /// Interaction logic for MainMenuView.xaml
     /// </summary>
-    public partial class MainMenuView : UserControl
+    public partial class ScoreboardView : UserControl
     {
-        public MainMenuView()
+        public ScoreboardView()
         {
             InitializeComponent();
         }

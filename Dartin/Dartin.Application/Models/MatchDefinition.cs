@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dartin.Managers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Dartin.Models
 {
     public class MatchDefinition
     {
+        public string Id { get; private set; }
         public string Name { get; set; }
         public DateTime Date { get; set; }
         public int SetsToWin { get; set; }
@@ -19,6 +21,7 @@ namespace Dartin.Models
 
         public MatchDefinition()
         {
+            Id = IdManager.GenerateId();
             Players = new List<Player>(2);
             Sets = new List<Set>();
         }
