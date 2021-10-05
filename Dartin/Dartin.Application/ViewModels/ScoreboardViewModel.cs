@@ -19,7 +19,19 @@ namespace Dartin.ViewModels
 
         public string BestOf => $"Best of {Match.SetsToWin} sets ({Match.LegsToWinSet} legs per set)";
         public MatchDefinition Match { get; }
-        public int CurrentLeg => Match.Sets.Any() && Match.Sets.Last().Legs.Any() ? Match.Sets.Last().Legs.Count : 1;
+        public string CurrentLeg {
+            get
+            {
+                string prefix = "Leg ";
+                int currentLeg;
+                if (Match.Sets.Any() && Match.Sets.Last().Legs.Any())
+                    currentLeg = Match.Sets.Last().Legs.Count;
+                else
+                    currentLeg = 1;
+
+                return prefix + currentLeg;
+            }
+        }
 
         public ScoreboardViewModel() {
             Match = new MatchDefinition
