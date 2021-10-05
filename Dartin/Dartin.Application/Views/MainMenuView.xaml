@@ -25,34 +25,16 @@
 
             <TextBlock Grid.Column="1" Text="Dartin" Foreground="Black" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
 
-            <Button Grid.Row="1" Grid.Column="1" x:Name="Matches" Width="auto" Height="auto">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Border x:Name="border" Background="#777" Width="250" Height="100">
-                            <TextBlock Grid.Column="1" Text="Wedstrijden" Foreground="Black" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
+            <Button Grid.Row="1" Grid.Column="1" Content="Matches" x:Name="Matches" Width="auto" Height="auto">
+
             </Button>
 
-            <Button Grid.Row="2" Grid.Column="1" x:Name="Darters" Width="auto" Height="auto">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Border x:Name="border" Background="#777" Width="250" Height="100">
-                            <TextBlock Grid.Column="1" Text="Darters" Foreground="Black" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
+            <Button Grid.Row="2" Grid.Column="1" Content="Darters" x:Name="Darters" Width="auto" Height="auto">
+
             </Button>
 
-            <Button Grid.Row="3" Grid.Column="0" x:Name="Settings" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="auto" Height="auto" Margin="24,0,0,24">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Border x:Name="border" Background="#777" Width="100" Height="75">
-                            <TextBlock Grid.Column="1" Text="Instellingen" Foreground="Black" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
+            <Button Grid.Row="3" Grid.Column="0" Content="Settings" x:Name="Settings" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="auto" Height="auto">
+
             </Button>
         </Grid>
     </Border>
