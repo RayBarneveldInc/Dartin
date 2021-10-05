@@ -8,11 +8,11 @@ namespace Dartin.Models
     {
         public int TurnScore { get; set; }
         public Player Player { get; set; }
-        public List<Throw> Throws { get; set; }
+        public List<Toss> Tosses { get; set; }
 
         public Turn()
         {
-            Throws = new List<Throw>(3);
+            Tosses = new List<Toss>(3);
         }
     }
 }
