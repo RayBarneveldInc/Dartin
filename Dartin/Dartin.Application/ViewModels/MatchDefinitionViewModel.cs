@@ -75,6 +75,12 @@ namespace Dartin.ViewModels
                 }
                 var newPlayer = new Player { Name = fullName };
                 Players.Add(newPlayer);
+
+                State.Instance.Players.Clear();
+                foreach (var player in Players)
+                {
+                    State.Instance.Players.Add(player);
+                }
             }
         }
 
