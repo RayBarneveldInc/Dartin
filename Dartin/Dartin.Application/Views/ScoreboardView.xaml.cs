@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace Dartin.Views
 {
     /// <summary>
-    /// Interaction logic for MainMenuView.xaml
+    /// Interaction logic for ScoreboardView.xaml
     /// </summary>
     public partial class ScoreboardView : UserControl
     {
