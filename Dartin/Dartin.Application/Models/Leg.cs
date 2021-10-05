@@ -7,8 +7,8 @@ namespace Dartin.Models
     public class Leg
     {
         // 501 of 301
-        public int TurnScoreToWin { get; set; }
         public List<Turn> Turns { get; set; }
+        public Player Winner { get; private set; } = null;
 
         public Leg()
         {

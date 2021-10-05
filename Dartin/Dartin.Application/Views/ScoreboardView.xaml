@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="Dartin.Views.ScoreboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Dartin.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Border Background="#ffffff" >
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="{Binding Match.Name}" HorizontalAlignment="Left" Padding="4"></Label>
+            <Label Grid.Row="0" Grid.Column="2" Content="{Binding BestOf}" HorizontalAlignment="Right" Padding="4"></Label>
+
+            <Label Grid.Row="1" Grid.Column="0" Content="{Binding Player1.Name}" HorizontalAlignment="Left" Padding="12"></Label>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="{Binding Player1LegScore}" Padding="3" HorizontalAlignment="Center"></Label>
+                <Label Grid.Row="0" Grid.Column="1" Content=":" Padding="3"></Label>
+                <Label Grid.Row="0" Grid.Column="2" Content="{Binding Player2LegScore}" Padding="3" HorizontalAlignment="Center"></Label>
+
+                <Label Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0" Content="{Binding CurrentLeg}" HorizontalAlignment="Center"></Label>
+            </Grid>
+            <Label Grid.Row="1" Grid.Column="2" Content="{Binding Player2.Name}" HorizontalAlignment="Right" Padding="12"></Label>
+
+            <ListView Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding Logs}"></ListView>
+            
+        </Grid>
+    </Border>
+</UserControl>
