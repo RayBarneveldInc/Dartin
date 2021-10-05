@@ -14,7 +14,7 @@ namespace UnitTests
     public class StateTests
     {
         [Fact]
-        public void CheckSave()
+        public void CheckState()
         {
             var state = State.Instance;
             State.Instance.Players.Clear();
