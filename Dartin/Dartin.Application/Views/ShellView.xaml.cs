@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -15,7 +16,7 @@ namespace Dartin.Views
     /// <summary>
     /// Interaction logic for ShellView.xaml
     /// </summary>
-    public partial class ShellView : Window
+    public partial class ShellView : MetroWindow
     {
         public ShellView()
         {
