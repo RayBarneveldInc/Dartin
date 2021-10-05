@@ -25,9 +25,13 @@ namespace Dartin.ViewModels
                 string prefix = "Leg ";
                 int currentLeg;
                 if (Match.Sets.Any() && Match.Sets.Last().Legs.Any())
+                {
                     currentLeg = Match.Sets.Last().Legs.Count;
+                }
                 else
+                {
                     currentLeg = 1;
+                }
 
                 return prefix + currentLeg;
             }
@@ -46,11 +50,6 @@ namespace Dartin.ViewModels
             };
         }
         public BindableCollection<string> Logs { get; set; } = new BindableCollection<string>() { "Thimo de Zwart gooide T20 + T20 + T20 (180).", "Jasper van der Lugt gooide T20 + T20 + D20 (160).", "Einde leg; gewonnen door Jasper van der Lugt." };
-
-        public void TestMethod()
-        {
-            Console.WriteLine("abracadabra");
-        }
 
         public void OnExit()
         {
