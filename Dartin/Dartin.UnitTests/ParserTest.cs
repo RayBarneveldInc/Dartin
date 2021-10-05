@@ -18,6 +18,8 @@ namespace UnitTests
         [InlineData(3, 20, "T20")]
         [InlineData(1, 50, "Bull")]
         [InlineData(1, 25, "OBull")]
+        [InlineData(1, 25, "25")]
+        [InlineData(1, 50, "50")]
 
         [InlineData(null, null, "jgskgjskl")]
         [InlineData(null, null, "D80")]
