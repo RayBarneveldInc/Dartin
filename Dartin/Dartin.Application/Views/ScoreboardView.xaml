@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dartin.Views"
              xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
+             xmlns:custom="clr-namespace:Dartin.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -46,7 +47,7 @@
             </Grid>
             <Label Grid.Row="1" Grid.Column="2" Content="{Binding Player2.Name}" HorizontalAlignment="Right" Padding="12" FontSize="16"></Label>
 
-            <ListView Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding Logs}" HorizontalAlignment="Center"></ListView>
+            <custom:ScrollingListView Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding Logs}" HorizontalAlignment="Center"></custom:ScrollingListView>
 
             <Button Grid.Row="3" Grid.Column="0" x:Name="Back" Content="Back" Padding="12" Margin="0"></Button>
             <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Input}" HorizontalAlignment="Center" Padding="0,12,0,12" Margin="0" Width="128" MaxLength="3" FontSize="20" TextAlignment="Center" cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]"> </TextBox>
