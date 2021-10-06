@@ -9,6 +9,10 @@ namespace Dartin.Extensions
 {
     public static class Extensions
     {
-        public static Player ToPlayer(this Guid guid) => State.Instance.Players.FirstOrDefault(player => player.Id == guid);
+        public static bool TryResolveToPlayer(this Guid guid, out Player player)
+        {
+            player = State.Instance.Players.FirstOrDefault(player => player.Id == guid);
+            return player != default(Player);
+        }
     }
 }

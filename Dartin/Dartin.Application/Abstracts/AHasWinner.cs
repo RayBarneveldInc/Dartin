@@ -20,6 +20,6 @@ namespace Dartin.Abstracts
                 NotifyPropertyChanged();
             }
         }
-        public Player Winner => _winnerId.ToPlayer();
+        //public Player Winner => _winnerId.ToPlayer();
     }
 }

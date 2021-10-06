@@ -10,22 +10,23 @@ namespace Dartin.Managers
 {
     public static class Parser
     {
-        public static Toss ParseThrow(string toss)
+        public static bool TryParseThrow(string input, out Toss toss)
         {
-            if (toss.ToLower() == "bull")
+            if (input.ToLower() == "bull")
             {
-                return new Toss(50, 1);
+                toss = new Toss(50, 1);
             }
-            else if (toss.ToLower() == "obull")
+            else if (input.ToLower() == "obull")
             {
-                return new Toss(25, 1);
+                toss = new Toss(25, 1);
             }
             else
             {
-                var score = Regex.Match(toss, @"^(d|t|D|T)?(\d*)$", RegexOptions.IgnoreCase);
+                var score = Regex.Match(input, @"^(d|t|D|T)?(\d*)$", RegexOptions.IgnoreCase);
                 if (!score.Success)
                 {
-                    return null;
+                    toss = null;
+                    return false;
                 }
 
                 var multiplier = score.Groups[1].ToString().ToLower();
@@ -33,21 +34,25 @@ namespace Dartin.Managers
 
                 if (points > 20 && !(points == 25 || points == 50))
                 {
-                    return null;
+                    toss = null;
+                    return false;
                 }
 
-                if (multiplier == "d") 
+                if (multiplier == "d")
                 {
-                    return new Toss(points, 2);
+                    toss = new Toss(points, 2);
                 }
 
-                else if (multiplier == "t") 
+                else if (multiplier == "t")
                 {
-                    return new Toss(points, 3);
+                    toss = new Toss(points, 3);
                 }
-
-                return new Toss(points, 1);
+                else
+                {
+                    toss = new Toss(points, 1);
+                }
             }
+            return true;
         }
     }
 }

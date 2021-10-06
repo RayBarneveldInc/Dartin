@@ -13,7 +13,9 @@ namespace Dartin.Models
         private Guid _playerId;
         private BindingList<Toss> _tosses;
 
-        public int TurnScore => Tosses.Sum(toss => toss.Score * toss.Multiplier);
+        public int TurnScore => Tosses.Sum(toss => toss.TotalScore);
+        public bool Valid { get; set; } = true;
+        public bool WinningTurn { get; set; } = false;
         public Guid PlayerId
         {
             get => _playerId;
@@ -23,7 +25,6 @@ namespace Dartin.Models
                 NotifyPropertyChanged();
             }
         }
-        public Player Player => _playerId.ToPlayer();
         public BindingList<Toss> Tosses
         {
             get => _tosses;
@@ -35,7 +36,7 @@ namespace Dartin.Models
         }
         public Turn(Player player, BindingList<Toss> tosses)
         {
-            _playerId = player.Id;
+            PlayerId = player.Id;
             Tosses = tosses;
         }
         public Turn(Guid playerId, BindingList<Toss> tosses)

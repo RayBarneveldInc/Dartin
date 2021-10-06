@@ -29,6 +29,9 @@ namespace Dartin.Models
                 NotifyPropertyChanged();
             }
         }
+
+        public int TotalScore => _score * _multiplier;
+
         public Toss(int score, int multiplier)
         {
             Score = score;
