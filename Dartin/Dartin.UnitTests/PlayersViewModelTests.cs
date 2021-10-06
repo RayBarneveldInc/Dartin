@@ -18,10 +18,10 @@ namespace UnitTests
             {
                 Players = new BindableCollection<Player>
                 {
-                    new() {Name = "yob ama"},
-                    new() {Name = "ama yob"},
-                    new() {Name = "oby maa"},
-                    new() {Name = "boy aam"},
+                    new Player("yob ama"),
+                    new Player("ama yob"),
+                    new Player("oby maa"),
+                    new Player("boy aam"),
                 },
                 SearchText = "yob"
             };

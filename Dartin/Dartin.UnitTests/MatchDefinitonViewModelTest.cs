@@ -7,6 +7,7 @@ using Xunit;
 using Dartin.ViewModels;
 using Dartin.Models;
 using Dartin;
+using System.ComponentModel;
 
 namespace UnitTests
 {
@@ -27,17 +28,10 @@ namespace UnitTests
         {
             var vm = new MatchDefinitionViewModel();
 
-            vm.CurrentObject = new MatchDefinition
-            {
-                Date = DateTime.Now,
-                Name = "Match name",
-                SetsToWin = 1,
-                LegsToWinSet = 5,
-                ScoreToWinLeg = 501
-            };
+            vm.CurrentObject = new MatchDefinition("Match name", DateTime.Now, new BindingList<Player>(), new BindingList<Set>(), new MatchConfiguration(1, 5, 501));
 
-            vm.SelectedPlayerOne = new Player { Name = "PlayerOne" };
-            vm.SelectedPlayerTwo = new Player { Name = "PlayerTwo" };
+            vm.SelectedPlayerOne = new Player("PlayerOne");
+            vm.SelectedPlayerTwo = new Player("PlayerTwo");
 
             vm.SaveGameAndExit();
             
