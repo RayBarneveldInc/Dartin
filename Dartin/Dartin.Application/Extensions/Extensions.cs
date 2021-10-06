@@ -14,5 +14,10 @@ namespace Dartin.Extensions
             player = State.Instance.Players.FirstOrDefault(player => player.Id == guid);
             return player != default(Player);
         }
+
+        public static Player ToPlayer(this Guid guid)
+        {
+            return State.Instance.Players.FirstOrDefault(player => player.Id == guid);
+        }
     }
 }
