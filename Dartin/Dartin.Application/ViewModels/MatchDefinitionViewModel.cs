@@ -10,6 +10,7 @@ using Dartin.Models;
 using Dartin.ViewModels;
 using System.Windows;
 using System.Text.RegularExpressions;
+using System.ComponentModel;
 
 namespace Dartin.ViewModels
 {
@@ -45,14 +46,7 @@ namespace Dartin.ViewModels
         {
             Players = new BindableCollection<Player>();
             Matches = new List<MatchDefinition>();
-            CurrentObject = new MatchDefinition
-            {
-                Date = DateTime.Now,
-                Name = "Match name",
-                SetsToWin = 1,
-                LegsToWinSet = 5,
-                ScoreToWinLeg = 501
-            };
+            CurrentObject = new MatchDefinition("Premier League Final 2017", DateTime.Today, new BindingList<Player>() { new Player("Thimo de Zwart"), new Player("Jasper van der Lugt") }, new BindingList<Set>(), new MatchConfiguration(5, 3, 501));
             FirstName = "First Name";
             Surname = "Surname";
         }
@@ -73,7 +67,7 @@ namespace Dartin.ViewModels
                 {
                     return;
                 }
-                var newPlayer = new Player { Name = fullName };
+                var newPlayer = new Player(fullName);
                 Players.Add(newPlayer);
 
                 State.Instance.Players.Clear();

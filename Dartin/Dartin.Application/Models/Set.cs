@@ -1,30 +1,25 @@
 ﻿using Dartin.Abstracts;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Dartin.Models
 {
-    public class Set : APropertyChanged
+    public class Set : AHasWinner
     {
-        private Player _winner = null;
-        public int LegsToWinSet { get; set; }
-        public List<Leg> Legs { get; set; }
-        public Player Winner
-        {
-            get => _winner;
+        private BindingList<Leg> _legs;
+        public BindingList<Leg> Legs {
+            get => _legs;
             set
             {
+                _legs = value;
                 NotifyPropertyChanged();
             }
         }
-
-        public Set()
+        public Set(BindingList<Leg> legs)
         {
-            if (!LegsToWinSet.Equals(0))
-            {
-                Legs = new List<Leg>(LegsToWinSet);
-            }
+            Legs = legs;
         }
     }
 }

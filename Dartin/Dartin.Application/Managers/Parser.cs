@@ -14,11 +14,11 @@ namespace Dartin.Managers
         {
             if (toss.ToLower() == "bull")
             {
-                return new Toss { Score = 50, Multiplier = 1 };
+                return new Toss(50, 1);
             }
             else if (toss.ToLower() == "obull")
             {
-                return new Toss { Score = 25, Multiplier = 1 };
+                return new Toss(25, 1);
             }
             else
             {
@@ -38,15 +38,15 @@ namespace Dartin.Managers
 
                 if (multiplier == "d") 
                 {
-                    return new Toss { Score = points, Multiplier = 2 };
+                    return new Toss(points, 2);
                 }
 
                 else if (multiplier == "t") 
                 {
-                    return new Toss { Score = points, Multiplier = 3 };
+                    return new Toss(points, 3);
                 }
 
-                return new Toss { Score = points, Multiplier = 1 };
+                return new Toss(points, 1);
             }
         }
     }

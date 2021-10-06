@@ -1,18 +1,27 @@
 ﻿using System;
+using Dartin.Abstracts;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
+using Dartin.Extensions;
 
 namespace Dartin.Models
 {
-    public class Leg
+    public class Leg : AHasWinner
     {
-        // 501 of 301
-        public List<Turn> Turns { get; set; }
-        public Player Winner { get; private set; } = null;
-
-        public Leg()
+        private BindingList<Turn> _turns;
+        public BindingList<Turn> Turns
         {
-            Turns = new List<Turn>();
+            get => _turns;
+            set
+            {
+                _turns = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public Leg(BindingList<Turn> turns)
+        {
+            Turns = turns;
         }
     }
 }
