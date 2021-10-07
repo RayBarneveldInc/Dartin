@@ -46,13 +46,13 @@
         <ComboBox ItemsSource="{Binding Players, Mode=OneWay}" SelectedItem="{Binding Path=SelectedPlayerTwo, Mode=OneWayToSource}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="2"/>
 
 		<Label Content="Sets to win" Grid.Row="2" Grid.Column="0"/>
-        <TextBox Text="{Binding CurrentObject.SetsToWin, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1"/>
+        <TextBox Text="{Binding CurrentObject.Configuration.SetsToWin, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1"/>
 
 		<Label Content="Legs to win set" Grid.Row="3" Grid.Column="0"/>
-        <TextBox Text="{Binding CurrentObject.LegsToWinSet, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"/>
+        <TextBox Text="{Binding CurrentObject.Configuration.LegsToWinSet, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"/>
 
 		<Label Content="Score to win leg" Grid.Row="4" Grid.Column="0"/>
-        <TextBox Text="{Binding CurrentObject.ScoreToWinLeg, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"/>
+        <TextBox Text="{Binding CurrentObject.Configuration.ScoreToWinLeg, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"/>
 
 		<Button x:Name="Exit" Content="Exit" Grid.Row="5" Grid.Column="0"/>
 		<Button x:Name="SaveGameAndExit" Content="Save game and exit" Grid.Row="5" Grid.Column="1"/>
