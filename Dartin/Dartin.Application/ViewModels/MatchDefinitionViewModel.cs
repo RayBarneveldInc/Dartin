@@ -67,6 +67,7 @@ namespace Dartin.ViewModels
                 {
                     return;
                 }
+
                 var newPlayer = new Player(fullName);
                 Players.Add(newPlayer);
 

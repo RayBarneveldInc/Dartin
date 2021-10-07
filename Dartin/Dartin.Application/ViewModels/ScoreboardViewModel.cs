@@ -97,8 +97,6 @@ namespace Dartin.ViewModels
             Logs.Add("A new leg is starting!");
             _leg = new Leg(new BindingList<Turn>());
             Match.Sets.Last().Legs.Add(_leg);
-
-            Debug.WriteLine(Match.Sets.Last().Legs.Count);
         }
 
         public void SetScores()
@@ -143,10 +141,9 @@ namespace Dartin.ViewModels
                         _leg.Turns.Add(new Turn(Player2, new BindingList<Toss>()));
                     }
 
-                    if (_leg.Turns.Last().PlayerId.TryResolveToPlayer(out Player p))
-                    {
-                        Logs.Add($"Player {p.Name} is starting their turn - {Match.Configuration.ScoreToWinLeg - _leg.Turns.Where(turn => turn.PlayerId == _leg.Turns.Last().PlayerId && turn.Valid).Sum(turn => turn.TurnScore)} left.");
-                    }
+                    var player = _leg.Turns.Last().PlayerId.ToPlayer();
+
+                    Logs.Add($"Player {player.Name} is starting their turn - {Match.Configuration.ScoreToWinLeg - _leg.Turns.Where(turn => turn.PlayerId == _leg.Turns.Last().PlayerId && turn.Valid).Sum(turn => turn.TurnScore)} left.");
                 }
 
                 var currentTurn = _leg.Turns.Last();
@@ -154,8 +151,10 @@ namespace Dartin.ViewModels
                 int currentPlayerScore = _leg.Turns.Where(turn => turn.PlayerId == activePlayer.Id && turn.Valid).Sum(turn => turn.TurnScore);
 
                 // Process turn
-                if (currentTurn.Tosses.Count < 3 && Parser.TryParseThrow(Input, out Toss toss))
+                if (currentTurn.Tosses.Count < 3 && Parser.ParseThrow(Input) != null)
                 {
+                    var toss = Parser.ParseThrow(Input);
+
                     if (currentPlayerScore + toss.TotalScore < Match.Configuration.ScoreToWinLeg)
                     {
                         currentTurn.Tosses.Add(toss);
@@ -187,8 +186,9 @@ namespace Dartin.ViewModels
                 {
                     Logs.Add($"{activePlayer.Name} scores {currentTurn.TurnScore} points!");
                 }
-                else if (currentTurn.WinningTurn && _leg.WinnerId.TryResolveToPlayer(out Player winner))
+                else if (currentTurn.WinningTurn)
                 {
+                    var winner = _leg.WinnerId.ToPlayer();
                     Logs.Add($"{winner.Name} wins the leg!");
                     SetLeg();
                     SetCurrentLeg();
