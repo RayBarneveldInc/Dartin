@@ -150,8 +150,8 @@ namespace Dartin.ViewModels
                 }
 
                 var currentTurn = _leg.Turns.Last();
-
-                int currentPlayerScore = _leg.Turns.Where(turn => turn.PlayerId == currentTurn.PlayerId && turn.Valid).Sum(turn => turn.TurnScore);
+                var activePlayer = currentTurn.PlayerId.ToPlayer();
+                int currentPlayerScore = _leg.Turns.Where(turn => turn.PlayerId == activePlayer.Id && turn.Valid).Sum(turn => turn.TurnScore);
 
                 // Process turn
                 if (currentTurn.Tosses.Count < 3 && Parser.TryParseThrow(Input, out Toss toss))
@@ -164,7 +164,7 @@ namespace Dartin.ViewModels
                     {
                         currentTurn.Tosses.Add(toss);
                         currentTurn.WinningTurn = true;
-                        _leg.WinnerId = currentTurn.PlayerId;
+                        _leg.WinnerId = activePlayer.Id;
                     }
                     else if (
                         ((currentPlayerScore + toss.TotalScore) == Match.Configuration.ScoreToWinLeg && toss.Multiplier != 2) ||
@@ -178,13 +178,14 @@ namespace Dartin.ViewModels
                     Logs.Add($"Threw {toss.TotalScore}! {Match.Configuration.ScoreToWinLeg - (currentPlayerScore + toss.TotalScore)} left.");
                 }
 
+
                 if (!currentTurn.Valid)
                 {
-                    Logs.Add($"{currentTurn.PlayerId.ToPlayer().Name} scores 0 points!");
+                    Logs.Add($"{activePlayer.Name} scores 0 points!");
                 }
-                else if (!currentTurn.WinningTurn && currentTurn.Tosses.Count == 3 && currentTurn.PlayerId.TryResolveToPlayer(out Player player))
+                else if (!currentTurn.WinningTurn && currentTurn.Tosses.Count == 3)
                 {
-                    Logs.Add($"{player.Name} scores {currentTurn.TurnScore} points!");
+                    Logs.Add($"{activePlayer.Name} scores {currentTurn.TurnScore} points!");
                 }
                 else if (currentTurn.WinningTurn && _leg.WinnerId.TryResolveToPlayer(out Player winner))
                 {
