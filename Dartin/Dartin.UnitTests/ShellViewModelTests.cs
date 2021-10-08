@@ -17,7 +17,7 @@ namespace UnitTests
             
             Assert.Equal(Visibility.Visible, vm.IsHelpVisible);
             
-            vm.IsHelpVisible = Visibility.Visible;
+            vm.HelpClick();
             
             Assert.Equal(Visibility.Hidden, vm.IsHelpVisible);
         }
