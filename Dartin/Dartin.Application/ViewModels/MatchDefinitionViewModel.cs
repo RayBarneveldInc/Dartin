@@ -14,47 +14,29 @@ using System.Text.RegularExpressions;
 namespace Dartin.ViewModels
 {
     public class MatchDefinitionViewModel : Screen, IViewModel
-
     {
-        private BindableCollection<Player> _players;
-        private Player _selectedPlayerOne;
-        private Player _selectedPlayerTwo;
-
-        public Player SelectedPlayerOne
-        {
-            get { return _selectedPlayerOne; }
-            set { _selectedPlayerOne = value; }
-        }
-
-        public Player SelectedPlayerTwo
-        {
-            get { return _selectedPlayerTwo; }
-            set { _selectedPlayerTwo = value; }
-        }
+        public Player SelectedPlayerOne { get; set; }
+        public Player SelectedPlayerTwo { get; set; }
 
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public MatchDefinition CurrentObject { get; set; }
-        public BindableCollection<Player> Players { get => _players; set { _players = value; NotifyOfPropertyChange(() => Players); } }
-        public List<MatchDefinition> Matches { get; set; }
+        public MatchDefinition OriginalMatch { get; set; }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public MatchDefinitionViewModel()
+        public MatchDefinitionViewModel(MatchDefinition match)
         {
-            Players = new BindableCollection<Player>();
-            Matches = new List<MatchDefinition>();
             CurrentObject = new MatchDefinition
             {
-                Date = DateTime.Now,
-                Name = "Match name",
-                SetsToWin = 1,
-                LegsToWinSet = 5,
-                ScoreToWinLeg = 501
+                Date = match.Date,
+                Name = match.Name,
+                SetsToWin = match.SetsToWin,
+                LegsToWinSet = match.LegsToWinSet,
+                ScoreToWinLeg = match.ScoreToWinLeg
             };
-            FirstName = "First Name";
-            Surname = "Surname";
+            OriginalMatch = match;
         }
 
         /// <summary>
@@ -69,15 +51,15 @@ namespace Dartin.ViewModels
 
             if (match.Success)
             {
-                if (Players.Any(p => p.Name == fullName))
+                if (CurrentObject.Players.Any(p => p.Name == fullName))
                 {
                     return;
                 }
                 var newPlayer = new Player { Name = fullName };
-                Players.Add(newPlayer);
+                CurrentObject.Players.Add(newPlayer);
 
                 State.Instance.Players.Clear();
-                foreach (var player in Players)
+                foreach (var player in CurrentObject.Players)
                 {
                     State.Instance.Players.Add(player);
                 }
@@ -100,7 +82,7 @@ namespace Dartin.ViewModels
             CurrentObject.Players.Add(SelectedPlayerOne);
             CurrentObject.Players.Add(SelectedPlayerTwo);
 
-            Matches.Add(CurrentObject);
+            State.Instance.Matches.Add(CurrentObject);
         }
 
         /// <summary>
@@ -108,7 +90,10 @@ namespace Dartin.ViewModels
         /// </summary>
         public void SaveAndStartGame()
         {
-            Matches.Add(CurrentObject);
+            if (OriginalMatch.Equals(null))
+                State.Instance.Matches.Add(CurrentObject);
+            else
+                OriginalMatch = CurrentObject;
         }
 
         public string ViewName { get; }
@@ -116,11 +101,6 @@ namespace Dartin.ViewModels
         public void OnExit()
         {
             throw new NotImplementedException();
-        }
-
-        public void CreateMatch()
-        {
-
         }
 
         public int CurrentContextObject { get; set; }

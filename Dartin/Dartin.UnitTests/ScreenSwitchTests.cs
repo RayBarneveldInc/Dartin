@@ -1,4 +1,5 @@
 using Dartin.Managers;
+using Dartin.Models;
 using Dartin.ViewModels;
 using Xunit;
 
@@ -11,7 +12,7 @@ namespace UnitTests
         {
             var shell = new ShellViewModel();
 
-            var newView = new MatchDefinitionViewModel();
+            var newView = new MatchDefinitionViewModel(new MatchDefinition());
             
             ScreenManager.GetInstance().SwitchViewModel(newView);
             
