@@ -115,7 +115,7 @@ namespace Dartin.ViewModels
 
         public void CreateMatch()
         {
-
+            throw new NotImplementedException();
         }
 
         public int CurrentContextObject { get; set; }

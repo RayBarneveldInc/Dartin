@@ -18,7 +18,9 @@ namespace Dartin.ViewModels
         private Leg _leg;
         private int _player1LegScore;
         private int _player2LegScore;
-        private string _input;
+        private string _tossOneInput;
+        private string _tossTwoInput;
+        private string _tossThreeInput;
         private string _currentLeg;
         private BindableCollection<Turn> _player1Turns;
         private BindableCollection<Turn> _player2Turns;
@@ -27,18 +29,45 @@ namespace Dartin.ViewModels
 
         private int GetLegScore(Player player) => Match.Sets.Any() && Match.Sets.Last().Legs.Any() ? Match.Sets.Last().Legs.Count(leg => leg.WinnerId == player.Id) : 0;
         
-        public string Input
+        public string TossOneInput
         {
             get
             {
-                return _input;
+                return _tossOneInput;
             }
             set
             {
-                _input = value;
-                NotifyOfPropertyChange(() => Input);
+                _tossOneInput = value;
+                NotifyOfPropertyChange(() => TossOneInput);
             }
         }
+
+        public string TossTwoInput
+        {
+            get
+            {
+                return _tossTwoInput;
+            }
+            set
+            {
+                _tossTwoInput = value;
+                NotifyOfPropertyChange(() => TossTwoInput);
+            }
+        }
+
+        public string TossThreeInput
+        {
+            get
+            {
+                return _tossThreeInput;
+            }
+            set
+            {
+                _tossThreeInput = value;
+                NotifyOfPropertyChange(() => TossThreeInput);
+            }
+        }
+
         public string ViewName => nameof(ScoreboardViewModel);
         public Player Player1 => Match.Players.First();
         public Player Player2 => Match.Players[1];
@@ -122,11 +151,10 @@ namespace Dartin.ViewModels
             Match = new MatchDefinition("Premier League Final 2017", DateTime.Today, new BindingList<Player>() { State.Instance.Players[0], State.Instance.Players[1] }, new BindingList<Set>(), new MatchConfiguration(5, 3, 501));
             Match.Sets.Add(new Set(new BindingList<Leg>()));
             State.Instance.Matches.Add(Match);
-            _player1Remainder = Match.Configuration.ScoreToWinLeg;
-            _player2Remainder = Match.Configuration.ScoreToWinLeg;
+            Player1Remainder = Match.Configuration.ScoreToWinLeg;
+            Player2Remainder = Match.Configuration.ScoreToWinLeg;
             SetCurrentLeg();
         }
-        public BindableCollection<string> Logs { get; set; } = new BindableCollection<string>() { "Thimo de Zwart gooide T20 + T20 + T20 (180).", "Jasper van der Lugt gooide T20 + T20 + D20 (160).", "Einde leg; gewonnen door Jasper van der Lugt." };
 
         public void OnExit()
         {
@@ -135,7 +163,6 @@ namespace Dartin.ViewModels
 
         public void SetLeg()
         {
-            Logs.Add("A new leg is starting!");
             _leg = new Leg(new BindingList<Turn>());
             Match.Sets.Last().Legs.Add(_leg);
         }
@@ -162,94 +189,150 @@ namespace Dartin.ViewModels
             CurrentLeg = $"Leg {legCount}";
         }
 
-        public void Submit()
+        public Player StartPlayerTurn()
         {
-            if (!string.IsNullOrEmpty(Input))
+            if (!_leg.Turns.Any() || !_leg.Turns.Last().Valid || _leg.Turns.Last().WinningTurn || _leg.Turns.Last().Tosses.Count >= 3)
             {
-                if (_leg == null)
+                if (_leg.Turns.Count % 2 == 0)
                 {
-                    SetLeg();
+                    _leg.Turns.Add(new Turn(Player1, new BindingList<Toss>()));
                 }
-
-                if (!_leg.Turns.Any() || !_leg.Turns.Last().Valid || _leg.Turns.Last().WinningTurn || _leg.Turns.Last().Tosses.Count >= 3)
+                else
                 {
-                    if (_leg.Turns.Count % 2 == 0)
-                    {
-                        _leg.Turns.Add(new Turn(Player1, new BindingList<Toss>()));
-                    }
-                    else
-                    {
-                        _leg.Turns.Add(new Turn(Player2, new BindingList<Toss>()));
-                    }
-
-                    var player = _leg.Turns.Last().PlayerId.ToPlayer();
-
-                    Logs.Add($"Player {player.Name} is starting their turn - {Match.Configuration.ScoreToWinLeg - _leg.Turns.Where(turn => turn.PlayerId == _leg.Turns.Last().PlayerId && turn.Valid).Sum(turn => turn.Score)} left.");
+                    _leg.Turns.Add(new Turn(Player2, new BindingList<Toss>()));
                 }
+            }
 
-                var currentTurn = _leg.Turns.Last();
-                var activePlayer = currentTurn.PlayerId.ToPlayer();
-                int currentPlayerScore = _leg.Turns.Where(turn => turn.PlayerId == activePlayer.Id && turn.Valid).Sum(turn => turn.Score);
+            return _leg.Turns.Last().PlayerId.ToPlayer();
+        }
 
-                // Process turn
-                if (currentTurn.Tosses.Count < 3 && Parser.ParseThrow(Input) != null)
+        public void PrcocessTossInputTurn(string tossInput)
+        {
+            if (!string.IsNullOrEmpty(tossInput) && Parser.ParseThrow(tossInput) != null)
+            {
+                Toss toss = Parser.ParseThrow(tossInput);
+                Turn currentTurn = GetCurrentTurn();
+                Player activePlayer = GetActivePlayer();
+                int currentPlayerScore = GetCurrentPlayerScore();
+
+                if (currentPlayerScore + toss.TotalScore < Match.Configuration.ScoreToWinLeg)
                 {
-                    var toss = Parser.ParseThrow(Input);
-
-                    if (currentPlayerScore + toss.TotalScore < Match.Configuration.ScoreToWinLeg)
-                    {
-                        currentTurn.Tosses.Add(toss);
-                    }
-                    else if ((currentPlayerScore + toss.TotalScore) == Match.Configuration.ScoreToWinLeg && toss.Multiplier == 2)
-                    {
-                        currentTurn.Tosses.Add(toss);
-                        currentTurn.WinningTurn = true;
-                        _leg.WinnerId = activePlayer.Id;
-                    }
-                    else if (
-                        ((currentPlayerScore + toss.TotalScore) == Match.Configuration.ScoreToWinLeg && toss.Multiplier != 2) ||
-                        (currentPlayerScore + toss.TotalScore) > Match.Configuration.ScoreToWinLeg || 
-                        (currentPlayerScore % 2 == 1 && currentTurn.Tosses.Count == 2))
-                    {
-                        currentTurn.Tosses.Add(toss);
-                        currentTurn.Valid = false;
-                    }
-
-                    if (activePlayer.Id == Player1.Id)
-                    {
-                        Player2Turns = new BindableCollection<Turn>(Match.Sets.Last().Legs.SelectMany(leg => leg.Turns).Where(turn => turn.PlayerId == Player2.Id && turn.Valid));
-                        Player1Remainder = Match.Configuration.ScoreToWinLeg - Player1Turns.Sum(turn => turn.Score);
-                    }
-                    else
-                    {
-                        Player2Turns = new BindableCollection<Turn>(Match.Sets.Last().Legs.SelectMany(leg => leg.Turns).Where(turn => turn.PlayerId == Player2.Id && turn.Valid));
-                        Player2Remainder = Match.Configuration.ScoreToWinLeg - Player2Turns.Sum(turn => turn.Score);
-                    }
-
-
-                    Logs.Add($"Threw {toss.TotalScore}! {Match.Configuration.ScoreToWinLeg - (currentPlayerScore + toss.TotalScore)} left.");
+                    currentTurn.Tosses.Add(toss);
                 }
-
-                if (!currentTurn.Valid)
+                else if (ComparePlayerScoreWithScoreToWinLeg(currentPlayerScore, toss) && toss.Multiplier == 2)
                 {
-                    Logs.Add($"{activePlayer.Name} scores 0 points!");
+                    currentTurn.Tosses.Add(toss);
+                    currentTurn.WinningTurn = true;
+                    _leg.WinnerId = activePlayer.Id;
                 }
-                else if (!currentTurn.WinningTurn && currentTurn.Tosses.Count == 3)
+                else if (
+                    (ComparePlayerScoreWithScoreToWinLeg(currentPlayerScore, toss) && toss.Multiplier != 2) ||
+                    (currentPlayerScore + toss.TotalScore) > Match.Configuration.ScoreToWinLeg)
                 {
-                    Logs.Add($"{activePlayer.Name} scores {currentTurn.Score} points!");
+                    currentTurn.Tosses.Add(toss);
+                    currentTurn.Valid = false;
                 }
-                else if (currentTurn.WinningTurn)
-                {
-                    var winner = _leg.WinnerId.ToPlayer();
-                    Logs.Add($"{winner.Name} wins the leg!");
-                    SetLeg();
-                    SetCurrentLeg();
-                    SetScores();
-                }
-
-                //Input = string.Empty;
             }
         }
+
+        public bool ComparePlayerScoreWithScoreToWinLeg(int currentPlayerScore, Toss toss)
+        {
+            return (currentPlayerScore + toss.TotalScore) == Match.Configuration.ScoreToWinLeg;
+        }
+
+        public Turn GetCurrentTurn()
+        {
+            return _leg.Turns.Last();
+        }
+
+        public Player GetActivePlayer()
+        {
+            return GetCurrentTurn().PlayerId.ToPlayer();
+        }
+
+        public int GetCurrentPlayerScore()
+        {
+            Player activePlayer = GetActivePlayer();
+
+            return _leg.Turns.Where(turn => turn.PlayerId == activePlayer.Id && turn.Valid).Sum(turn => turn.Score);
+        }
+
+        public int CalculatePlayerScoreLeft()
+        {
+            return Match.Configuration.ScoreToWinLeg - _leg.Turns.Where(turn => turn.PlayerId == _leg.Turns.Last().PlayerId && turn.Valid).Sum(turn => turn.Score);
+        }
+
+        public void HandlePlayerScore()
+        {
+            Player activePlayer = GetActivePlayer();
+
+            if (activePlayer.Id == Player1.Id)
+            {
+                Player1Turns = new BindableCollection<Turn>(Match.Sets.Last().Legs.SelectMany(leg => leg.Turns).Where(turn => turn.PlayerId == Player1.Id && turn.Valid));
+                Player1Remainder = Match.Configuration.ScoreToWinLeg - Player1Turns.Sum(turn => turn.Score);
+            }
+            else
+            {
+                Player2Turns = new BindableCollection<Turn>(Match.Sets.Last().Legs.SelectMany(leg => leg.Turns).Where(turn => turn.PlayerId == Player2.Id && turn.Valid));
+                Player2Remainder = Match.Configuration.ScoreToWinLeg - Player2Turns.Sum(turn => turn.Score);
+            }
+        }
+
+        public void HandleEndTurn()
+        {
+            Turn currentTurn = GetCurrentTurn();
+            Player activePlayer = GetActivePlayer();
+
+            if (!currentTurn.Valid)
+            {
+                Debug.WriteLine($"{activePlayer.Name} scores 0 points!");
+            }
+            else if (!currentTurn.WinningTurn && currentTurn.Tosses.Count == 3)
+            {
+                Debug.WriteLine($"{activePlayer.Name} scores {currentTurn.Score} points!");
+            }
+            else if (currentTurn.WinningTurn)
+            {
+                Player winner = _leg.WinnerId.ToPlayer();
+
+                Debug.WriteLine($"{winner.Name} wins the leg!");
+                SetLeg();
+                SetCurrentLeg();
+                SetScores();
+            }
+        }
+
+        public void Submit()
+        {
+            if (_leg == null)
+            {
+                SetLeg();
+            }
+
+            StartPlayerTurn();
+
+            Turn currentTurn = GetCurrentTurn();
+
+            PrcocessTossInputTurn(TossOneInput);
+            PrcocessTossInputTurn(TossTwoInput);
+            PrcocessTossInputTurn(TossThreeInput);
+
+            if (currentTurn.Tosses.Any())
+            {
+                HandlePlayerScore();
+                HandleEndTurn();
+            }
+
+            //Logs.Add($"Threw {toss.TotalScore}! {Match.Configuration.ScoreToWinLeg - (currentPlayerScore + toss.TotalScore)} left.");
+        }
+
+        public void ClearTossInputs()
+        {
+            TossOneInput = string.Empty;
+            TossTwoInput = string.Empty;
+            TossThreeInput = string.Empty;
+        }
+
         public void Submit(KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
