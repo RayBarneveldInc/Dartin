@@ -22,7 +22,7 @@ namespace Dartin.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Dartin.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Dartin.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Dartin.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,9 +61,32 @@ namespace Dartin.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notation for score.
+        ///
+        ///[x score]
+        ///x 	= the multuplier, d for double, t for triple.
+        ///score 	= the score in integers, example 19
+        ///
+        ///Examples
+        ///
+        ///T20 	= Triple 20
+        ///D19 	= Double 19
+        ///16  	= Single 16
+        ///bull 	= Bullseye
+        ///50	= Bullseye 
+        ///obull	= Outer Bullseye
+        ///20 	= Outer Bullseye.
+        /// </summary>
+        public static string HelpText {
+            get {
+                return ResourceManager.GetString("HelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hello.
         /// </summary>
-        internal static string TestString {
+        public static string TestString {
             get {
                 return ResourceManager.GetString("TestString", resourceCulture);
             }
