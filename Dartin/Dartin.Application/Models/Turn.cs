@@ -13,7 +13,7 @@ namespace Dartin.Models
         private Guid _playerId;
         private BindingList<Toss> _tosses;
 
-        public int TurnScore => Tosses.Sum(toss => toss.TotalScore);
+        public int Score => Tosses.Sum(toss => toss.TotalScore);
         public bool Valid { get; set; } = true;
         public bool WinningTurn { get; set; } = false;
         public Guid PlayerId

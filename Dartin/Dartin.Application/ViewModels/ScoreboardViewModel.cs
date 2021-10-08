@@ -20,6 +20,11 @@ namespace Dartin.ViewModels
         private int _player2LegScore;
         private string _input;
         private string _currentLeg;
+        private BindableCollection<Turn> _player1Turns;
+        private BindableCollection<Turn> _player2Turns;
+        private int _player1Remainder;
+        private int _player2Remainder;
+
         private int GetLegScore(Player player) => Match.Sets.Any() && Match.Sets.Last().Legs.Any() ? Match.Sets.Last().Legs.Count(leg => leg.WinnerId == player.Id) : 0;
         
         public string Input
@@ -37,12 +42,28 @@ namespace Dartin.ViewModels
         public string ViewName => nameof(ScoreboardViewModel);
         public Player Player1 => Match.Players.First();
         public Player Player2 => Match.Players[1];
-        
-        public int Player1LegScore { 
-            get
+        public BindableCollection<Turn> Player1Turns
+        {
+            get => _player1Turns;
+            set
             {
-                return _player1LegScore;
+                _player1Turns = value;
+                NotifyOfPropertyChange(() => Player1Turns);
             }
+        }
+        public BindableCollection<Turn> Player2Turns
+        {
+            get => _player2Turns;
+            set
+            {
+                _player2Turns = value;
+                NotifyOfPropertyChange(() => Player2Turns);
+            }
+        }
+        
+        public int Player1LegScore
+        { 
+            get => _player1LegScore;
             set
             {
                 _player1LegScore = value;
@@ -60,6 +81,24 @@ namespace Dartin.ViewModels
             {
                 _player2LegScore = value;
                 NotifyOfPropertyChange(() => Player2LegScore);
+            }
+        }
+
+        public int Player1Remainder {
+            get => _player1Remainder;
+            set
+            {
+                _player1Remainder = value;
+                NotifyOfPropertyChange(() => Player1Remainder);
+            }
+        }
+
+        public int Player2Remainder {
+            get => _player2Remainder;
+            set
+            {
+                _player2Remainder = value;
+                NotifyOfPropertyChange(() => Player1Remainder);
             }
         }
 
@@ -83,6 +122,8 @@ namespace Dartin.ViewModels
             Match = new MatchDefinition("Premier League Final 2017", DateTime.Today, new BindingList<Player>() { State.Instance.Players[0], State.Instance.Players[1] }, new BindingList<Set>(), new MatchConfiguration(5, 3, 501));
             Match.Sets.Add(new Set(new BindingList<Leg>()));
             State.Instance.Matches.Add(Match);
+            _player1Remainder = Match.Configuration.ScoreToWinLeg;
+            _player2Remainder = Match.Configuration.ScoreToWinLeg;
             SetCurrentLeg();
         }
         public BindableCollection<string> Logs { get; set; } = new BindableCollection<string>() { "Thimo de Zwart gooide T20 + T20 + T20 (180).", "Jasper van der Lugt gooide T20 + T20 + D20 (160).", "Einde leg; gewonnen door Jasper van der Lugt." };
@@ -143,12 +184,12 @@ namespace Dartin.ViewModels
 
                     var player = _leg.Turns.Last().PlayerId.ToPlayer();
 
-                    Logs.Add($"Player {player.Name} is starting their turn - {Match.Configuration.ScoreToWinLeg - _leg.Turns.Where(turn => turn.PlayerId == _leg.Turns.Last().PlayerId && turn.Valid).Sum(turn => turn.TurnScore)} left.");
+                    Logs.Add($"Player {player.Name} is starting their turn - {Match.Configuration.ScoreToWinLeg - _leg.Turns.Where(turn => turn.PlayerId == _leg.Turns.Last().PlayerId && turn.Valid).Sum(turn => turn.Score)} left.");
                 }
 
                 var currentTurn = _leg.Turns.Last();
                 var activePlayer = currentTurn.PlayerId.ToPlayer();
-                int currentPlayerScore = _leg.Turns.Where(turn => turn.PlayerId == activePlayer.Id && turn.Valid).Sum(turn => turn.TurnScore);
+                int currentPlayerScore = _leg.Turns.Where(turn => turn.PlayerId == activePlayer.Id && turn.Valid).Sum(turn => turn.Score);
 
                 // Process turn
                 if (currentTurn.Tosses.Count < 3 && Parser.ParseThrow(Input) != null)
@@ -174,9 +215,20 @@ namespace Dartin.ViewModels
                         currentTurn.Valid = false;
                     }
 
+                    if (activePlayer.Id == Player1.Id)
+                    {
+                        Player2Turns = new BindableCollection<Turn>(Match.Sets.Last().Legs.SelectMany(leg => leg.Turns).Where(turn => turn.PlayerId == Player2.Id && turn.Valid));
+                        Player1Remainder = Match.Configuration.ScoreToWinLeg - Player1Turns.Sum(turn => turn.Score);
+                    }
+                    else
+                    {
+                        Player2Turns = new BindableCollection<Turn>(Match.Sets.Last().Legs.SelectMany(leg => leg.Turns).Where(turn => turn.PlayerId == Player2.Id && turn.Valid));
+                        Player2Remainder = Match.Configuration.ScoreToWinLeg - Player2Turns.Sum(turn => turn.Score);
+                    }
+
+
                     Logs.Add($"Threw {toss.TotalScore}! {Match.Configuration.ScoreToWinLeg - (currentPlayerScore + toss.TotalScore)} left.");
                 }
-
 
                 if (!currentTurn.Valid)
                 {
@@ -184,7 +236,7 @@ namespace Dartin.ViewModels
                 }
                 else if (!currentTurn.WinningTurn && currentTurn.Tosses.Count == 3)
                 {
-                    Logs.Add($"{activePlayer.Name} scores {currentTurn.TurnScore} points!");
+                    Logs.Add($"{activePlayer.Name} scores {currentTurn.Score} points!");
                 }
                 else if (currentTurn.WinningTurn)
                 {
