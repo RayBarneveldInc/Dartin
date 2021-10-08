@@ -250,6 +250,12 @@ namespace Dartin.ViewModels
             return GetCurrentTurn().PlayerId.ToPlayer();
         }
 
+        public void ClearScoreListViews()
+        {
+            Player1Turns.Clear();
+            Player2Turns.Clear();
+        }
+
         public int GetCurrentPlayerScore()
         {
             Player activePlayer = GetActivePlayer();
@@ -262,19 +268,29 @@ namespace Dartin.ViewModels
             return Match.Configuration.ScoreToWinLeg - _leg.Turns.Where(turn => turn.PlayerId == _leg.Turns.Last().PlayerId && turn.Valid).Sum(turn => turn.Score);
         }
 
+        public BindableCollection<Turn> GetPlayerTurnsCollection(Player player)
+        {
+            return new BindableCollection<Turn>(Match.Sets.Last().Legs.Last().Turns.Where(turn => turn.PlayerId == player.Id && turn.Valid));
+        }
+
+        public int GetPlayerRemainder(BindableCollection<Turn> turns)
+        {
+            return Match.Configuration.ScoreToWinLeg - turns.Sum(turn => turn.Score);
+        }
+
         public void HandlePlayerScore()
         {
             Player activePlayer = GetActivePlayer();
 
             if (activePlayer.Id == Player1.Id)
             {
-                Player1Turns = new BindableCollection<Turn>(Match.Sets.Last().Legs.SelectMany(leg => leg.Turns).Where(turn => turn.PlayerId == Player1.Id && turn.Valid));
-                Player1Remainder = Match.Configuration.ScoreToWinLeg - Player1Turns.Sum(turn => turn.Score);
+                Player1Turns = GetPlayerTurnsCollection(Player1);
+                Player1Remainder = GetPlayerRemainder(Player1Turns);
             }
             else
             {
-                Player2Turns = new BindableCollection<Turn>(Match.Sets.Last().Legs.SelectMany(leg => leg.Turns).Where(turn => turn.PlayerId == Player2.Id && turn.Valid));
-                Player2Remainder = Match.Configuration.ScoreToWinLeg - Player2Turns.Sum(turn => turn.Score);
+                Player2Turns = GetPlayerTurnsCollection(Player2);
+                Player2Remainder = GetPlayerRemainder(Player2Turns);
             }
         }
 
@@ -296,6 +312,8 @@ namespace Dartin.ViewModels
                 Player winner = _leg.WinnerId.ToPlayer();
 
                 Debug.WriteLine($"{winner.Name} wins the leg!");
+
+                ClearScoreListViews();
                 SetLeg();
                 SetCurrentLeg();
                 SetScores();
