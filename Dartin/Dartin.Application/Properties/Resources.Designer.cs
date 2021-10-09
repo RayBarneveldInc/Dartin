@@ -64,7 +64,7 @@ namespace Dartin.Properties {
         ///   Looks up a localized string similar to Notation for score.
         ///
         ///[x score]
-        ///x 	= the multuplier, d for double, t for triple.
+        ///x 	= the multiplier, d for double, t for triple.
         ///score 	= the score in integers, example 19
         ///
         ///Examples
