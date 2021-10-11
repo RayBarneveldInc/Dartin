@@ -6,7 +6,7 @@ namespace Dartin.Models
 {
     public class Toss
     {
-        public int Score;
-        public int Multiplier;
+        public int Score { get; set; }
+        public int Multiplier { get; set; }
     }
 }

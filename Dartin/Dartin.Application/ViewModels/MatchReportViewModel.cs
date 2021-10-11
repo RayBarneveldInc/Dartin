@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Newtonsoft.Json;
 
 namespace Dartin.ViewModels
 {
@@ -18,7 +19,7 @@ namespace Dartin.ViewModels
 
         public BindingList<MatchDefinition> ExistingMatches => State.Instance.Matches;
         public int MatchCount => State.Instance.Matches.Count;
-        
+
         public void ListViewSelection(object sender, MouseButtonEventArgs e)
         {
             var item = sender as MatchDefinition;
@@ -30,7 +31,7 @@ namespace Dartin.ViewModels
 
         public void changeMatch(MatchDefinition selectedMatch)
         {
-            _currentMatch = selectedMatch; 
+            _currentMatch = selectedMatch;
         }
 
         public void OnExit()
@@ -38,6 +39,25 @@ namespace Dartin.ViewModels
             throw new NotImplementedException();
         }
 
+        public MatchDefinition SetsPerPlayer(int i)
+        {
+            var copyser = JsonConvert.SerializeObject(Match, Formatting.Indented);
+            MatchDefinition deepcopy = JsonConvert.DeserializeObject<MatchDefinition>(copyser);
+
+            Player player = deepcopy.Players[i];
+
+            foreach (Set s in deepcopy.Sets)
+            {
+                foreach (Leg l in s.Legs)
+                {
+                    l.Turns = l.Turns.FindAll(t => t.Player.Name == player.Name);
+                }
+            }
+            return deepcopy;
+        }
+
+        public MatchDefinition MatchInfo1 => SetsPerPlayer(0);
+        public MatchDefinition MatchInfo2 => SetsPerPlayer(1);
 
         public MatchReportViewModel()
         {
@@ -99,12 +119,13 @@ namespace Dartin.ViewModels
             {
                 return _currentMatch.Players[id].Name;
 
-            } else
+            }
+            else
             {
                 return "Willem" + id;
             }
         }
-        
+
 
 
     }

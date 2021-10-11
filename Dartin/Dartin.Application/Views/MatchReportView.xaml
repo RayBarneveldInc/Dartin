@@ -76,7 +76,7 @@
                         </Grid>
 
                         <Grid Grid.Row="1">
-                            <TreeView ItemsSource="{Binding Match.Sets}">
+                            <TreeView ItemsSource="{Binding MatchInfo1.Sets}">
                                 <TreeView.ItemTemplate>
                                     <HierarchicalDataTemplate ItemsSource="{Binding Legs}" DataType="{x:Type VM:Set}">
                                         <Label Content="set 1"></Label>
@@ -120,7 +120,7 @@
 
                         <Grid Grid.Row="1">
 
-                            <TreeView ItemsSource="{Binding Match.Sets}">
+                            <TreeView ItemsSource="{Binding MatchInfo2.Sets}">
                                 <TreeView.ItemTemplate>
                                     <HierarchicalDataTemplate ItemsSource="{Binding Legs}" DataType="{x:Type VM:Set}">
                                         <Label Content="set 1"></Label>
@@ -148,41 +148,7 @@
                                 </TreeView.ItemTemplate>
                             </TreeView>
 
-                            <!--<TreeView x:Name="MainTreeView" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" ItemsSource="{Binding Departments}">
-                                <TreeView.ItemTemplate>
-                                    <HierarchicalDataTemplate ItemsSource="{Binding Positions}" DataType="{x:Type VM:Department}">
-                                        <Label Content="{Binding DepartmentName}"/>
-                                        <HierarchicalDataTemplate.ItemTemplate>
-                                            <HierarchicalDataTemplate ItemsSource="{Binding Employees}" DataType="{x:Type VM:Position}">
-                                                <Label Content="{Binding PositionName}"/>
-                                                <HierarchicalDataTemplate.ItemTemplate>
-                                                    <DataTemplate DataType="{x:Type VM:Employee}">
-                                                        <Label Content="{Binding EmployeeName}"/>
-                                                    </DataTemplate>
-                                                </HierarchicalDataTemplate.ItemTemplate>
-                                            </HierarchicalDataTemplate>
-                                        </HierarchicalDataTemplate.ItemTemplate>
-                                    </HierarchicalDataTemplate>
-                                </TreeView.ItemTemplate>
-                            </TreeView>-->
-
                         </Grid>
-                        <!--<HierarchicalDataTemplate ItemsSource="{Binding Legs}" x:Key="leg">
-                            <TreeViewItem>
-                                <TextBlock Text="{Binding Name}"></TextBlock>
-                            </TreeViewItem>
-                        </HierarchicalDataTemplate>
-                        <HierarchicalDataTemplate  ItemsSource="{Binding Turns}" x:Key="turn">
-                            <TreeViewItem>
-                                <TextBlock Text="{Binding Name}"></TextBlock>
-                            </TreeViewItem>
-                        </HierarchicalDataTemplate>
-                        <HierarchicalDataTemplate  ItemsSource="{Binding Toss}" x:Key="toss">
-                            <TreeViewItem>
-                                <TextBlock Text="{Binding Name}"></TextBlock>
-                            </TreeViewItem>
-                        </HierarchicalDataTemplate>-->
-
                     </Grid>
 
                 </Grid>
