@@ -28,6 +28,8 @@
             <Label Grid.Row="0" Grid.Column="2" Content="{Binding BestOf}" HorizontalAlignment="Right" Padding="12" FontSize="16"></Label>
 
             <Label Grid.Row="1" Grid.Column="0" Content="{Binding Player1.Name}" HorizontalAlignment="Left" Padding="12" FontSize="16"></Label>
+            <Image Grid.Row="1" Grid.Column="0" Visibility="{Binding PlayerOneTurnIndicatorIsVisible}" Source="/Resources/indicator.png" Height="10" Width="10" />
+
             <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
@@ -45,7 +47,9 @@
 
                 <Label Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0" Content="{Binding CurrentLeg, StringFormat='Leg {0}'}" HorizontalAlignment="Center" Padding="12" FontSize="24" FontWeight="Bold"></Label>
             </Grid>
+            
             <Label Grid.Row="1" Grid.Column="2" Content="{Binding Player2.Name}" HorizontalAlignment="Right" Padding="12" FontSize="16"></Label>
+            <Image Grid.Row="1" Grid.Column="2" Visibility="{Binding PlayerTwoTurnIndicatorIsVisible}" Source="/Resources/indicator.png" Height="10" Width="10" />
 
             <ListView ItemsSource="{Binding Player1Turns}" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" MinWidth="320">
                 <ListView.View>
@@ -62,7 +66,7 @@
             <ListView ItemsSource="{Binding Player2Turns}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" MinWidth="320">
                 <ListView.View>
                     <GridView AllowsColumnReorder="False">
-                        <GridViewColumn Header="Remainder" Width="64" DisplayMemberBinding="{Binding DataContext.Player2Remainder, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"></GridViewColumn>
+                        <GridViewColumn Header="Remainder"  Width="64" DisplayMemberBinding="{Binding DataContext.Player2Remainder, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}"></GridViewColumn>
                         <GridViewColumn Header="Total" Width="64" DisplayMemberBinding="{Binding Score}"></GridViewColumn>
                         <GridViewColumn Header="3" Width="64" DisplayMemberBinding="{Binding Tosses[2].TotalScore}"></GridViewColumn>
                         <GridViewColumn Header="2" Width="64" DisplayMemberBinding="{Binding Tosses[1].TotalScore}"></GridViewColumn>

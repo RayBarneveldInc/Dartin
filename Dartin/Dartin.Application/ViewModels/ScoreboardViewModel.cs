@@ -10,6 +10,7 @@ using System.Linq;
 using System.Windows.Input;
 using Parser = Dartin.Managers.Parser;
 using System.Diagnostics;
+using System.Windows;
 
 namespace Dartin.ViewModels
 {
@@ -22,6 +23,8 @@ namespace Dartin.ViewModels
         private string _tossTwoInput;
         private string _tossThreeInput;
         private string _currentLeg;
+        private Visibility _playerOneTurnIndicatorIsVisible;
+        private Visibility _playerTwoTurnIndicatorIsVisible;
         private BindableCollection<Turn> _player1Turns;
         private BindableCollection<Turn> _player2Turns;
         private int _player1Remainder;
@@ -65,6 +68,26 @@ namespace Dartin.ViewModels
             {
                 _tossThreeInput = value;
                 NotifyOfPropertyChange(() => TossThreeInput);
+            }
+        }
+
+        public Visibility PlayerOneTurnIndicatorIsVisible
+        {
+            get => _playerOneTurnIndicatorIsVisible;
+            set
+            {
+                _playerOneTurnIndicatorIsVisible = value;
+                NotifyOfPropertyChange(() => PlayerOneTurnIndicatorIsVisible);
+            }
+        }
+
+        public Visibility PlayerTwoTurnIndicatorIsVisible
+        {
+            get => _playerTwoTurnIndicatorIsVisible;
+            set
+            {
+                _playerTwoTurnIndicatorIsVisible = value;
+                NotifyOfPropertyChange(() => PlayerTwoTurnIndicatorIsVisible);
             }
         }
 
@@ -153,6 +176,7 @@ namespace Dartin.ViewModels
             State.Instance.Matches.Add(Match);
             Player1Remainder = Match.Configuration.ScoreToWinLeg;
             Player2Remainder = Match.Configuration.ScoreToWinLeg;
+            TogglePlayerTurnIndicator(true);
             SetCurrentLeg();
         }
 
@@ -196,14 +220,30 @@ namespace Dartin.ViewModels
                 if (_leg.Turns.Count % 2 == 0)
                 {
                     _leg.Turns.Add(new Turn(Player1, new BindingList<Toss>()));
+                    TogglePlayerTurnIndicator(false);
                 }
                 else
                 {
                     _leg.Turns.Add(new Turn(Player2, new BindingList<Toss>()));
+                    TogglePlayerTurnIndicator();
                 }
             }
 
             return _leg.Turns.Last().PlayerId.ToPlayer();
+        }
+
+        public void TogglePlayerTurnIndicator(bool playerOneActive = true)
+        {
+            if (playerOneActive)
+            {
+                PlayerOneTurnIndicatorIsVisible = Visibility.Visible;
+                PlayerTwoTurnIndicatorIsVisible = Visibility.Hidden;
+            }
+            else
+            {
+                PlayerOneTurnIndicatorIsVisible = Visibility.Hidden;
+                PlayerTwoTurnIndicatorIsVisible = Visibility.Visible;
+            }
         }
 
         public void PrcocessTossInputTurn(string tossInput)
