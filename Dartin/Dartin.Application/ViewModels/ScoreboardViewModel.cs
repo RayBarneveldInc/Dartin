@@ -146,7 +146,6 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => Player1Remainders);
             }
         }
-        public int Player1Remainder => Player1Remainders.Sum();
         public BindableCollection<int> Player2Remainders
         {
             get => _player2Remainders;
@@ -156,7 +155,6 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => Player2Remainders);
             }
         }
-        public int Player2Remainder => Player2Remainders.Sum();
         public string BestOf => $"Best of {Match.Configuration.SetsToWin} sets ({Match.Configuration.LegsToWinSet} legs per set)";
         public MatchDefinition Match { get; }
         public string LegText
@@ -323,6 +321,26 @@ namespace Dartin.ViewModels
         public int GetPlayerRemainder(BindableCollection<Turn> turns)
         {
             return Match.Configuration.ScoreToWinLeg - turns.Sum(turn => turn.Score);
+        }
+
+        public void RevertTurn()
+        {
+            if (_currentLeg.Turns.Any())
+            {
+                var player = GetActivePlayer();
+                _currentLeg.Turns.RemoveLast();
+                if (player == Player1)
+                {
+                    Player1Remainders.RemoveLast();
+                    Player1Turns.RemoveLast();
+                }
+                else
+                {
+                    Player2Remainders.RemoveLast();
+                    Player2Turns.RemoveLast();
+                }
+                TogglePlayerTurnIndicator(player == Player1);
+            }
         }
 
         public void HandlePlayerScore()

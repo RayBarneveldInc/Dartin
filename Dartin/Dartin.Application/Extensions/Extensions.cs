@@ -19,5 +19,6 @@ namespace Dartin.Extensions
         {
             return State.Instance.Players.FirstOrDefault(player => player.Id == guid);
         }
+        public static void RemoveLast<T>(this IList<T> list) => list.RemoveAt(list.Count - 1);
     }
 }
