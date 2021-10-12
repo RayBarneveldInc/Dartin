@@ -127,13 +127,27 @@ namespace UnitTests
         [Fact]
         public void TestProcessTossInputTurn()
         {
+            ClearState();
 
+            //var vm = new ScoreboardViewModel();
+            //vm.Match.Configuration.ScoreToWinLeg = 501;
+            //(465, new Toss(18, 2));
         }
 
         [Fact]
         public void TestComparePlayerScoreWithScoreToWinLeg()
         {
+            ClearState();
 
+            var vm = new ScoreboardViewModel();
+            vm.Match.Configuration.ScoreToWinLeg = 501;
+            bool result = vm.ComparePlayerScoreWithScoreToWinLeg(180, new Toss(20, 3));
+
+            Assert.False(result);
+
+            result = vm.ComparePlayerScoreWithScoreToWinLeg(465, new Toss(18, 2));
+
+            Assert.True(result);
         }
 
         [Fact]
