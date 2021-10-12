@@ -330,12 +330,10 @@ namespace Dartin.ViewModels
             if (activePlayer.Id == Player1.Id)
             {
                 Player1Turns = GetPlayerTurnsCollection(Player1);
-                Player1Remainders = new BindableCollection<int>(_currentLeg.GetRemaindersForPlayer(Player1, Match.Configuration.ScoreToWinLeg));
             }
             else
             {
                 Player2Turns = GetPlayerTurnsCollection(Player2);
-                Player2Remainders = new BindableCollection<int>(_currentLeg.GetRemaindersForPlayer(Player1, Match.Configuration.ScoreToWinLeg));
             }
         }
 
@@ -354,15 +352,18 @@ namespace Dartin.ViewModels
             }
             else if (currentTurn.WinningTurn)
             {
-                Player winner = _currentLeg.WinnerId.ToPlayer();
-
-                Debug.WriteLine($"{winner.Name} wins the leg!");
+                Debug.WriteLine($"{activePlayer.Name} wins the leg!");
 
                 ClearScoreListViews();
                 SetLeg();
                 SetLegText();
                 SetScores();
             }
+
+            if (activePlayer == Player1)
+                Player1Remainders = new BindableCollection<int>(_currentLeg.GetRemaindersForPlayer(Player1, Match.Configuration.ScoreToWinLeg));
+            else
+                Player2Remainders = new BindableCollection<int>(_currentLeg.GetRemaindersForPlayer(Player2, Match.Configuration.ScoreToWinLeg));
         }
 
         public void Submit()
@@ -379,6 +380,7 @@ namespace Dartin.ViewModels
             ProcessTossInputTurn(TossOneInput);
             ProcessTossInputTurn(TossTwoInput);
             ProcessTossInputTurn(TossThreeInput);
+
 
             if (currentTurn.Tosses.Any())
             {

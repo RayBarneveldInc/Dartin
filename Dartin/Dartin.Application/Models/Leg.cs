@@ -18,15 +18,13 @@ namespace Dartin.Models
             if (!Turns.Any())
                 return turnScores;
 
-            for (int i = 0; i <= Turns.Count; i++)
+            var turns = Turns.Where(turn => turn.PlayerId == player.Id && turn.Valid).ToList();
+            for (int i = 0; i < turns.Count; i++)
             {
-                if (Turns[i].PlayerId == player.Id)
-                {
-                    if (i == 0)
-                        turnScores.Add(maxScore - _turns[i].Score);
-                    else
-                        turnScores.Add(turnScores[i - 1] - Turns[i].Score);
-                }
+                if (i == 0)
+                    turnScores.Add(maxScore - turns[i].Score);
+                else
+                    turnScores.Add(turnScores[i - 1] - turns[i].Score);
             }
             return turnScores;
         }
