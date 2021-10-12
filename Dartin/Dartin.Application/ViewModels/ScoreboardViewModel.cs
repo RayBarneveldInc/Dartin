@@ -141,10 +141,10 @@ namespace Dartin.ViewModels
 
         public int Player1SetScore
         {
-            get => _player1LegScore;
+            get => _player1SetScore;
             set
             {
-                _player1LegScore = value;
+                _player1SetScore = value;
                 NotifyOfPropertyChange(() => Player1SetScore);
             }
         }
@@ -153,11 +153,11 @@ namespace Dartin.ViewModels
         {
             get
             {
-                return _player2LegScore;
+                return _player2SetScore;
             }
             set
             {
-                _player2LegScore = value;
+                _player2SetScore = value;
                 NotifyOfPropertyChange(() => Player2SetScore);
             }
         }
