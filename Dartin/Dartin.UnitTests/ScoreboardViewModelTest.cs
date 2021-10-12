@@ -125,16 +125,6 @@ namespace UnitTests
         }
 
         [Fact]
-        public void TestProcessTossInputTurn()
-        {
-            ClearState();
-
-            //var vm = new ScoreboardViewModel();
-            //vm.Match.Configuration.ScoreToWinLeg = 501;
-            //(465, new Toss(18, 2));
-        }
-
-        [Fact]
         public void TestComparePlayerScoreWithScoreToWinLeg()
         {
             ClearState();
