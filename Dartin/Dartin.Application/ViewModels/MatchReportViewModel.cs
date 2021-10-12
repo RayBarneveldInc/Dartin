@@ -28,8 +28,15 @@ namespace Dartin.ViewModels
         public int TotalSetsWonP2 => TotalSetsWon(MatchInfo2);
         public int TotalLegsWonP1 => TotalLegsWon(MatchInfo1);
         public int TotalLegsWonP2 => TotalLegsWon(MatchInfo2);
+        public int MatchAverageP1 => MatchAverage(MatchInfo1);
+        public int MatchAverageP2 => MatchAverage(MatchInfo2);
         public int TotalDartsThrownP1 => TotalDartsThrown(MatchInfo1);
         public int TotalDartsThrownP2 => TotalDartsThrown(MatchInfo2);
+        public int TotalThreeDartersP1 => TotalThreeDarters(MatchInfo1);
+        public int TotalThreeDartersP2 => TotalThreeDarters(MatchInfo2);
+        public int TotalScoreAboveHundredP1 => TotalScoreByAmountPlusTwenty(MatchInfo1, 100);
+        public int TotalScoreAboveHundredP2 => TotalScoreByAmountPlusTwenty(MatchInfo2, 100);
+
 
         public int MatchCount => State.Instance.Matches.Count;
 
@@ -77,6 +84,58 @@ namespace Dartin.ViewModels
             }).Count;
         }
 
+        public int TotalThreeDarters(MatchDefinition match)
+        {
+            int Total = 0;
+            int TempScore = 0;
+
+            match.Sets.ForEach(s => s.Legs.ForEach(l => l.Turns.ForEach(t =>
+            {
+                t.Tosses.ForEach(t => TempScore += (t.Multiplier * t.Score));
+
+                if (TempScore == 180)
+                {
+                    TempScore = 0;
+                    Total++;
+                }
+            })));
+
+            return Total;
+        }
+
+        public int TotalScoreByAmountPlusTwenty(MatchDefinition match, int number)
+        {
+            int Total = 0;
+            int TempScore = 0;
+
+            match.Sets.ForEach(s => s.Legs.ForEach(l => l.Turns.ForEach(t =>
+            {
+                t.Tosses.ForEach(t => TempScore += (t.Multiplier * t.Score));
+
+                if (TempScore >= number && TempScore <= (TempScore + 20))
+                {
+                    TempScore = 0;
+                    Total++;
+                }
+            })));
+
+            return Total;
+        }
+
+        public int MatchAverage(MatchDefinition match)
+        {
+            int TotalThrows = 0;
+            int TotalScore = 0;
+
+            match.Sets.ForEach(s => s.Legs.ForEach(l => l.Turns.ForEach(t => t.Tosses.ForEach(to =>
+            {
+                TotalThrows++;
+                TotalScore += (to.Multiplier * to.Score);
+            }))));
+
+            return TotalScore / TotalThrows;
+        }
+
         public void ListViewSelection(object sender, MouseButtonEventArgs e)
         {
             var item = sender as MatchDefinition;
@@ -113,8 +172,6 @@ namespace Dartin.ViewModels
             }
             return deepcopy;
         }
-
-
 
         public MatchReportViewModel()
         {
