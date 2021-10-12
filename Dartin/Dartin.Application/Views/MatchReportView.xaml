@@ -178,8 +178,8 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="0" Text="{Binding TotalLegsWonP1}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="{Binding TotalSetsWonP1}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                     <TextBlock Grid.Row="2" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                     <TextBlock Grid.Row="3" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                     <TextBlock Grid.Row="4" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
@@ -209,8 +209,8 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="0" Text="{Binding TotalLegsWonP2}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="{Binding TotalSetsWonP2}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                     <TextBlock Grid.Row="2" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                     <TextBlock Grid.Row="3" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                     <TextBlock Grid.Row="4" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
@@ -287,7 +287,7 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="0" Text="{Binding TotalDartsThrownP1}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                     <TextBlock Grid.Row="1" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                     <TextBlock Grid.Row="2" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                     <TextBlock Grid.Row="3" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
@@ -330,7 +330,7 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="0" Text="{Binding TotalDartsThrownP2}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                     <TextBlock Grid.Row="1" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                     <TextBlock Grid.Row="2" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                     <TextBlock Grid.Row="3" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>

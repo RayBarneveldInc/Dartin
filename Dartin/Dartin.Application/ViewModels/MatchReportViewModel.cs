@@ -14,11 +14,68 @@ namespace Dartin.ViewModels
 {
     class MatchReportViewModel : Screen, IViewModel
     {
-        public string ViewName { get; }
         private MatchDefinition _currentMatch;
 
+        public string ViewName { get; }
+        public string PlayerOne => PlayerString(0);
+        public string PlayerTwo => PlayerString(1);
+        public MatchDefinition MatchInfo1 => SetsPerPlayer(0);
+        public MatchDefinition MatchInfo2 => SetsPerPlayer(1);
         public BindingList<MatchDefinition> ExistingMatches => State.Instance.Matches;
+        public MatchDefinition Match => _currentMatch;
+
+        public int TotalSetsWonP1 => TotalSetsWon(MatchInfo1);
+        public int TotalSetsWonP2 => TotalSetsWon(MatchInfo2);
+        public int TotalLegsWonP1 => TotalLegsWon(MatchInfo1);
+        public int TotalLegsWonP2 => TotalLegsWon(MatchInfo2);
+        public int TotalDartsThrownP1 => TotalDartsThrown(MatchInfo1);
+        public int TotalDartsThrownP2 => TotalDartsThrown(MatchInfo2);
+
         public int MatchCount => State.Instance.Matches.Count;
+
+        public int TotalDartsThrown(MatchDefinition match)
+        {
+            int Total = 0;
+
+            match.Sets.ForEach(s => s.Legs.ForEach(l => l.Turns.ForEach(t => Total += t.Tosses.Count)));
+
+            return Total;
+        }
+
+        public int TotalLegsWon(MatchDefinition match)
+        {
+            Player Player = match.Players[0];
+            int Total = 0;
+
+            match.Sets.ForEach(s =>
+            {
+                Total += s.Legs.FindAll(l =>
+                {
+                    if (l.Winner != null && l.Winner.Name == Player.Name)
+                    {
+                        return true;
+                    }
+                    return false;
+                }).Count;
+
+            });
+
+            return Total;
+        }
+
+        public int TotalSetsWon(MatchDefinition match)
+        {
+            Player Player = match.Players[0];
+
+            return match.Sets.FindAll(s =>
+            {
+                if (s.Winner != null && s.Winner.Name == Player.Name)
+                {
+                    return true;
+                }
+                return false;
+            }).Count;
+        }
 
         public void ListViewSelection(object sender, MouseButtonEventArgs e)
         {
@@ -50,14 +107,14 @@ namespace Dartin.ViewModels
             {
                 foreach (Leg l in s.Legs)
                 {
+                    // TODO -> aanpassen naar ID
                     l.Turns = l.Turns.FindAll(t => t.Player.Name == player.Name);
                 }
             }
             return deepcopy;
         }
 
-        public MatchDefinition MatchInfo1 => SetsPerPlayer(0);
-        public MatchDefinition MatchInfo2 => SetsPerPlayer(1);
+
 
         public MatchReportViewModel()
         {
@@ -108,10 +165,7 @@ namespace Dartin.ViewModels
             //State.Instance.Matches.Add(_currentMatch);
         }
 
-        public MatchDefinition Match => _currentMatch;
 
-        public string PlayerOne => PlayerString(0);
-        public string PlayerTwo => PlayerString(1);
 
         public string PlayerString(int id)
         {
