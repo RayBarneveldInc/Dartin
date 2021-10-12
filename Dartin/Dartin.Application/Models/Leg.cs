@@ -16,15 +16,21 @@ namespace Dartin.Models
         {
             List<int> turnScores = new List<int>();
             if (!Turns.Any())
+            {
                 return turnScores;
+            }
 
             var turns = Turns.Where(turn => turn.PlayerId == player.Id && turn.Valid).ToList();
             for (int i = 0; i < turns.Count; i++)
             {
                 if (i == 0)
+                {
                     turnScores.Add(maxScore - turns[i].Score);
+                }
                 else
+                {
                     turnScores.Add(turnScores[i - 1] - turns[i].Score);
+                }
             }
             return turnScores;
         }
@@ -32,9 +38,11 @@ namespace Dartin.Models
         {
             var remainders = GetRemaindersForPlayer(player, maxScore);
             if (remainders.Any())
+            {
                 return remainders.Sum();
-            else
-                return maxScore;
+            }
+
+            return maxScore;
         }
         public BindingList<Turn> Turns
         {

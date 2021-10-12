@@ -23,7 +23,6 @@
 		</Grid.RowDefinitions>
 
 		<Label x:Uid="Label_0" Content="Match date" Grid.Row="0" Grid.Column="0"/>
-		<!--TODO ResourceStrings aanmaken-->
 		<DatePicker x:Uid="DatePicker_0" SelectedDate="{Binding MatchDefinition.Date}" Grid.Row="0" Grid.Column="1"/>
 
 		<Grid Grid.Row="0" Grid.Column="2">
@@ -53,8 +52,10 @@
 
 		<Label Content="Score to win leg" Grid.Row="4" Grid.Column="0"/>
         <TextBox Text="{Binding CurrentObject.Configuration.ScoreToWinLeg, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"/>
+        <!--<RadioButton Grid.Row="4" Grid.Column="1" IsChecked="{Binding UpdateSourceTrigger=PropertyChanged}">501</RadioButton>-->
+        <!--<RadioButton Grid.Row="4" Grid.Column="1" Margin="0, 15, 15, 15" IsChecked="{Binding UpdateSourceTrigger=PropertyChanged}">301</RadioButton>-->
 
-		<Button x:Name="Exit" Content="Exit" Grid.Row="5" Grid.Column="0"/>
+        <Button x:Name="Exit" Content="Exit" Grid.Row="5" Grid.Column="0"/>
 		<Button x:Name="SaveGameAndExit" Content="Save game and exit" Grid.Row="5" Grid.Column="1"/>
 		<Button x:Name="SaveAndStartGame" Content="Save and start game" Grid.Row="5" Grid.Column="2"/> 
 	</Grid>

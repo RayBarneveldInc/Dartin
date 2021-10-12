@@ -41,11 +41,14 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
+                <Label Grid.Row="0" Grid.Column="0" Content="{Binding Player1SetScore}" HorizontalAlignment="Center" Padding="12" FontSize="24" FontWeight="Bold" Margin="0,0,30,0"></Label>
                 <Label Grid.Row="0" Grid.Column="0" Content="{Binding Player1LegScore}" HorizontalAlignment="Center" Padding="12" FontSize="24" FontWeight="Bold"></Label>
                 <Label Grid.Row="0" Grid.Column="1" Content=":" Padding="12" FontSize="24" FontWeight="Bold"></Label>
                 <Label Grid.Row="0" Grid.Column="2" Content="{Binding Player2LegScore}" HorizontalAlignment="Center" Padding="12" FontSize="24" FontWeight="Bold"></Label>
+                <Label Grid.Row="0" Grid.Column="2" Content="{Binding Player2SetScore}" HorizontalAlignment="Center" Padding="12" FontSize="24" FontWeight="Bold" Margin="0,0,30,0"></Label>
 
-                <Label Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0" Content="{Binding LegText, StringFormat='Leg {0}'}" HorizontalAlignment="Center" Padding="12" FontSize="24" FontWeight="Bold"></Label>
+                <Label Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0" Content="{Binding SetText, StringFormat='Leg {0}'}" HorizontalAlignment="Center" Padding="12" FontSize="24" FontWeight="Bold"></Label>
+                <Label Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0" Content="{Binding LegText, StringFormat='Leg {0}'}" HorizontalAlignment="Center" Padding="12" FontSize="24" FontWeight="Bold" Margin="0,30,0,0"></Label>
             </Grid>
             
             <Label Grid.Row="1" Grid.Column="2" Content="{Binding Player2.Name}" HorizontalAlignment="Right" Padding="12" FontSize="16"></Label>
