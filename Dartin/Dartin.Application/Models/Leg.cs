@@ -12,7 +12,7 @@ namespace Dartin.Models
     {
         private BindingList<Turn> _turns;
         public int GetTotalScoreForPlayer(Player player) => _turns.Where(turn => turn.PlayerId == player.Id && turn.Valid).Sum(turn => turn.Score);
-        public List<int> GetRemainderForPlayer(Player player, int maxScore)
+        public List<int> GetRemaindersForPlayer(Player player, int maxScore)
         {
             List<int> turnScores = new List<int>();
             if (!Turns.Any())
@@ -29,6 +29,14 @@ namespace Dartin.Models
                 }
             }
             return turnScores;
+        }
+        public int GetRemainderForPlayer(Player player, int maxScore)
+        {
+            var remainders = GetRemaindersForPlayer(player, maxScore);
+            if (remainders.Any())
+                return remainders.Sum();
+            else
+                return maxScore;
         }
         public BindingList<Turn> Turns
         {
