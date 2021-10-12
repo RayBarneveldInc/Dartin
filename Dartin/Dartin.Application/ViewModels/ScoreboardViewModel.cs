@@ -299,6 +299,8 @@ namespace Dartin.ViewModels
         {
             Player1Turns.Clear();
             Player2Turns.Clear();
+            Player1Remainders.Clear();
+            Player2Remainders.Clear();
         }
 
         public int GetCurrentPlayerScore()
