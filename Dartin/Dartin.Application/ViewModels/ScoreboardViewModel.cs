@@ -14,7 +14,7 @@ using System.Windows;
 
 namespace Dartin.ViewModels
 {
-    class ScoreboardViewModel : Screen, IViewModel
+    public class ScoreboardViewModel : Screen, IViewModel
     {
         private Leg _currentLeg;
         private Set _currentSet;
@@ -33,7 +33,6 @@ namespace Dartin.ViewModels
         private BindableCollection<Turn> _player2Turns;
         private BindableCollection<int> _player1Remainders;
         private BindableCollection<int> _player2Remainders;
-
 
         public string TossOneInput
         {
@@ -213,8 +212,8 @@ namespace Dartin.ViewModels
             State.Instance.Players.Add(new Player("Thimo de Zwart"));
             State.Instance.Players.Add(new Player("Jasper van der Lugt"));
             Match = new MatchDefinition("Premier League Final 2017", DateTime.Today, new BindingList<Player>() { State.Instance.Players[0], State.Instance.Players[1] }, new BindingList<Set>(), new MatchConfiguration(5, 3, 501));
-            SetSet();
             State.Instance.Matches.Add(Match);
+            SetSet();
             TogglePlayerTurnIndicator(true);
             SetSetText();
             SetLegText();
@@ -245,12 +244,12 @@ namespace Dartin.ViewModels
             Player2SetScore = GetSetScore(Player2);
         }
 
-        private int GetLegScore(Player player)
+        public int GetLegScore(Player player)
         {
             return Match.Sets.Any() && Match.Sets.Last().Legs.Any() ? Match.Sets.Last().Legs.Count(leg => leg.WinnerId == player.Id) : 0;
         }
         
-        private int GetSetScore(Player player)
+        public int GetSetScore(Player player)
         {
             return Match.Sets.Any() ? Match.Sets.Count(set => set.WinnerId == player.Id) : 0;
         }
@@ -287,25 +286,23 @@ namespace Dartin.ViewModels
             SetText = $"Set {setCount}";
         }
 
-        public Player StartPlayerTurn()
+        public Turn StartPlayerTurn()
         {
-            if (!_currentLeg.Turns.Any() || !_currentLeg.Turns.Last().Valid || _currentLeg.Turns.Last().WinningTurn || _currentLeg.Turns.Last().Tosses.Count >= 3)
+            if (!_currentLeg.Turns.Any() || !_currentLeg.Turns.Last().Valid || _currentLeg.Turns.Last().WinningTurn || _currentLeg.Turns.Last().Tosses.Count == 3)
             {
                 if (_currentLeg.Turns.Count % 2 == 0)
                 {
                     _currentLeg.Turns.Add(new Turn(Player1, new BindingList<Toss>()));
                     TogglePlayerTurnIndicator(false);
-                    var remainders = _currentLeg.GetRemaindersForPlayer(Player1, Match.Configuration.ScoreToWinLeg);
                 }
                 else
                 {
                     _currentLeg.Turns.Add(new Turn(Player2, new BindingList<Toss>()));
                     TogglePlayerTurnIndicator();
-                    var remainders = _currentLeg.GetRemaindersForPlayer(Player2, Match.Configuration.ScoreToWinLeg);
                 }
             }
 
-            return _currentLeg.Turns.Last().PlayerId.ToPlayer();
+            return GetCurrentTurn();
         }
 
         public void TogglePlayerTurnIndicator(bool playerOneActive = true)
@@ -403,6 +400,9 @@ namespace Dartin.ViewModels
             return Match.Configuration.ScoreToWinLeg - turns.Sum(turn => turn.Score);
         }
 
+        /// <summary>
+        /// Revert turn to write new turn.
+        /// </summary>
         public void RevertTurn()
         {
             if (_currentLeg.Turns.Any())
@@ -423,6 +423,9 @@ namespace Dartin.ViewModels
             }
         }
 
+        /// <summary>
+        /// Handle scores for both players.
+        /// </summary>
         public void HandlePlayerScore()
         {
             Player activePlayer = GetActivePlayer();
@@ -437,7 +440,10 @@ namespace Dartin.ViewModels
             }
         }
 
-        public void HandleEndTurn()
+        /// <summary>
+        /// Check for the last turn of the leg.
+        /// </summary>
+        public void HandleLastTurn()
         {
             Turn currentTurn = GetCurrentTurn();
             Player activePlayer = GetActivePlayer();
@@ -487,6 +493,9 @@ namespace Dartin.ViewModels
             }
         }
 
+        /// <summary>
+        ///  Submit score.
+        /// </summary>
         public void Submit()
         {
             if (_currentLeg == null)
@@ -505,10 +514,13 @@ namespace Dartin.ViewModels
             if (currentTurn.Tosses.Any())
             {
                 HandlePlayerScore();
-                HandleEndTurn();
+                HandleLastTurn();
             }
         }
 
+        /// <summary>
+        /// Clear all toss inputs to empty fields.
+        /// </summary>
         public void ClearTossInputs()
         {
             TossOneInput = string.Empty;
@@ -516,6 +528,10 @@ namespace Dartin.ViewModels
             TossThreeInput = string.Empty;
         }
 
+        /// <summary>
+        /// Submit scores with enter key.
+        /// </summary>
+        /// <param name="e">KeyEventArgs</param>
         public void Submit(KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
