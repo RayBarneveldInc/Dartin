@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Dartin.Views"
              xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
              xmlns:custom="clr-namespace:Dartin.Controls"
+             xmlns:converters="clr-namespace:Dartin.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -104,9 +105,14 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <ListView ItemsSource="{Binding Player2Turns}" Grid.Row="0" Grid.ColumnSpan="4" Grid.Column="1" HorizontalAlignment="Center" BorderThickness="0" MinWidth="256">
+                    <ListView  ItemsSource="{Binding Player2Turns}" Grid.Row="0" Grid.ColumnSpan="4" Grid.Column="1" HorizontalAlignment="Center" BorderThickness="0" MinWidth="256">
+                        <ListView.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <!-- <Setter Property="Foreground" Value="{Binding Path=Valid, Converter={StaticResource converters:BrushColorConverter}}"></Setter> -->
+                            </Style>
+                        </ListView.Resources>
                         <ListView.View>
-                            <GridView AllowsColumnReorder="False">
+                            <GridView AllowsColumnReorder="False" >
                                 <GridViewColumn Header="Total" Width="64" DisplayMemberBinding="{Binding Score}"></GridViewColumn>
                                 <GridViewColumn Header="3" Width="64" DisplayMemberBinding="{Binding Tosses[2].TotalScore}"></GridViewColumn>
                                 <GridViewColumn Header="2" Width="64" DisplayMemberBinding="{Binding Tosses[1].TotalScore}"></GridViewColumn>
