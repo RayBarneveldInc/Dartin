@@ -10,11 +10,31 @@ namespace Dartin.Models
 {
     public class Turn : APropertyChanged
     {
+        private bool _valid = true;
+        private bool _winningTurn = false;
         private Guid _playerId;
         private BindingList<Toss> _tosses;
+
         public int Score => Tosses.Sum(toss => toss.TotalScore);
-        public bool Valid { get; set; } = true;
-        public bool WinningTurn { get; set; } = false;
+
+        public bool Valid {
+            get => _valid;
+            set
+            {
+                _valid = value; NotifyPropertyChanged();
+            }
+        }
+
+        public bool WinningTurn
+        {
+            get => _winningTurn;
+            set
+            {
+                _winningTurn = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public Guid PlayerId
         {
             get => _playerId;
@@ -24,6 +44,7 @@ namespace Dartin.Models
                 NotifyPropertyChanged();
             }
         }
+
         public BindingList<Toss> Tosses
         {
             get => _tosses;
@@ -33,15 +54,18 @@ namespace Dartin.Models
                 NotifyPropertyChanged();
             }
         }
+
         public Turn(Player player, BindingList<Toss> tosses)
         {
             PlayerId = player.Id;
             Tosses = tosses;
         }
+
         public Turn(Guid playerId, BindingList<Toss> tosses)
         {
             PlayerId = playerId;
             Tosses = tosses;
         }
+
     }
 }
