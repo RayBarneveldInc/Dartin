@@ -1,0 +1,24 @@
+﻿using Dartin.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Dartin.Extensions
+{
+    public static class Extensions
+    {
+        public static bool TryResolveToPlayer(this Guid guid, out Player player)
+        {
+            player = State.Instance.Players.FirstOrDefault(player => player.Id == guid);
+            return player != default(Player);
+        }
+
+        public static Player ToPlayer(this Guid guid)
+        {
+            return State.Instance.Players.FirstOrDefault(player => player.Id == guid);
+        }
+        public static void RemoveLast<T>(this IList<T> list) => list.RemoveAt(list.Count - 1);
+    }
+}

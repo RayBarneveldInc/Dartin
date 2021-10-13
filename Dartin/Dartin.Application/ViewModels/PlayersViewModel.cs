@@ -155,14 +155,15 @@ namespace Dartin.ViewModels
             Title = "Edit Player";
             ModalButtonText = "Edit";
 
-            FirstName = selectedPlayer.Name.Split(" ")[0];
-            LastName = selectedPlayer.Name.Split(" ")[1];
+            FirstName = selectedPlayer.FirstName;
+            LastName = selectedPlayer.LastName;
 
             PlayerAction = () =>
             {
-                var playerFromState = State.Instance.Players.FirstOrDefault(x => x.Name == selectedPlayer.Name);
+                var playerFromState = State.Instance.Players.FirstOrDefault(x => x.Id == selectedPlayer.Id);
 
-                playerFromState.Name = $"{FirstName} {LastName}";
+                playerFromState.FirstName = FirstName;
+                playerFromState.LastName = LastName;
             };
             
             ToggleModal();
@@ -179,10 +180,7 @@ namespace Dartin.ViewModels
             
             PlayerAction = () =>
             {
-                State.Instance.Players.Add(new Player
-                {
-                    Name = $"{FirstName} {LastName}",
-                });
+                State.Instance.Players.Add(new Player(FirstName, LastName));
             };
             
             ToggleModal();

@@ -14,16 +14,27 @@ namespace UnitTests
 {
     public class PlayersViewModelTests
     {
+        [Fact]
         public void FilterPlayers()
         {
+            var player1 = new Player("yob", "ama");
+            var player2 = new Player("ama", "yob");
+            var player3 = new Player("oby", "maa");
+            var player4 = new Player("boy", "aam");
+
+            State.Instance.Players.Add(player1);
+            State.Instance.Players.Add(player2);
+            State.Instance.Players.Add(player3);
+            State.Instance.Players.Add(player4);
+
             var vm = new PlayersViewModel
             {
                 Players = new BindableCollection<Player>
                 {
-                    new() {Name = "yob ama"},
-                    new() {Name = "ama yob"},
-                    new() {Name = "oby maa"},
-                    new() {Name = "boy aam"},
+                    player1,
+                    player2,
+                    player3,
+                    player4,
                 },
                 SearchText = "yob"
             };
