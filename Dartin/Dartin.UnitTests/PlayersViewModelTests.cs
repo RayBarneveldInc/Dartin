@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using Dartin;
 using Dartin.Models;
 using Dartin.ViewModels;
 using Xunit;
@@ -25,8 +27,28 @@ namespace UnitTests
                 },
                 SearchText = "yob"
             };
+
+            Assert.Equal(2, vm.Players.Count);
+        }
+
+        [Fact]
+        public void AddPlayer()
+        {
+            var vm = new PlayersViewModel();
             
-            Assert.Equal(2,vm.Players.Count);
+            State.Instance.Players.Clear();
+            
+            vm.Players = new BindableCollection<Player>();
+
+            vm.Add();
+            
+            vm.FirstName = "newbama";
+            
+            vm.LastName = "obama";
+            
+            vm.EditAddButtonClick();
+            
+            Assert.Single(vm.Players);
         }
     }
 }

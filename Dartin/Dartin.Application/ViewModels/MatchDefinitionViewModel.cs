@@ -46,37 +46,9 @@ namespace Dartin.ViewModels
         {
             Players = new BindableCollection<Player>();
             Matches = new List<MatchDefinition>();
-            CurrentObject = new MatchDefinition("Premier League Final 2017", DateTime.Today, new BindingList<Player>() { new Player("Thimo de Zwart"), new Player("Jasper van der Lugt") }, new BindingList<Set>(), new MatchConfiguration(5, 3, 501));
+            CurrentObject = new MatchDefinition("Premier League Final 2017", DateTime.Today, new BindingList<Player>() { new Player("Thimo", "de Zwart"), new Player("Jasper", "van der Lugt") }, new BindingList<Set>(), new MatchConfiguration(5, 3, 501));
             FirstName = "First Name";
             Surname = "Surname";
-        }
-
-        /// <summary>
-        /// Add player to list.
-        /// </summary>
-        /// <param name="firstName">string</param>
-        /// <param name="surname">string</param>
-        public void AddPlayer(string firstName, string surname)
-        {
-            var fullName = firstName + " " + surname;
-            var match = Regex.Match(fullName, @"^[\p{L}\p{M}' \.\-]+$", RegexOptions.IgnoreCase);
-
-            if (match.Success)
-            {
-                if (Players.Any(p => p.Name == fullName))
-                {
-                    return;
-                }
-
-                var newPlayer = new Player(fullName);
-                Players.Add(newPlayer);
-
-                State.Instance.Players.Clear();
-                foreach (var player in Players)
-                {
-                    State.Instance.Players.Add(player);
-                }
-            }
         }
 
         /// <summary>

@@ -34,10 +34,7 @@
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
-			<TextBox x:Name="FirstName" Grid.Column="0" Text="First name"/>
-			<TextBox x:Name="Surname" Grid.Column="1" Text="Surname"/>
-			<Button x:Name="AddPlayer" Grid.Column="2" Content="Add player"/>
-		</Grid>
+        </Grid>
 
         <ComboBox ItemsSource="{Binding Players, Mode=OneWay}" SelectedItem="{Binding Path=SelectedPlayerOne, Mode=OneWayToSource}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="0"/>
 
