@@ -72,6 +72,11 @@
                     </Grid.RowDefinitions>
 
                     <ListView ItemsSource="{Binding Player1Turns}" Grid.Row="0" Grid.ColumnSpan="4" Grid.Column="0" HorizontalAlignment="Center" BorderThickness="0" MinWidth="256">
+                        <ListView.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Foreground" Value="{Binding Path=Valid, Converter={StaticResource BrushColorConverterKey}}"></Setter>
+                            </Style>
+                        </ListView.Resources>
                         <ListView.View>
                             <GridView AllowsColumnReorder="False">
                                 <GridViewColumn Header="1" Width="64" DisplayMemberBinding="{Binding Tosses[0].TotalScore}"></GridViewColumn>
