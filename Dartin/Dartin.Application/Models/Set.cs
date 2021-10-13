@@ -9,8 +9,11 @@ namespace Dartin.Models
     {
         private Player _winner = null;
         public int LegsToWinSet { get; set; }
+        public int Index { get; set; }
         public List<Leg> Legs { get; set; }
+        public string SetToString => String.Format("Set {0} - legs played: {1}", Index + 1, Legs.Count);
         public Player Winner
+       
         {
             get => _winner;
             set

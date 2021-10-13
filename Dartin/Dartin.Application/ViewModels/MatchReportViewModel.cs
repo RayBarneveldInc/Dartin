@@ -30,8 +30,8 @@ namespace Dartin.ViewModels
         public int TotalLegsWonP2 => TotalLegsWon(MatchInfo2);
         public int MatchAverageP1 => MatchAverage(MatchInfo1);
         public int MatchAverageP2 => MatchAverage(MatchInfo2);
-        public int TotalDartsThrownP1 => TotalDartsThrown(MatchInfo1);
-        public int TotalDartsThrownP2 => TotalDartsThrown(MatchInfo2);
+        public int TotalDartsThrownP1 => TotalDartsThrown(0);
+        public int TotalDartsThrownP2 => TotalDartsThrown(1);
         public int TotalThreeDartersP1 => TotalThreeDarters(MatchInfo1);
         public int TotalThreeDartersP2 => TotalThreeDarters(MatchInfo2);
         public int TotalScoreAboveHundredP1 => TotalScoreByAmountPlusTwenty(MatchInfo1, 100);
@@ -40,8 +40,16 @@ namespace Dartin.ViewModels
 
         public int MatchCount => State.Instance.Matches.Count;
 
-        public int TotalDartsThrown(MatchDefinition match)
+        public MatchDefinition getMatchDef(int playerId)
         {
+            MatchDefinition match;
+            if (playerId == 0) match = MatchInfo1; else match = MatchInfo2;
+            return match;
+        }
+
+        public int TotalDartsThrown(int playerId)
+        {
+            MatchDefinition match = getMatchDef(playerId);
             int Total = 0;
 
             match.Sets.ForEach(s => s.Legs.ForEach(l => l.Turns.ForEach(t => Total += t.Tosses.Count)));
@@ -164,10 +172,20 @@ namespace Dartin.ViewModels
 
             foreach (Set s in deepcopy.Sets)
             {
+                s.Index = deepcopy.Sets.IndexOf(s);
                 foreach (Leg l in s.Legs)
                 {
                     // TODO -> aanpassen naar ID
                     l.Turns = l.Turns.FindAll(t => t.Player.Name == player.Name);
+                    l.Index = s.Legs.IndexOf(l);
+                    foreach (Turn t in l.Turns)
+                    {
+                        t.Index = l.Turns.IndexOf(t);
+                        foreach(Toss to in t.Tosses)
+                        {
+                            to.Index = t.Tosses.IndexOf(to);
+                        }
+                    }
                 }
             }
             return deepcopy;
@@ -175,7 +193,7 @@ namespace Dartin.ViewModels
 
         public MatchReportViewModel()
         {
-            _currentMatch = State.Instance.Matches[2];
+            _currentMatch = State.Instance.Matches[1];
             //_currentMatch = new MatchDefinition();
             //Player p1 = new Player();
             //Player p2 = new Player();
@@ -183,8 +201,7 @@ namespace Dartin.ViewModels
             //p2.Name = "Tjeerd";
             //_currentMatch.Players.Add(p1);
             //_currentMatch.Players.Add(p2);
-            //_currentMatch.Players[1] = p2;
-
+            
             //Toss t1 = new Toss();
             //t1.Score = 20;
             //t1.Multiplier = 3;
@@ -204,8 +221,16 @@ namespace Dartin.ViewModels
             //tu.Tosses.Add(t2);
             //tu.Tosses.Add(t3);
 
+            //Turn tu2 = new Turn();
+            //tu2.Player = p2;
+            //tu2.TurnScore = 120;
+            //tu2.Tosses.Add(t1);
+            //tu2.Tosses.Add(t2);
+            //tu2.Tosses.Add(t3);
+
             //Leg l = new Leg();
             //l.Turns.Add(tu);
+            //l.Turns.Add(tu2);
             ////l.Winner.Name = p2.Name;
 
             //Set s = new Set();
