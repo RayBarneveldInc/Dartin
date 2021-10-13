@@ -9,6 +9,9 @@
              xmlns:converters="clr-namespace:Dartin.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:BrushColorConverter x:Key="BrushColorConverterKey"></converters:BrushColorConverter>
+    </UserControl.Resources>
 
     <Border Background="#ffffff" >
         <Grid>
@@ -108,7 +111,7 @@
                     <ListView  ItemsSource="{Binding Player2Turns}" Grid.Row="0" Grid.ColumnSpan="4" Grid.Column="1" HorizontalAlignment="Center" BorderThickness="0" MinWidth="256">
                         <ListView.Resources>
                             <Style TargetType="{x:Type TextBlock}">
-                                <!-- <Setter Property="Foreground" Value="{Binding Path=Valid, Converter={StaticResource converters:BrushColorConverter}}"></Setter> -->
+                                <Setter Property="Foreground" Value="{Binding Path=Valid, Converter={StaticResource BrushColorConverterKey}}"></Setter>
                             </Style>
                         </ListView.Resources>
                         <ListView.View>

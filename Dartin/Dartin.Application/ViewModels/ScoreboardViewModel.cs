@@ -317,7 +317,7 @@ namespace Dartin.ViewModels
 
         public BindableCollection<Turn> GetPlayerTurnsCollection(Player player)
         {
-            return new BindableCollection<Turn>(Match.Sets.Last().Legs.Last().Turns.Where(turn => turn.PlayerId == player.Id && turn.Valid));
+            return new BindableCollection<Turn>(Match.Sets.Last().Legs.Last().Turns.Where(turn => turn.PlayerId == player.Id));
         }
 
         public int GetPlayerRemainder(BindableCollection<Turn> turns)
