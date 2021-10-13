@@ -19,8 +19,8 @@ namespace Dartin.ViewModels
         private BindableCollection<Player> _players;
         private Player _selectedPlayerOne;
         private Player _selectedPlayerTwo;
-
         private string _isChecked301;
+        private string _isChecked501;
 
         public string IsChecked301
         {
@@ -31,8 +31,6 @@ namespace Dartin.ViewModels
             }
         }
 
-        private string _isChecked501;
-
         public string IsChecked501
         {
             get { return _isChecked501; }
@@ -41,7 +39,6 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => IsChecked501);
             }
         }
-
 
         public Player SelectedPlayerOne
         {
