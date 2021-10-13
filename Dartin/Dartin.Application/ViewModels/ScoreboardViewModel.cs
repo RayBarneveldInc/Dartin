@@ -11,6 +11,7 @@ using System.Windows.Input;
 using Parser = Dartin.Managers.Parser;
 using System.Diagnostics;
 using System.Windows;
+using Dartin.Converters;
 
 namespace Dartin.ViewModels
 {
@@ -94,6 +95,7 @@ namespace Dartin.ViewModels
         }
 
         public string ViewName => nameof(ScoreboardViewModel);
+        public static BrushColorConverter BrushColorConverter = new BrushColorConverter();
         public Player Player1 => Match.Players.First();
         public Player Player2 => Match.Players[1];
         public BindableCollection<Turn> Player1Turns
@@ -392,7 +394,7 @@ namespace Dartin.ViewModels
 
         public BindableCollection<Turn> GetPlayerTurnsCollection(Player player)
         {
-            return new BindableCollection<Turn>(Match.Sets.Last().Legs.Last().Turns.Where(turn => turn.PlayerId == player.Id && turn.Valid));
+            return new BindableCollection<Turn>(Match.Sets.Last().Legs.Last().Turns.Where(turn => turn.PlayerId == player.Id));
         }
 
         /// <summary>
