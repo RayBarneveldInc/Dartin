@@ -3,9 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:Dartin.Converters"
         xmlns:local="clr-namespace:Dartin.Views" xmlns:viewmodels="clr-namespace:Dartin.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ShellViewModel}"
 		mc:Ignorable="d"
         >
+    <UserControl.Resources>
+        <converters:BoolInverterConverter x:Key="BoolInverterConverterKey"></converters:BoolInverterConverter>
+    </UserControl.Resources>
+    
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
@@ -47,10 +52,9 @@
 		<Label Content="Legs to win set" Grid.Row="3" Grid.Column="0"/>
         <TextBox Text="{Binding CurrentObject.Configuration.LegsToWinSet, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"/>
 
-		<Label Content="Score to win leg" Grid.Row="4" Grid.Column="0"/>
-        <TextBox Text="{Binding CurrentObject.Configuration.ScoreToWinLeg, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"/>
-        <!--<RadioButton Grid.Row="4" Grid.Column="1" IsChecked="{Binding UpdateSourceTrigger=PropertyChanged}">501</RadioButton>-->
-        <!--<RadioButton Grid.Row="4" Grid.Column="1" Margin="0, 15, 15, 15" IsChecked="{Binding UpdateSourceTrigger=PropertyChanged}">301</RadioButton>-->
+        <Label Content="Score to win leg" Grid.Row="4" Grid.Column="0"/>
+        <RadioButton Grid.Row="4" Grid.Column="1" IsChecked="{Binding IsChecked501, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource BoolInverterConverterKey}}">501</RadioButton>
+        <RadioButton Grid.Row="4" Grid.Column="1" Margin="0, 15, 15, 15" IsChecked="{ Binding IsChecked301, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource BoolInverterConverterKey} }">301</RadioButton>
 
         <Button x:Name="Exit" Content="Exit" Grid.Row="5" Grid.Column="0"/>
 		<Button x:Name="SaveGameAndExit" Content="Save game and exit" Grid.Row="5" Grid.Column="1"/>
