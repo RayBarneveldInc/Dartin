@@ -31,27 +31,5 @@ namespace UnitTests
             Assert.Equal(2, vm.CurrentObject.Players.Count());
             Assert.Single(vm.Matches);
         }
-        
-        public void HasNoDuplicates()
-        {
-            var vm = new MatchDefinitionViewModel();
-            vm.AddPlayer("Yo", "Bama");
-            vm.AddPlayer("Yo", "Bama");
-            Assert.Single(vm.Players);
-        }
-        
-        public void UserAddInputValidation()
-        {
-            var vm = new MatchDefinitionViewModel();
-            vm.AddPlayer("Yo", "Bama");
-            vm.AddPlayer("タロウ", "Θεοκλεια");
-            vm.AddPlayer("മലയാളം", "אַבְרָהָם");
-            vm.AddPlayer("Sütterlin", "test");    
-
-            vm.AddPlayer("test123", "test");   
-            vm.AddPlayer("test", "test@@");
-
-            Assert.True(vm.Players.Count == 4);
-        }
     }
 }

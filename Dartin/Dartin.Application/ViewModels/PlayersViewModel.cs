@@ -160,7 +160,7 @@ namespace Dartin.ViewModels
 
             PlayerAction = () =>
             {
-                var playerFromState = State.Instance.Players.FirstOrDefault(x => x.Name == selectedPlayer.Name);
+                var playerFromState = State.Instance.Players.FirstOrDefault(x => x.Id == selectedPlayer.Id);
 
                 playerFromState.FirstName = FirstName;
                 playerFromState.LastName = LastName;
