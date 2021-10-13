@@ -8,6 +8,7 @@ using Dartin.Models;
 using Xunit;
 using System.ComponentModel;
 using Dartin;
+using System.Diagnostics;
 
 namespace UnitTests
 {
@@ -17,6 +18,15 @@ namespace UnitTests
         {
             State.Instance.Matches.Clear();
             State.Instance.Players.Clear();
+        }
+
+        private void SubmitTossInputs(ScoreboardViewModel vm, string inputOne, string inputTwo, string inputThree)
+        {
+            vm.TossOneInput = inputOne;
+            vm.TossTwoInput = inputTwo;
+            vm.TossThreeInput = inputThree;
+
+            vm.Submit();
         }
 
         [Fact]
@@ -141,25 +151,13 @@ namespace UnitTests
         }
 
         [Fact]
-        public void TestGetCurrentPlayerScore()
-        {
-
-        }
-
-        [Fact]
-        public void TestCalculatePlayerScoreLeft()
-        {
-
-        }
-
-        [Fact]
         public void TestGetPlayerRemainder()
         {
 
         }
 
         [Fact]
-        public void TestHandleLastTurn()
+        public void TestGetPlayerRemainders()
         {
 
         }
@@ -167,7 +165,17 @@ namespace UnitTests
         [Fact] 
         public void TestSubmit()
         {
+            ClearState();
 
+            var vm = new ScoreboardViewModel();
+
+            SubmitTossInputs(vm, "t20", "t20", "t20");
+            SubmitTossInputs(vm, "t20", "t20", "t20");
+            SubmitTossInputs(vm, "t20", "t20", "t20");
+            SubmitTossInputs(vm, "t20", "t20", "t20");
+            SubmitTossInputs(vm, "t20", "t15", "d18");
+
+            Assert.Single(vm.Match.Sets.Last().Legs.Where(leg => leg.WinnerId == vm.Player1.Id));
         }
     }
 }

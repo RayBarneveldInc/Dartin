@@ -395,11 +395,6 @@ namespace Dartin.ViewModels
             return new BindableCollection<Turn>(Match.Sets.Last().Legs.Last().Turns.Where(turn => turn.PlayerId == player.Id && turn.Valid));
         }
 
-        public int GetPlayerRemainder(BindableCollection<Turn> turns)
-        {
-            return Match.Configuration.ScoreToWinLeg - turns.Sum(turn => turn.Score);
-        }
-
         /// <summary>
         /// Revert turn to write new turn.
         /// </summary>
