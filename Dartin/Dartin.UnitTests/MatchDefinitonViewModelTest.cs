@@ -13,6 +13,12 @@ namespace UnitTests
 {
     public class MatchDefinitonViewModelTest
     {
+        private void ClearState()
+        {
+            State.Instance.Matches.Clear();
+            State.Instance.Players.Clear();
+        }
+
         [Fact]
         public void AddPlayer()
         {
@@ -26,6 +32,8 @@ namespace UnitTests
         [Fact]
         public void SaveGameAndExit()
         {
+            ClearState();
+
             var vm = new MatchDefinitionViewModel();
 
             vm.CurrentObject = new MatchDefinition("Match name", DateTime.Now, new BindingList<Player>(), new BindingList<Set>(), new MatchConfiguration(1, 5, 501));
@@ -44,6 +52,8 @@ namespace UnitTests
         [Fact]
         public void HasNoDuplicates()
         {
+            ClearState();
+
             var vm = new MatchDefinitionViewModel();
             vm.AddPlayer("Yo", "Bama");
             vm.AddPlayer("Yo", "Bama");
@@ -53,6 +63,8 @@ namespace UnitTests
         [Fact]
         public void UserAddInputValidation()
         {
+            ClearState();
+
             var vm = new MatchDefinitionViewModel();
             vm.AddPlayer("Yo", "Bama");
             vm.AddPlayer("タロウ", "Θεοκλεια");
