@@ -3,9 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:Dartin.Converters"
         xmlns:local="clr-namespace:Dartin.Views" xmlns:viewmodels="clr-namespace:Dartin.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ShellViewModel}"
 		mc:Ignorable="d"
         >
+    <UserControl.Resources>
+        <converters:BoolInverterConverter x:Key="BoolInverterConverterKey"></converters:BoolInverterConverter>
+    </UserControl.Resources>
+    
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
@@ -23,7 +28,6 @@
 		</Grid.RowDefinitions>
 
 		<Label x:Uid="Label_0" Content="Match date" Grid.Row="0" Grid.Column="0"/>
-		<!--TODO ResourceStrings aanmaken-->
 		<DatePicker x:Uid="DatePicker_0" SelectedDate="{Binding MatchDefinition.Date}" Grid.Row="0" Grid.Column="1"/>
 
 		<Grid Grid.Row="0" Grid.Column="2">
@@ -35,10 +39,7 @@
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
-			<TextBox x:Name="FirstName" Grid.Column="0" Text="First name"/>
-			<TextBox x:Name="Surname" Grid.Column="1" Text="Surname"/>
-			<Button x:Name="AddPlayer" Grid.Column="2" Content="Add player"/>
-		</Grid>
+        </Grid>
 
         <ComboBox ItemsSource="{Binding Players, Mode=OneWay}" SelectedItem="{Binding Path=SelectedPlayerOne, Mode=OneWayToSource}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="0"/>
 
@@ -46,15 +47,16 @@
         <ComboBox ItemsSource="{Binding Players, Mode=OneWay}" SelectedItem="{Binding Path=SelectedPlayerTwo, Mode=OneWayToSource}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="2"/>
 
 		<Label Content="Sets to win" Grid.Row="2" Grid.Column="0"/>
-        <TextBox Text="{Binding CurrentObject.SetsToWin, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1"/>
+        <TextBox Text="{Binding CurrentObject.Configuration.SetsToWin, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1"/>
 
 		<Label Content="Legs to win set" Grid.Row="3" Grid.Column="0"/>
-        <TextBox Text="{Binding CurrentObject.LegsToWinSet, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"/>
+        <TextBox Text="{Binding CurrentObject.Configuration.LegsToWinSet, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"/>
 
-		<Label Content="Score to win leg" Grid.Row="4" Grid.Column="0"/>
-        <TextBox Text="{Binding CurrentObject.ScoreToWinLeg, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"/>
+        <Label Content="Score to win leg" Grid.Row="4" Grid.Column="0"/>
+        <RadioButton Grid.Row="4" Grid.Column="1" IsChecked="{Binding IsChecked501, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource BoolInverterConverterKey}}">501</RadioButton>
+        <RadioButton Grid.Row="4" Grid.Column="1" Margin="0, 15, 15, 15" IsChecked="{ Binding IsChecked301, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource BoolInverterConverterKey} }">301</RadioButton>
 
-		<Button x:Name="Exit" Content="Exit" Grid.Row="5" Grid.Column="0"/>
+        <Button x:Name="Exit" Content="Exit" Grid.Row="5" Grid.Column="0"/>
 		<Button x:Name="SaveGameAndExit" Content="Save game and exit" Grid.Row="5" Grid.Column="1"/>
 		<Button x:Name="SaveAndStartGame" Content="Save and start game" Grid.Row="5" Grid.Column="2"/> 
 	</Grid>

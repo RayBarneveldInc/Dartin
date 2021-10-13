@@ -10,6 +10,7 @@ using Dartin.Models;
 using Dartin.ViewModels;
 using System.Windows;
 using System.Text.RegularExpressions;
+using System.ComponentModel;
 
 namespace Dartin.ViewModels
 {
@@ -19,6 +20,26 @@ namespace Dartin.ViewModels
         private BindableCollection<Player> _players;
         private Player _selectedPlayerOne;
         private Player _selectedPlayerTwo;
+        private bool _isChecked301;
+        private bool _isChecked501;
+
+        public bool IsChecked301
+        {
+            get { return _isChecked301; }
+            set { 
+                _isChecked301 = value;
+                NotifyOfPropertyChange(() => IsChecked301);
+            }
+        }
+
+        public bool IsChecked501
+        {
+            get { return _isChecked501; }
+            set { 
+                _isChecked501 = value;
+                NotifyOfPropertyChange(() => IsChecked501);
+            }
+        }
 
         public Player SelectedPlayerOne
         {
@@ -45,43 +66,9 @@ namespace Dartin.ViewModels
         {
             Players = new BindableCollection<Player>();
             Matches = new List<MatchDefinition>();
-            CurrentObject = new MatchDefinition
-            {
-                Date = DateTime.Now,
-                Name = "Match name",
-                SetsToWin = 1,
-                LegsToWinSet = 5,
-                ScoreToWinLeg = 501
-            };
+            CurrentObject = new MatchDefinition("Premier League Final 2017", DateTime.Today, new BindingList<Player>() { new Player("Thimo", "de Zwart"), new Player("Jasper", "van der Lugt") }, new BindingList<Set>(), new MatchConfiguration(5, 3, 501));
             FirstName = "First Name";
             Surname = "Surname";
-        }
-
-        /// <summary>
-        /// Add player to list.
-        /// </summary>
-        /// <param name="firstName">string</param>
-        /// <param name="surname">string</param>
-        public void AddPlayer(string firstName, string surname)
-        {
-            var fullName = firstName + " " + surname;
-            var match = Regex.Match(fullName, @"^[\p{L}\p{M}' \.\-]+$", RegexOptions.IgnoreCase);
-
-            if (match.Success)
-            {
-                if (Players.Any(p => p.Name == fullName))
-                {
-                    return;
-                }
-                var newPlayer = new Player { Name = fullName };
-                Players.Add(newPlayer);
-
-                State.Instance.Players.Clear();
-                foreach (var player in Players)
-                {
-                    State.Instance.Players.Add(player);
-                }
-            }
         }
 
         /// <summary>
@@ -99,6 +86,15 @@ namespace Dartin.ViewModels
         {
             CurrentObject.Players.Add(SelectedPlayerOne);
             CurrentObject.Players.Add(SelectedPlayerTwo);
+
+            if (!IsChecked301)
+            {
+                CurrentObject.Configuration.ScoreToWinLeg = 301;
+            } 
+            else if (!IsChecked501)
+            {
+                CurrentObject.Configuration.ScoreToWinLeg = 501;
+            }
 
             Matches.Add(CurrentObject);
         }
@@ -120,7 +116,7 @@ namespace Dartin.ViewModels
 
         public void CreateMatch()
         {
-
+            throw new NotImplementedException();
         }
 
         public int CurrentContextObject { get; set; }

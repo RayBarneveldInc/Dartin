@@ -1,22 +1,45 @@
-﻿using System;
+﻿using Dartin.Abstracts;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Dartin.Abstracts;
 
 namespace Dartin.Models
 {
     public class Player : APropertyChanged
     {
-        private string _name;
+        private string _firstName;
+        private string _lastName;
+        public Guid Id { get; }
 
-        public string Name
+        public string FirstName
         {
-            get => _name;
+            get => _firstName;
             set
             {
-                _name = value;
+                _firstName = value;
                 NotifyPropertyChanged();
             }
         }
+
+        public string LastName
+        {
+            get => _lastName;
+            set
+            {
+                _lastName = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string Name => FirstName + " " + LastName;
+
+        public Player(string firstName, string lastName)
+        {
+            Id = Guid.NewGuid();
+            FirstName = firstName;
+            LastName = lastName;
+        }
     }
+
 }
