@@ -19,10 +19,10 @@ namespace Dartin.ViewModels
         private BindableCollection<Player> _players;
         private Player _selectedPlayerOne;
         private Player _selectedPlayerTwo;
-        private string _isChecked301;
-        private string _isChecked501;
+        private bool _isChecked301;
+        private bool _isChecked501;
 
-        public string IsChecked301
+        public bool IsChecked301
         {
             get { return _isChecked301; }
             set { 
@@ -31,7 +31,7 @@ namespace Dartin.ViewModels
             }
         }
 
-        public string IsChecked501
+        public bool IsChecked501
         {
             get { return _isChecked501; }
             set { 
@@ -63,7 +63,6 @@ namespace Dartin.ViewModels
         /// </summary>
         public MatchDefinitionViewModel()
         {
-            IsChecked501 = "True";
             Players = new BindableCollection<Player>();
             Matches = new List<MatchDefinition>();
             CurrentObject = new MatchDefinition
@@ -121,11 +120,11 @@ namespace Dartin.ViewModels
             CurrentObject.Players.Add(SelectedPlayerOne);
             CurrentObject.Players.Add(SelectedPlayerTwo);
 
-            if (IsChecked301 == "True")
+            if (!IsChecked301)
             {
                 CurrentObject.ScoreToWinLeg = 301;
             } 
-            else if (IsChecked501 == "True")
+            else if (!IsChecked501)
             {
                 CurrentObject.ScoreToWinLeg = 501;
             }
