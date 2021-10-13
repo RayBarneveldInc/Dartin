@@ -133,8 +133,6 @@ namespace Dartin.ViewModels
                 CurrentObject.ScoreToWinLeg = 501;
             }
 
-            Debug.WriteLine(CurrentObject.ScoreToWinLeg);
-
             Matches.Add(CurrentObject);
         }
 
