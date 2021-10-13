@@ -1,6 +1,9 @@
 ﻿using Caliburn.Micro;
 using Dartin.Models;
 using System;
+using System.Linq;
+using System.Windows;
+using Action = System.Action;
 
 namespace Dartin.ViewModels
 {
@@ -11,10 +14,71 @@ namespace Dartin.ViewModels
         private string _searchText;
         private BindableCollection<Player> _players;
         private int _selectedIndex;
+        private Visibility _crudModalVisibility;
+        private string _lastName;
+        private string _firstName;
+        private string _modalButtonText;
+        private string _title;
+
+        // CrudModel
+        public string Title
+        {
+            get => _title;
+            set
+            {
+                _title = value;
+                NotifyOfPropertyChange(() => Title);
+            }
+        }
+
+        public Action PlayerAction { get; set; }
+
+        public string FirstName
+        {
+            get => _firstName;
+            set
+            {
+                _firstName = value;
+                NotifyOfPropertyChange(() => FirstName);
+            }
+        }
+
+        public string LastName
+        {
+            get => _lastName;
+            set
+            {
+                _lastName = value;
+                NotifyOfPropertyChange(() => LastName);
+            }
+        }
+
+        public string ModalButtonText
+        {
+            get => _modalButtonText;
+            set
+            {
+                _modalButtonText = value;
+                NotifyOfPropertyChange(() => ModalButtonText);
+            }
+        }
+
+        public Visibility CrudModalVisibility
+        {
+            get => _crudModalVisibility;
+            set
+            {
+                _crudModalVisibility = value;
+                NotifyOfPropertyChange(() => CrudModalVisibility);
+            }
+        }
+
 
         public PlayersViewModel()
         {
             Players = new BindableCollection<Player>();
+
+            CrudModalVisibility = Visibility.Hidden;
 
             InitializePlayers();
         }
@@ -81,10 +145,60 @@ namespace Dartin.ViewModels
 
         public void Edit()
         {
-            var player = Players[SelectedIndex];
+            if ((SelectedIndex < 0 || SelectedIndex >= Players.Count))
+            {
+                return;
+            }
+            
+            var selectedPlayer = Players[SelectedIndex];
 
-            throw new NotImplementedException();
+            Title = "Edit Player";
+            ModalButtonText = "Edit";
+
+            FirstName = selectedPlayer.Name.Split(" ")[0];
+            LastName = selectedPlayer.Name.Split(" ")[1];
+
+            PlayerAction = () =>
+            {
+                var playerFromState = State.Instance.Players.FirstOrDefault(x => x.Name == selectedPlayer.Name);
+
+                playerFromState.Name = $"{FirstName} {LastName}";
+            };
+            
+            ToggleModal();
         }
+
+        public void Add()
+        {
+            Title = "Add Player";
+            ModalButtonText = "Add";
+
+            FirstName = string.Empty;
+            LastName = string.Empty;
+
+            
+            PlayerAction = () =>
+            {
+                State.Instance.Players.Add(new Player
+                {
+                    Name = $"{FirstName} {LastName}",
+                });
+            };
+            
+            ToggleModal();
+        }
+
+        public void EditAddButtonClick()
+        {
+            PlayerAction.Invoke();
+
+            ToggleModal();
+
+            InitializePlayers();
+        }
+
+        public void ToggleModal() => CrudModalVisibility = ~_crudModalVisibility;
+
 
         public void History()
         {
@@ -93,10 +207,6 @@ namespace Dartin.ViewModels
             throw new NotImplementedException();
         }
 
-        public void Add()
-        {
-            throw new NotImplementedException();
-        }
 
         public void OnExit()
         {

@@ -43,7 +43,7 @@
         </Grid>
 
         <!--edit-->
-        <Grid Visibility="Hidden" Grid.Row="0" Grid.RowSpan="3" Opacity=".9"  Background="#111111">
+        <Grid Visibility="{Binding CrudModalVisibility, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="3" Opacity=".9"  Background="#111111">
             <Grid Margin="100" Background="White">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"></RowDefinition>
@@ -57,16 +57,16 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Foreground="White" FontSize="15" Background="Black" Grid.ColumnSpan="2" Content="Edit Player"></Label>
+                <Label Foreground="White" FontSize="15" Background="Black" Grid.ColumnSpan="2" Content="{Binding Title}"></Label>
                 <!--First name-->
                 <Label FontStyle="Oblique" Background="LightBlue" Grid.Row="1" Content="First Name"></Label>
-                <TextBox  Grid.Row="1" Grid.Column="1"></TextBox>
+                <TextBox Text="{Binding FirstName, Mode=TwoWay}" Grid.Row="1" Grid.Column="1"></TextBox>
                 <!--Last Name-->
                 <Label FontStyle="Oblique" Background="LightBlue" Grid.Row="2" Content="Last Name"></Label>
-                <TextBox Grid.Row="2" Grid.Column="1"></TextBox>
+                <TextBox Text="{Binding LastName, Mode=TwoWay}" Grid.Row="2" Grid.Column="1"></TextBox>
                 <!--Apply-->
-                <Button Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="4" Background="Red" Grid.Column="0" Content="Back"></Button>
-                <Button Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="4" Background="Green" Grid.Column="1" Content="Edit"></Button>
+                <Button x:Name="ToggleModal" Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="4" Background="Red" Grid.Column="0" Content="Back"></Button>
+                <Button Content="{Binding ModalButtonText}" x:Name="EditAddButtonClick" Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="4" Background="Green" Grid.Column="1"></Button>
             </Grid>
         </Grid>
 
