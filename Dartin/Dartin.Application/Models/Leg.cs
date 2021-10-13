@@ -12,7 +12,7 @@ namespace Dartin.Models
     {
         private BindingList<Turn> _turns;
         public int GetTotalScoreForPlayer(Player player) => _turns.Where(turn => turn.PlayerId == player.Id && turn.Valid).Sum(turn => turn.Score);
-        public List<int> GetRemaindersForPlayer(Player player, int maxScore)
+        public List<int> GetRemaindersForPlayer(Player player, int maxScore, bool onlyValid = false)
         {
             List<int> turnScores = new List<int>();
             if (!Turns.Any())
@@ -20,31 +20,19 @@ namespace Dartin.Models
                 return turnScores;
             }
 
-            var turns = Turns.Where(turn => turn.PlayerId == player.Id && turn.Valid).ToList();
+            var turns = (onlyValid) ? Turns.Where(turn => turn.PlayerId == player.Id && turn.Valid).ToList() : Turns.Where(turn => turn.PlayerId == player.Id).ToList();
+            int lastValidRemainder = maxScore;
             for (int i = 0; i < turns.Count; i++)
             {
-                if (i == 0)
-                {
-                    turnScores.Add(maxScore - turns[i].Score);
-                }
-                else
-                {
-                    turnScores.Add(turnScores[i - 1] - turns[i].Score);
-                }
+                var remainder = lastValidRemainder - turns[i].Score;
+                if (turns[i].Valid)
+                    lastValidRemainder = remainder;
+
+                turnScores.Add(remainder);
             }
             return turnScores;
         }
 
-        public int GetRemainderForPlayer(Player player, int maxScore)
-        {
-            var remainders = GetRemaindersForPlayer(player, maxScore);
-            if (remainders.Any())
-            {
-                return remainders.Sum();
-            }
-
-            return maxScore;
-        }
         public BindingList<Turn> Turns
         {
             get => _turns;
