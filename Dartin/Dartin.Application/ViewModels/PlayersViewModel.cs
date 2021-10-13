@@ -197,7 +197,7 @@ namespace Dartin.ViewModels
             InitializePlayers();
         }
 
-        public void ToggleModal() => CrudModalVisibility = ~_crudModalVisibility;
+        public void ToggleModal() => CrudModalVisibility = ~CrudModalVisibility;
 
 
         public void History()
