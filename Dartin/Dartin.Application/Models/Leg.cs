@@ -34,6 +34,7 @@ namespace Dartin.Models
             }
             return turnScores;
         }
+
         public int GetRemainderForPlayer(Player player, int maxScore)
         {
             var remainders = GetRemaindersForPlayer(player, maxScore);

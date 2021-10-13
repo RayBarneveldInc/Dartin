@@ -151,15 +151,30 @@ namespace UnitTests
         }
 
         [Fact]
-        public void TestGetPlayerRemainder()
-        {
-
-        }
-
-        [Fact]
         public void TestGetPlayerRemainders()
         {
+            ClearState();
 
+            var vm = new ScoreboardViewModel();
+
+            vm.Match.Configuration.ScoreToWinLeg = 501;
+
+            SubmitTossInputs(vm, "t20", "t20", "t20");
+            SubmitTossInputs(vm, "t20", "t10", "t5");
+            SubmitTossInputs(vm, "t5", "d18", "d5");
+            SubmitTossInputs(vm, "d19", "t15", "10");
+
+            Leg leg = vm.Match.Sets.Last().Legs.Last();
+
+            List<int> remainders = leg.GetRemaindersForPlayer(vm.Player1, vm.Match.Configuration.ScoreToWinLeg);
+
+            Assert.Equal(321, remainders[0]);
+            Assert.Equal(260, remainders[1]);
+
+            remainders = leg.GetRemaindersForPlayer(vm.Player2, vm.Match.Configuration.ScoreToWinLeg);
+
+            Assert.Equal(396, remainders[0]);
+            Assert.Equal(303, remainders[1]);
         }
 
         [Fact] 
