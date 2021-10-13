@@ -16,6 +16,18 @@ namespace Dartin.ViewModels
 {
     public class ShellViewModel : Conductor<IViewModel>
     {
+        private Visibility _isHelpVisible;
+
+        public Visibility IsHelpVisible
+        {
+            get => _isHelpVisible;
+            set
+            {
+                _isHelpVisible = value;
+                NotifyOfPropertyChange(() => IsHelpVisible);
+            }
+        }
+
         private int _selectedViewIndex;
         public BindableCollection<Type> ViewModels { get; set; }
 
@@ -32,6 +44,8 @@ namespace Dartin.ViewModels
         public ShellViewModel()
         {
             ScreenManager.GetInstance().RegisterShellViewModel(this);
+
+            IsHelpVisible = Visibility.Hidden;
             
             ViewModels = new BindableCollection<Type>();
 
@@ -40,6 +54,18 @@ namespace Dartin.ViewModels
                 .ToList().ForEach(x=> ViewModels.Add(x));
             
             NotifyOfPropertyChange(() => ViewModels);
+        }
+
+        public void HelpClick()
+        {
+            if (IsHelpVisible == Visibility.Visible)
+            {
+                IsHelpVisible = Visibility.Hidden;
+            }
+            else
+            {
+                IsHelpVisible = Visibility.Visible;
+            }
         }
 
         private void SwitchView(int index)
