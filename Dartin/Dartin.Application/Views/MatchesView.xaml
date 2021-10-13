@@ -19,12 +19,23 @@
             <RowDefinition Height="40"></RowDefinition>
         </Grid.RowDefinitions>
         <!--PlayerList-->
-        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Players}" SelectedIndex="{Binding SelectedIndex}">
+        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding CurrentCollection}" SelectedIndex="{Binding SelectedIndex}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Path=Name}" />
-                    </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="{Binding Name}" Grid.Column="0"/>
+                        <Label Content="{Binding BestOfDescription}" Grid.Column="1"/>
+                        <Label Content="{Binding Date}" Grid.Column="2"/>
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -37,9 +48,11 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button x:Name="Add" Grid.Column="0" Content="Add"></Button>
+            <Button x:Name="OnExit" Grid.Column="0" Content="Back"></Button>
+            <Button x:Name="MoreInfo" Grid.Column="0" Content="More info"></Button>
             <Button x:Name="Edit" Grid.Column="1" Content="Edit"></Button>
-            <Button x:Name="History" Grid.Column="2" Content="History"></Button>
+            <Button x:Name="Add" Grid.Column="2" Content="Add"></Button>
+            <Button x:Name="StartMatch" Grid.Column="2" Content="Start match"></Button>
         </Grid>
     </Grid>
 </UserControl>

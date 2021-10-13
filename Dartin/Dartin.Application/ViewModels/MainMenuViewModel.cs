@@ -11,7 +11,7 @@ namespace Dartin.ViewModels
 
         public void Matches()
         {
-            ScreenManager.GetInstance().SwitchViewModel(new MatchesViewModel());
+            ScreenManager.GetInstance().SwitchViewModel(new MatchesViewModel(State.Instance.Matches));
         }
 
         public void Darters()

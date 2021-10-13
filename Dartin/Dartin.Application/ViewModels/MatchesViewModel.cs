@@ -1,8 +1,13 @@
 ﻿using Caliburn.Micro;
 using Dartin.Models;
 using System;
+using System.ComponentModel;
+using System.Linq;
+using System.ServiceModel.Channels;
 using System.Text.RegularExpressions;
+using System.Windows;
 using Dartin.Managers;
+using Microsoft.Win32;
 
 namespace Dartin.ViewModels
 {
@@ -10,42 +15,42 @@ namespace Dartin.ViewModels
     {
         private int _selectedIndex;
         private string _searchText;
-        public BindableCollection<MatchDefinition> Matches { get; set; }
-        public MatchesViewModel()
+        private BindableCollection<MatchDefinition> _currentCollection;
+        public BindableCollection<MatchDefinition> CurrentCollection
         {
-            InitializeMatches();
-        }
-        private void InitializeMatches()
-        {
-            if (Matches == null)
+            get => _currentCollection;
+            set
             {
-                Matches = new BindableCollection<MatchDefinition>(); 
-            }
-
-            Matches.Clear();
-
-            foreach (var match in State.Instance.Matches)
-            {
-                Matches.Add(match);
+                _currentCollection = value;
+                NotifyOfPropertyChange(() => CurrentCollection);
             }
         }
-        private void FilterPlayers(string filter)
+        public BindingList<MatchDefinition> OriginalCollection { get; set; }
+
+        public MatchesViewModel(BindingList<MatchDefinition> matches)
+        {
+            OriginalCollection = matches;
+
+            CurrentCollection = new BindableCollection<MatchDefinition>();
+            foreach (MatchDefinition matchDefinition in OriginalCollection)
+            { 
+                CurrentCollection.Add(matchDefinition);
+            }
+        }
+
+        private void FilterMatches(string filter)
         {
             if (string.IsNullOrEmpty(filter))
             {
-                InitializeMatches();
-
-                return;
-            }
-
-            Matches.Clear();
-
-            foreach (var match in State.Instance.Matches)
-            {
-                if (match.Name.ToLower().Contains(filter.ToLower()))
+                CurrentCollection = new BindableCollection<MatchDefinition>();
+                foreach (MatchDefinition matchDefinition in OriginalCollection)
                 {
-                    Matches.Add(match);
+                    CurrentCollection.Add(matchDefinition);
                 }
+            }
+            else
+            {
+                CurrentCollection = OriginalCollection.Where(match => match.Name.Contains(filter, StringComparison.OrdinalIgnoreCase)) as BindableCollection<MatchDefinition>;
             }
         }
 
@@ -55,7 +60,7 @@ namespace Dartin.ViewModels
             set
             {
                 _searchText = value;
-                FilterPlayers(_searchText);
+                FilterMatches(_searchText);
             }
         }
 
@@ -70,28 +75,40 @@ namespace Dartin.ViewModels
         }
 
         public string ViewName { get; }
-        public void Edit()
-        {
-            var match = Matches[SelectedIndex];
-
-            ScreenManager.GetInstance().SwitchViewModel(new MatchDefinitionViewModel(match));
-        }
-
-        public void History()
-        {
-            var player = Matches[SelectedIndex];
-
-            throw new NotImplementedException();
-        }
-
-        public void Add()
-        {
-            ScreenManager.GetInstance().SwitchViewModel(new MatchDefinitionViewModel(new MatchDefinition()));
-        }
 
         public void OnExit()
         {
             throw new NotImplementedException();
         }
+        public void Edit()
+        {
+            try
+            {
+                MatchDefinition match = CurrentCollection[SelectedIndex];
+                ScreenManager.GetInstance().SwitchViewModel(new MatchDefinitionViewModel(match));
+            }
+            catch
+            {
+                MessageBox.Show("No match was selected to be edited!", "Edit Match Error", MessageBoxButton.OK, MessageBoxImage.Warning); 
+            }
+        }
+
+        public void MoreInfo()
+        {
+            MatchDefinition match = CurrentCollection[SelectedIndex];
+
+            // Hier moet die screen van Tjeerd en Jacco
+            //ScreenManager.GetInstance().SwitchViewModel(new Matches(new MatchDefinition()));
+        }
+
+        public void Add()
+        {
+            ScreenManager.GetInstance().SwitchViewModel(new MatchDefinitionViewModel(State.Instance.Matches.AddNew()));
+        }
+        public void StartMatch()
+        {
+            ScreenManager.GetInstance().SwitchViewModel(new MatchDefinitionViewModel(State.Instance.Matches.AddNew()));
+        }
+
     }
 }

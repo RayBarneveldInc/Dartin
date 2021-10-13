@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:Dartin.Views"
              xmlns:models="clr-namespace:Dartin.Models"
              mc:Ignorable="d" 
@@ -26,7 +27,7 @@
 
 		<Label x:Uid="Label_0" Content="Match date" Grid.Row="0" Grid.Column="0"/>
 		<!--TODO ResourceStrings aanmaken-->
-		<DatePicker x:Uid="DatePicker_0" SelectedDate="{Binding MatchDefinition.Date}" Grid.Row="0" Grid.Column="1"/>
+        <DatePicker x:Uid="DatePicker_0" SelectedDate="{Binding CurrentObject.Date}" Grid.Row="0" Grid.Column="1"/>
 
 		<Grid Grid.Row="0" Grid.Column="2">
 			<Grid.ColumnDefinitions>
@@ -42,10 +43,10 @@
 			<Button x:Name="AddPlayer" Grid.Column="2" Content="Add player"/>
 		</Grid>
 
-        <ComboBox ItemsSource="{Binding Players, Mode=OneWay}" SelectedItem="{Binding Path=SelectedPlayerOne, Mode=OneWayToSource}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="0"/>
+        <ComboBox ItemsSource="{Binding Players}" SelectedItem="{Binding Path=SelectedPlayerOne}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="0"/>
 
 		<Label Content="Versus" Grid.Row="1" Grid.Column="1"/>
-        <ComboBox ItemsSource="{Binding Players, Mode=OneWay}" SelectedItem="{Binding Path=SelectedPlayerTwo, Mode=OneWayToSource}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="2"/>
+        <ComboBox ItemsSource="{Binding Players}" SelectedItem="{Binding Path=SelectedPlayerTwo}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="2"/>
 
 		<Label Content="Sets to win" Grid.Row="2" Grid.Column="0"/>
         <TextBox Text="{Binding CurrentObject.SetsToWin, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1"/>

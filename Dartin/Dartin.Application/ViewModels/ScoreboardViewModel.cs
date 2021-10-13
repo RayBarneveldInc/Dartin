@@ -4,6 +4,7 @@ using Dartin.Managers;
 using Dartin.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Dartin.ViewModels
@@ -40,13 +41,12 @@ namespace Dartin.ViewModels
         public ScoreboardViewModel() {
             Match = new MatchDefinition
             {
-                Name = "Premier League Final 2017",
                 Date = DateTime.Today,
                 SetsToWin = 5,
                 LegsToWinSet = 3,
                 ScoreToWinLeg = 501,
-                Players = new List<Player>() { new Player { Name = "Thimo de Zwart" }, new Player { Name = "Jasper van der Lugt" } },
-                Sets = new List<Set>()
+                Players = new BindingList<Player>() { new Player { Name = "Thimo de Zwart" }, new Player { Name = "Jasper van der Lugt" } },
+                Sets = new BindingList<Set>()
             };
         }
         public BindableCollection<string> Logs { get; set; } = new BindableCollection<string>() { "Thimo de Zwart gooide T20 + T20 + T20 (180).", "Jasper van der Lugt gooide T20 + T20 + D20 (160).", "Einde leg; gewonnen door Jasper van der Lugt." };

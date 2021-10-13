@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,19 +15,20 @@ namespace UnitTests
     {
         public void FilterMatches()
         {
-            var vm = new MatchesViewModel()
+            BindingList<MatchDefinition> CurrentCollection = new BindingList<MatchDefinition>
             {
-                Matches = new BindableCollection<MatchDefinition>
-                {
-                    new() {Name = "yob ama"},
-                    new() {Name = "ama yob"},
-                    new() {Name = "oby maa"},
-                    new() {Name = "boy aam"},
-                },
+                new() {Name = "yob ama"},
+                new() {Name = "ama yob"},
+                new() {Name = "oby maa"},
+                new() {Name = "boy aam"},
+            };
+
+            var vm = new MatchesViewModel(CurrentCollection)
+            {
                 SearchText = "yob"
             };
 
-            Assert.Equal(2, vm.Matches.Count);
+            Assert.Equal(2, vm.CurrentCollection.Count);
         }
     }
 }
