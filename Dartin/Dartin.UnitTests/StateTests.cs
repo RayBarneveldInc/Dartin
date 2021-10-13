@@ -18,8 +18,8 @@ namespace UnitTests
         {
             var state = State.Instance;
             State.Instance.Players.Clear();
-            state.Players.Add(new Player() { Name = "Thimo" });
-            Assert.Single(state.Players.Where(player => player.Name == "Thimo"));
+            state.Players.Add(new Player("Thimo", "de Zwart"));
+            Assert.Single(state.Players.Where(player => player.Name == "Thimo de Zwart"));
         }
     }
 }

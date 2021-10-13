@@ -7,29 +7,22 @@ using Xunit;
 using Dartin.ViewModels;
 using Dartin.Models;
 using Dartin;
+using System.ComponentModel;
 
 namespace UnitTests
 {
     public class MatchDefinitonViewModelTest
     {
-        [Fact]
-        public void AddPlayer()
-        {
-            State.Instance.Players.Clear();
-
-            var vm = new MatchDefinitionViewModel(new MatchDefinition());
-            vm.AddPlayer("New", "Player");
-            vm.AddPlayer("Yo", "Bama");
-            Assert.Equal(2 , vm.CurrentObject.Players.Count());
-        }
 
         [Fact]
         public void SaveGameAndExit()
         {
-            var vm = new MatchDefinitionViewModel(new MatchDefinition());
+            var vm = new MatchDefinitionViewModel();
 
-            vm.SelectedPlayerOne = new Player { Name = "PlayerOne" };
-            vm.SelectedPlayerTwo = new Player { Name = "PlayerTwo" };
+            vm.CurrentObject = new MatchDefinition("Match name", DateTime.Now, new BindingList<Player>(), new BindingList<Set>(), new MatchConfiguration(1, 5, 501));
+
+            vm.SelectedPlayerOne = new Player("Player", "One");
+            vm.SelectedPlayerTwo = new Player("Player", "Two");
 
             vm.SaveGameAndExit();
             
@@ -37,30 +30,6 @@ namespace UnitTests
             //Assert.Equal(vm.SelectedPlayerTwo, vm.CurrentObject.Players.Skip(1).First());
             Assert.Equal(2, vm.CurrentObject.Players.Count());
             //Assert.Single(vm.CurrentCollection);
-        }
-
-        [Fact]
-        public void HasNoDuplicates()
-        {
-            var vm = new MatchDefinitionViewModel(new MatchDefinition());
-            vm.AddPlayer("Yo", "Bama");
-            vm.AddPlayer("Yo", "Bama");
-            Assert.Single(vm.CurrentObject.Players);
-        }
-
-        [Fact]
-        public void UserAddInputValidation()
-        {
-            var vm = new MatchDefinitionViewModel(new MatchDefinition());
-            vm.AddPlayer("Yo", "Bama");
-            vm.AddPlayer("タロウ", "Θεοκλεια");
-            vm.AddPlayer("മലയാളം", "אַבְרָהָם");
-            vm.AddPlayer("Sütterlin", "test");    
-
-            vm.AddPlayer("test123", "test");   
-            vm.AddPlayer("test", "test@@");
-
-            Assert.True(vm.CurrentObject.Players.Count == 4);
         }
     }
 }

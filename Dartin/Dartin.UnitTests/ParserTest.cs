@@ -30,7 +30,7 @@ namespace UnitTests
             if (multiplier != null && points != null)
             {
                 var testInput = JsonConvert.SerializeObject(Parser.ParseThrow(input));
-                string expected = JsonConvert.SerializeObject(new Toss { Score = points.Value, Multiplier = multiplier.Value });
+                string expected = JsonConvert.SerializeObject(new Toss(points.Value, multiplier.Value));
                 Assert.Equal(expected, testInput);
             }
             else

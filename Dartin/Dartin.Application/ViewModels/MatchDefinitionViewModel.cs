@@ -11,6 +11,30 @@ namespace Dartin.ViewModels
 {
     public class MatchDefinitionViewModel : Screen, IViewModel
     {
+        private BindableCollection<Player> _players;
+        private Player _selectedPlayerOne;
+        private Player _selectedPlayerTwo;
+        private bool _isChecked301;
+        private bool _isChecked501;
+
+        public bool IsChecked301
+        {
+            get { return _isChecked301; }
+            set { 
+                _isChecked301 = value;
+                NotifyOfPropertyChange(() => IsChecked301);
+            }
+        }
+
+        public bool IsChecked501
+        {
+            get { return _isChecked501; }
+            set { 
+                _isChecked501 = value;
+                NotifyOfPropertyChange(() => IsChecked501);
+            }
+        }
+
         public Player SelectedPlayerOne
         {
             get
@@ -87,6 +111,16 @@ namespace Dartin.ViewModels
             OriginalMatch.SetsToWin = CurrentObject.SetsToWin;
             OriginalMatch.LegsToWinSet = CurrentObject.SetsToWin;
 
+            if (IsChecked301)
+            {
+                CurrentObject.Configuration.ScoreToWinLeg = 301;
+            } 
+            else if (IsChecked501)
+            {
+                CurrentObject.Configuration.ScoreToWinLeg = 501;
+            }
+
+            Matches.Add(CurrentObject);
             ScreenManager.GetInstance().SwitchViewModel(new MatchesViewModel(State.Instance.Matches));
         }
 
@@ -106,7 +140,5 @@ namespace Dartin.ViewModels
         {
             throw new NotImplementedException();
         }
-
-        public int CurrentContextObject { get; set; }
     }
 }

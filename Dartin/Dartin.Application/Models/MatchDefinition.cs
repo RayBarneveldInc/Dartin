@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dartin.Abstracts;
+using Dartin.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -91,7 +93,7 @@ namespace Dartin.Models
             }
         }
 
-        public MatchDefinition()
+        public MatchDefinition(string name, DateTime date, BindingList<Player> players, BindingList<Set> sets, MatchConfiguration configuration)
         {
             Date = DateTime.Now;
             Players = new BindingList<Player>();

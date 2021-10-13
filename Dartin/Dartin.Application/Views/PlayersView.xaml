@@ -9,7 +9,7 @@
              Background="White"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
@@ -19,6 +19,7 @@
             <RowDefinition Height="40"></RowDefinition>
         </Grid.RowDefinitions>
         <!--PlayerList-->
+        <TextBox Text="{Binding SearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Players}" SelectedIndex="{Binding SelectedIndex}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -29,7 +30,6 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <TextBox Text="{Binding SearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <!--Buttons-->
         <Grid Grid.Row="2" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
@@ -41,5 +41,35 @@
             <Button x:Name="Edit" Grid.Column="1" Content="Edit"></Button>
             <Button x:Name="History" Grid.Column="2" Content="History"></Button>
         </Grid>
+
+        <!--edit-->
+        <Grid Visibility="{Binding CrudModalVisibility, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="3" Opacity=".9"  Background="#111111">
+            <Grid Margin="100" Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="25"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Label Foreground="White" FontSize="15" Background="Black" Grid.ColumnSpan="2" Content="{Binding Title}"></Label>
+                <!--First name-->
+                <Label FontStyle="Oblique" Background="LightBlue" Grid.Row="1" Content="First Name"></Label>
+                <TextBox Text="{Binding FirstName, Mode=TwoWay}" Grid.Row="1" Grid.Column="1"></TextBox>
+                <!--Last Name-->
+                <Label FontStyle="Oblique" Background="LightBlue" Grid.Row="2" Content="Last Name"></Label>
+                <TextBox Text="{Binding LastName, Mode=TwoWay}" Grid.Row="2" Grid.Column="1"></TextBox>
+                <!--Apply-->
+                <Button x:Name="ToggleModal" Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="4" Background="Red" Grid.Column="0" Content="Back"></Button>
+                <Button Content="{Binding ModalButtonText}" x:Name="EditAddButtonClick" Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="4" Background="Green" Grid.Column="1"></Button>
+            </Grid>
+        </Grid>
+
+
     </Grid>
 </UserControl>
