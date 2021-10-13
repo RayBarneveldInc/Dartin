@@ -12,7 +12,6 @@ namespace UnitTests
 {
     public class MatchDefinitonViewModelTest
     {
-        [Fact]
         public void AddPlayer()
         {
             State.Instance.Players.Clear();
@@ -46,8 +45,7 @@ namespace UnitTests
             Assert.Equal(2, vm.CurrentObject.Players.Count());
             Assert.Single(vm.Matches);
         }
-
-        [Fact]
+        
         public void HasNoDuplicates()
         {
             var vm = new MatchDefinitionViewModel();
@@ -55,8 +53,7 @@ namespace UnitTests
             vm.AddPlayer("Yo", "Bama");
             Assert.Single(vm.Players);
         }
-
-        [Fact]
+        
         public void UserAddInputValidation()
         {
             var vm = new MatchDefinitionViewModel();
