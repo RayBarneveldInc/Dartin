@@ -220,21 +220,6 @@ namespace Dartin.ViewModels
             SetLegText();
         }
 
-        public ScoreboardViewModel(MatchDefinition match)
-        {
-            Match = match;
-
-            State.Instance.Matches.Add(Match);
-
-            SetSet();
-
-            TogglePlayerTurnIndicator(true);
-
-            SetSetText();
-
-            SetLegText();
-        }
-
         public void OnExit()
         {
             throw new System.NotImplementedException();
