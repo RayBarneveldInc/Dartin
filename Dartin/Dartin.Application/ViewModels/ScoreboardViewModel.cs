@@ -233,7 +233,6 @@ namespace Dartin.ViewModels
 
         public ScoreboardViewModel(MatchDefinition match)
         {
-            Match = match;
             State.Instance.Matches.Add(Match);
             SetSet();
             SetSetText();

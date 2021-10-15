@@ -34,7 +34,10 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel();
+            State.Instance.Players.Add(new Player("Henk", "de Vries"));
+            State.Instance.Players.Add(new Player("Jan", "Jaarsma"));
+            var match = new MatchDefinition("Premier League Final 2017", DateTime.Today, new BindingList<Player>() { State.Instance.Players[0], State.Instance.Players[1] }, new BindingList<Set>(), new MatchConfiguration(5, 3, 501));
+            var vm = new ScoreboardViewModel(match);
             vm.SetLeg();
 
             Assert.Single(vm.Match.Sets.Last().Legs);
@@ -45,7 +48,10 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel();
+            State.Instance.Players.Add(new Player("Henk", "de Vries"));
+            State.Instance.Players.Add(new Player("Jan", "Jaarsma"));
+            var match = new MatchDefinition("Premier League Final 2017", DateTime.Today, new BindingList<Player>() { State.Instance.Players[0], State.Instance.Players[1] }, new BindingList<Set>(), new MatchConfiguration(5, 3, 501));
+            var vm = new ScoreboardViewModel(match);
             vm.SetSet();
 
             Assert.Equal(2, vm.Match.Sets.Count);
@@ -56,7 +62,10 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel();
+            State.Instance.Players.Add(new Player("Henk", "de Vries"));
+            State.Instance.Players.Add(new Player("Jan", "Jaarsma"));
+            var match = new MatchDefinition("Premier League Final 2017", DateTime.Today, new BindingList<Player>() { State.Instance.Players[0], State.Instance.Players[1] }, new BindingList<Set>(), new MatchConfiguration(5, 3, 501));
+            var vm = new ScoreboardViewModel(match);
             Player player = vm.Match.Players.First();
             int resultOne = vm.GetLegScore(player);
 
@@ -83,7 +92,10 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel();
+            State.Instance.Players.Add(new Player("Henk", "de Vries"));
+            State.Instance.Players.Add(new Player("Jan", "Jaarsma"));
+            var match = new MatchDefinition("Premier League Final 2017", DateTime.Today, new BindingList<Player>() { State.Instance.Players[0], State.Instance.Players[1] }, new BindingList<Set>(), new MatchConfiguration(5, 3, 501));
+            var vm = new ScoreboardViewModel(match);
             Player player = vm.Match.Players.First();
             int resultOne = vm.GetSetScore(player);
 
@@ -142,7 +154,10 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel();
+            State.Instance.Players.Add(new Player("Henk", "de Vries"));
+            State.Instance.Players.Add(new Player("Jan", "Jaarsma"));
+            var match = new MatchDefinition("Premier League Final 2017", DateTime.Today, new BindingList<Player>() { State.Instance.Players[0], State.Instance.Players[1] }, new BindingList<Set>(), new MatchConfiguration(5, 3, 501));
+            var vm = new ScoreboardViewModel(match);
             vm.Match.Configuration.ScoreToWinLeg = 501;
             bool result = vm.ComparePlayerScoreWithScoreToWinLeg(180, new Toss(20, 3));
 
@@ -158,7 +173,10 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel();
+            State.Instance.Players.Add(new Player("Henk", "de Vries"));
+            State.Instance.Players.Add(new Player("Jan", "Jaarsma"));
+            var match = new MatchDefinition("Premier League Final 2017", DateTime.Today, new BindingList<Player>() { State.Instance.Players[0], State.Instance.Players[1] }, new BindingList<Set>(), new MatchConfiguration(5, 3, 501));
+            var vm = new ScoreboardViewModel(match);
 
             vm.Match.Configuration.ScoreToWinLeg = 501;
 
@@ -185,7 +203,10 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel();
+            State.Instance.Players.Add(new Player("Henk", "de Vries"));
+            State.Instance.Players.Add(new Player("Jan", "Jaarsma"));
+            var match = new MatchDefinition("Premier League Final 2017", DateTime.Today, new BindingList<Player>() { State.Instance.Players[0], State.Instance.Players[1] }, new BindingList<Set>(), new MatchConfiguration(5, 3, 501));
+            var vm = new ScoreboardViewModel(match);
 
             SubmitTossInputs(vm, "t20", "t20", "t20");
             SubmitTossInputs(vm, "t20", "t20", "t20");
