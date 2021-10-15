@@ -28,15 +28,14 @@ namespace Dartin.ViewModels
         private string _tossThreeInput;
         private string _legText;
         private string _setText;
-        private Visibility _playerOneTurnIndicatorIsVisible;
-        private Visibility _playerTwoTurnIndicatorIsVisible;
-        private Visibility _playerOneStartedLegIndicatorIsVisible;
-        private Visibility _playerTwoStartedLegIndicatorIsVisible;
+        private Visibility _playerOneTurnIndicatorIsVisible = Visibility.Visible;
+        private Visibility _playerTwoTurnIndicatorIsVisible = Visibility.Hidden;
+        private Visibility _playerOneStartedLegIndicatorIsVisible = Visibility.Visible;
+        private Visibility _playerTwoStartedLegIndicatorIsVisible = Visibility.Hidden;
         private BindableCollection<Turn> _player1Turns;
         private BindableCollection<Turn> _player2Turns;
         private BindableCollection<int> _player1Remainders;
         private BindableCollection<int> _player2Remainders;
-        private Player lastStartingPlayer;
 
         public string TossOneInput
         {
@@ -237,8 +236,6 @@ namespace Dartin.ViewModels
             Match = new MatchDefinition("Premier League Final 2017", DateTime.Today, new BindingList<Player>() { State.Instance.Players[0], State.Instance.Players[1] }, new BindingList<Set>(), new MatchConfiguration(5, 3, 501));
             State.Instance.Matches.Add(Match);
             SetSet();
-            TogglePlayerTurnIndicator(true);
-            ToggleLegStartedIndicator(Player1);
             SetSetText();
             SetLegText();
         }
@@ -250,8 +247,8 @@ namespace Dartin.ViewModels
 
         public void SetLeg()
         {
+            _currentLeg = new Leg(new BindingList<Turn>());
 
-            _currentLeg = new Leg(new BindingList<Turn>(), Player1.Id);
             Match.Sets.Last().Legs.Add(_currentLeg);
         }
         
@@ -313,49 +310,59 @@ namespace Dartin.ViewModels
 
         public Turn StartPlayerTurn()
         {
+            var legs = Match.Sets.Last().Legs;
             if (!_currentLeg.Turns.Any() || !_currentLeg.Turns.Last().Valid || _currentLeg.Turns.Last().WinningTurn || _currentLeg.Turns.Last().Tosses.Count == 3)
             {
-                if (_currentLeg.Turns.Count % 2 == 0)
+                if (!_currentLeg.Turns.Any() && legs.Count >= 2 && legs[legs.Count - 2].StartingPlayerId != Guid.Empty)
+                {
+                    var lastStartingPlayer = legs[legs.Count - 2].StartingPlayerId;
+                    if (lastStartingPlayer == Player1.Id)
+                        _currentLeg.Turns.Add(new Turn(Player2, new BindingList<Toss>()));
+                    else
+                        _currentLeg.Turns.Add(new Turn(Player1, new BindingList<Toss>()));
+                }
+                else if (!_currentLeg.Turns.Any() && legs.Last().StartingPlayerId == Guid.Empty)
                 {
                     _currentLeg.Turns.Add(new Turn(Player1, new BindingList<Toss>()));
-                    TogglePlayerTurnIndicator(false);
+                }
+                else if (_currentLeg.Turns.Last().PlayerId == Player2.Id)
+                {
+                    _currentLeg.Turns.Add(new Turn(Player1, new BindingList<Toss>()));
                 }
                 else
                 {
                     _currentLeg.Turns.Add(new Turn(Player2, new BindingList<Toss>()));
-                    TogglePlayerTurnIndicator();
                 }
+                TogglePlayerTurnIndicator();
             }
 
             return GetCurrentTurn();
         }
 
-        public void TogglePlayerTurnIndicator(bool playerOneActive = true)
+        public void TogglePlayerTurnIndicator()
         {
-            if (playerOneActive)
-            {
-                PlayerOneTurnIndicatorIsVisible = Visibility.Visible;
-                PlayerTwoTurnIndicatorIsVisible = Visibility.Hidden;
-            }
-            else
+            if (PlayerOneTurnIndicatorIsVisible == Visibility.Visible)
             {
                 PlayerOneTurnIndicatorIsVisible = Visibility.Hidden;
                 PlayerTwoTurnIndicatorIsVisible = Visibility.Visible;
             }
-        }
-        public void ToggleLegStartedIndicator(Player playerStarted)
-        {
-            if (playerStarted == Player1)
+            else
             {
-                lastStartingPlayer = Player1;
-                PlayerOneStartedLegIndicatorIsVisible = Visibility.Visible;
-                PlayerTwoStartedLegIndicatorIsVisible = Visibility.Hidden;
+                PlayerOneTurnIndicatorIsVisible = Visibility.Visible;
+                PlayerTwoTurnIndicatorIsVisible = Visibility.Hidden;
+            }
+        }
+        public void ToggleLegStartedIndicator()
+        {
+            if (PlayerOneStartedLegIndicatorIsVisible == Visibility.Visible)
+            {
+                PlayerOneStartedLegIndicatorIsVisible = Visibility.Hidden;
+                PlayerTwoStartedLegIndicatorIsVisible = Visibility.Visible;
             }
             else
             {
-                lastStartingPlayer = Player2;
-                PlayerOneStartedLegIndicatorIsVisible = Visibility.Hidden;
-                PlayerTwoStartedLegIndicatorIsVisible = Visibility.Visible;
+                PlayerOneStartedLegIndicatorIsVisible = Visibility.Visible;
+                PlayerTwoStartedLegIndicatorIsVisible = Visibility.Hidden;
             }
         }
 
@@ -377,14 +384,7 @@ namespace Dartin.ViewModels
                     currentTurn.Tosses.Add(toss);
                     currentTurn.WinningTurn = true;
                     _currentLeg.WinnerId = activePlayer.Id;
-                    if (lastStartingPlayer == Player1)
-                    {
-                        ToggleLegStartedIndicator(Player2);
-                    }
-                    else
-                    {
-                        ToggleLegStartedIndicator(Player1);
-                    }
+                    ToggleLegStartedIndicator();
                 }
                 else if (
                     (ComparePlayerScoreWithScoreToWinLeg(currentPlayerScore, toss) && toss.Multiplier != 2) ||
@@ -462,7 +462,7 @@ namespace Dartin.ViewModels
                     Player2Remainders.RemoveLast();
                     Player2Turns.RemoveLast();
                 }
-                TogglePlayerTurnIndicator(player == Player1);
+                TogglePlayerTurnIndicator();
             }
         }
 
@@ -533,7 +533,7 @@ namespace Dartin.ViewModels
             else
             {
                 Player2Remainders = new BindableCollection<int>(_currentLeg.GetRemaindersForPlayer(Player2, Match.Configuration.ScoreToWinLeg));
-            }
+        }
         }
 
         /// <summary>
