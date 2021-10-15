@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <None Remove="Resources\indicator.png" />
+    <None Remove="Resources\turnindicator-left.png" />
+    <None Remove="Resources\turnindicator-right.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +21,12 @@
 
   <ItemGroup>
     <Resource Include="Resources\indicator.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\turnindicator-left.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\turnindicator-right.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

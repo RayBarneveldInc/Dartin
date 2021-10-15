@@ -33,6 +33,7 @@
 
             <Label Grid.Row="1" Grid.Column="0" Content="{Binding Player1.Name}" HorizontalAlignment="Left" Padding="12" FontSize="16"></Label>
             <Image Grid.Row="1" Grid.Column="0" Visibility="{Binding PlayerOneTurnIndicatorIsVisible}" Source="/Resources/indicator.png" Height="10" Width="10" />
+            <Image Grid.Row="1" Grid.Column="0" Visibility="{Binding PlayerOneStartedLegIndicatorIsVisible}" Source="/Resources/turnindicator-left.png" Height="10" Width="10" Margin="30,0,0,0"/>
 
             <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
@@ -57,6 +58,7 @@
             
             <Label Grid.Row="1" Grid.Column="2" Content="{Binding Player2.Name}" HorizontalAlignment="Right" Padding="12" FontSize="16"></Label>
             <Image Grid.Row="1" Grid.Column="2" Visibility="{Binding PlayerTwoTurnIndicatorIsVisible}" Source="/Resources/indicator.png" Height="10" Width="10" />
+            <Image Grid.Row="1" Grid.Column="2" Visibility="{Binding PlayerTwoStartedLegIndicatorIsVisible}" Source="/Resources/turnindicator-right.png" Height="10" Width="10" Margin="0,0,30,0" />
 
             <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center">
                 <Grid MinWidth="320">
