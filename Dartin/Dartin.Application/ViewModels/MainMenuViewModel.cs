@@ -6,12 +6,7 @@ namespace Dartin.ViewModels
     class MainMenuViewModel : Screen, IViewModel
     {
         public string ViewName => throw new System.NotImplementedException();
-
-        public void StartGame()
-        {
-            ScreenManager.GetInstance().SwitchViewModel(new MatchDefinitionViewModel());
-        }
-
+        
         public void Matches()
         {
             // TODO: wait for matchesviewmodel implementation
