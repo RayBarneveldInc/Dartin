@@ -96,6 +96,8 @@ namespace Dartin.ViewModels
 
         public string ViewName => nameof(ScoreboardViewModel);
         public static BrushColorConverter BrushColorConverter = new BrushColorConverter();
+        private MatchDefinition currentObject;
+
         public Player Player1 => Match.Players.First();
         public Player Player2 => Match.Players[1];
         public BindableCollection<Turn> Player1Turns
@@ -215,6 +217,21 @@ namespace Dartin.ViewModels
             SetSet();
             TogglePlayerTurnIndicator(true);
             SetSetText();
+            SetLegText();
+        }
+
+        public ScoreboardViewModel(MatchDefinition match)
+        {
+            Match = match;
+
+            State.Instance.Matches.Add(Match);
+
+            SetSet();
+
+            TogglePlayerTurnIndicator(true);
+
+            SetSetText();
+
             SetLegText();
         }
 

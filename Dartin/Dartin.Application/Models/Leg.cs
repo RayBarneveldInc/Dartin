@@ -16,9 +16,7 @@ namespace Dartin.Models
         {
             List<int> turnScores = new List<int>();
             if (!Turns.Any())
-            {
                 return turnScores;
-            }
 
             var turns = (onlyValid) ? Turns.Where(turn => turn.PlayerId == player.Id && turn.Valid).ToList() : Turns.Where(turn => turn.PlayerId == player.Id).ToList();
             int lastValidRemainder = maxScore;
@@ -28,7 +26,7 @@ namespace Dartin.Models
                 if (turns[i].Valid)
                     lastValidRemainder = remainder;
 
-                turnScores.Add(remainder);
+                turnScores.Add(lastValidRemainder);
             }
             return turnScores;
         }

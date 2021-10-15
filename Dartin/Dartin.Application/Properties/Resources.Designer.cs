@@ -72,10 +72,10 @@ namespace Dartin.Properties {
         ///T20 	= Triple 20
         ///D19 	= Double 19
         ///16  	= Single 16
-        ///bull 	= Bullseye
+        ///Bull/bull 	= Bullseye
+        ///Obull/obull	= Outer Bullseye
         ///50	= Bullseye 
-        ///obull	= Outer Bullseye
-        ///20 	= Outer Bullseye.
+        ///25 	= Outer Bullseye.
         /// </summary>
         public static string HelpText {
             get {
