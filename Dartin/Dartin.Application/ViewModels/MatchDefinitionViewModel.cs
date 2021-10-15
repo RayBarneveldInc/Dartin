@@ -88,6 +88,34 @@ namespace Dartin.ViewModels
 
         public void SaveGameAndExit()
         {
+            if (SetMatchDefinition())
+            {
+                ScreenManager.GetInstance().SwitchViewModel(new MatchesViewModel(State.Instance.Matches));
+            }
+            else
+            {
+                // TODO Show error dialog OF knop disable
+            }
+        }
+
+        public void SaveAndStartGame()
+        {
+            if (SetMatchDefinition())
+            {
+                ScreenManager.GetInstance().SwitchViewModel(new ScoreboardViewModel(OriginalMatch));
+            }
+            else
+            {
+                // TODO Show error dialog OF knop disable
+            }
+
+        }
+
+        private bool SetMatchDefinition()
+        {
+            if (SelectedPlayerOne == SelectedPlayerTwo)
+                return false;
+
             OriginalMatch.Date = CurrentObject.Date;
             OriginalMatch.Players.Add(SelectedPlayerOne);
             OriginalMatch.Players.Add(SelectedPlayerTwo);
@@ -96,24 +124,11 @@ namespace Dartin.ViewModels
             OriginalMatch.LegsToWinSet = CurrentObject.SetsToWin;
 
             if (IsChecked301)
-            {
                 OriginalMatch.ScoreToWinLeg = 301;
-            }
             else if (IsChecked501)
-            {
                 OriginalMatch.ScoreToWinLeg = 501;
-            }
-            ScreenManager.GetInstance().SwitchViewModel(new MatchesViewModel(State.Instance.Matches));
-        }
 
-        public void SaveAndStartGame()
-        {
-            // Hier moet dan het spel gestart worden
-            //if (OriginalMatch.Equals(null))
-            //    State.Instance.Matches.Add(CurrentObject);
-            //else
-            //    OriginalMatch = CurrentObject;
-
+            return true;
         }
 
         public void DeleteMatch()
