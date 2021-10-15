@@ -203,65 +203,7 @@
                     <TextBlock Grid.Row="4" Text="{Binding player2Stats.AvgScoreFirstNineDarts}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                 </Grid>
 
-                <!-- row 2 -->
-
-                <!--<Grid Grid.Row="1" Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Grid.Row="0" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="2" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="3" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="4" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="5" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                </Grid>
-                <Grid Grid.Row="1" Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Grid.Row="0" Text="Highest Finish" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="Average Finish" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="2" Text="50+ finishes" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="3" Text="60+ finishes" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="4" Text="80+ finishes" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="5" Text="100+ finishes" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                </Grid>
-
-                <Grid Grid.Row="1" Grid.Column="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Grid.Row="0" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="2" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="3" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="4" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="5" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                </Grid>-->
-
-                <!-- row 3 -->
-
-
+                <!--row 2-->
                 <Grid Grid.Row="1" Grid.Column="0">
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>

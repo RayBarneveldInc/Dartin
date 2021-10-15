@@ -21,7 +21,7 @@ namespace Dartin.Models
         public int nineDarters { get; set; }
         public MatchStatsPlayer(MatchDefinition playerStats)
         {
-            TotalWins(playerStats);
+            //TotalWins(playerStats);
             MatchAverages(playerStats);
         }
 

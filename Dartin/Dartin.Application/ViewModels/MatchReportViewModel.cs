@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Newtonsoft.Json;
+using System.Windows;
 
 namespace Dartin.ViewModels
 {
@@ -24,7 +25,6 @@ namespace Dartin.ViewModels
         public MatchDefinition MatchInfo2 => SetsPerPlayer(1);
         public MatchStatsPlayer player1Stats { get; set; }
         public MatchStatsPlayer player2Stats { get; set; }
-
 
         public void OnExit()
         {
@@ -58,9 +58,9 @@ namespace Dartin.ViewModels
             return deepcopy;
         }
 
-        public MatchReportViewModel(MatchDefinition match)
+        public MatchReportViewModel()
         {
-            _currentMatch = match;
+            _currentMatch = State.Instance.Matches[0];
             player1Stats = new MatchStatsPlayer(MatchInfo1);
             player2Stats = new MatchStatsPlayer(MatchInfo2);
 
@@ -70,7 +70,7 @@ namespace Dartin.ViewModels
 
         public string PlayerString(int id)
         {
-                return _currentMatch.Players[id].Name;
+            return _currentMatch.Players[id].Name;
         }
 
 

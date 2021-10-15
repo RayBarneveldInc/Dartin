@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Text;
 using Dartin.Extensions;
 using System.Linq;
+using System.Windows;
 
 namespace Dartin.Models
 {
@@ -13,6 +14,7 @@ namespace Dartin.Models
         private BindingList<Turn> _turns;
         public int Index { get; set; }
         public string LegToString => String.Format("Leg {0} - {1} turns", Index + 1, Turns.Count);
+
         public Player Winner { get; set; } = null;
 
         public int GetTotalScoreForPlayer(Player player) => _turns.Where(turn => turn.PlayerId == player.Id && turn.Valid).Sum(turn => turn.Score);
