@@ -121,7 +121,6 @@ namespace Dartin.ViewModels
             OriginalMatch.Players.Add(SelectedPlayerTwo);
             OriginalMatch.LegsToWinSet = CurrentObject.LegsToWinSet;
             OriginalMatch.SetsToWin = CurrentObject.SetsToWin;
-            OriginalMatch.LegsToWinSet = CurrentObject.SetsToWin;
 
             if (IsChecked301)
                 OriginalMatch.ScoreToWinLeg = 301;
