@@ -40,6 +40,14 @@ namespace Dartin.Models
             FirstName = firstName;
             LastName = lastName;
         }
+
+        [JsonConstructor]
+        public Player(Guid id, string firstName, string lastName)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+        }
     }
 
 }
