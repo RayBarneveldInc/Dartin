@@ -165,11 +165,11 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="{Binding TotalLegsWonP1}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="{Binding TotalSetsWonP1}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="2" Text="{Binding MatchAverageP1}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="3" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="4" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="0" Text="{Binding player1Stats.setsWon}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="{Binding player1Stats.legsWon}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="2" Text="{Binding player1Stats.avgScore}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="3" Text="{Binding player2Stats.nineDarters}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="4" Text="{Binding player1Stats.AvgScoreFirstNineDarts}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -180,10 +180,10 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Legs Won" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="Sets Won" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="0" Text="Sets Won" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="Legs Won" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                     <TextBlock Grid.Row="2" Text="Match Avg" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="3" Text="Best leg won" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="3" Text="Nine Darters" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                     <TextBlock Grid.Row="4" Text="First 9 avg" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                 </Grid>
 
@@ -196,11 +196,11 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="{Binding TotalLegsWonP2}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="{Binding TotalSetsWonP2}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="2" Text="{Binding MatchAverageP2}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="3" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="4" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="0" Text="{Binding player2Stats.setsWon}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="{Binding player2Stats.legsWon}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="2" Text="{Binding player2Stats.avgScore}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="3" Text="{Binding player2Stats.nineDarters}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="4" Text="{Binding player2Stats.AvgScoreFirstNineDarts}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                 </Grid>
 
                 <!-- row 2 -->
@@ -270,18 +270,14 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="{Binding TotalDartsThrownP1}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="2" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="3" Text="{Binding TotalScoreAboveHundredP1}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="4" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="5" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="6" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="7" Text="{Binding TotalThreeDartersP1}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="0" Text="{Binding player1Stats.dartsThrown}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="{Binding player1Stats.hundredPlus}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="2" Text="{Binding player1Stats.hundredTwentyPlus}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="3" Text="{Binding player1Stats.hundredFourtyPlus}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="4" Text="{Binding player1Stats.hundredSixtyPlus}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="5" Text="{Binding player1Stats.hundredEighty}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                 </Grid>
                 <Grid Grid.Row="1" Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -291,18 +287,14 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Text="Total darts" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="60+ scores" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="2" Text="80+ scores" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="3" Text="100+ scores" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="4" Text="120+ scores" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="5" Text="140+ scores" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="6" Text="160+ scores" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="7" Text="180's" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="100+ scores" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="2" Text="120+ scores" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="3" Text="140+ scores" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="4" Text="160+ scores" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="5" Text="180's" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="2">
@@ -313,18 +305,14 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="{Binding TotalDartsThrownP2}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="2" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="3" Text="{Binding TotalScoreAboveHundredP2}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="4" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="5" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="6" Text="tba" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="7" Text="{Binding TotalThreeDartersP2}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="0" Text="{Binding player2Stats.dartsThrown}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="{Binding player2Stats.hundredPlus}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="2" Text="{Binding player2Stats.hundredTwentyPlus}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="3" Text="{Binding player2Stats.hundredFourtyPlus}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="4" Text="{Binding player2Stats.hundredSixtyPlus}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="5" Text="{Binding player2Stats.hundredEighty}" Foreground="White" HorizontalAlignment="Center" FontSize="14"></TextBlock>
                 </Grid>
             </Grid>
         </Grid>

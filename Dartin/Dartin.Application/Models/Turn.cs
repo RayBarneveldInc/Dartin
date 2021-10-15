@@ -14,7 +14,8 @@ namespace Dartin.Models
         private bool _winningTurn = false;
         private Guid _playerId;
         private BindingList<Toss> _tosses;
-
+        public string TurnToString => String.Format("Turn {0} - total score: {1}", Index + 1, Score);
+        public int Index { get; set; }
         public int Score => Tosses.Sum(toss => toss.TotalScore);
 
         public bool Valid {
@@ -57,22 +58,9 @@ namespace Dartin.Models
 
         public Turn(Player player, BindingList<Toss> tosses)
         {
-            PlayerId = player.Id;
+            if (player == null) PlayerId = Guid.Empty; else PlayerId = player.Id;
+
             Tosses = tosses;
         }
-    public class Turn
-    {
-        public string TurnToString => String.Format("Turn {0} - total score: {1}", Index + 1, TurnScore);
-        public int Index{ get; set; }
-        public int TurnScore { get; set; }
-        public Player Player { get; set; }
-        public List<Toss> Tosses { get; set; }
-
-        public Turn(Guid playerId, BindingList<Toss> tosses)
-        {
-            PlayerId = playerId;
-            Tosses = tosses;
-        }
-
     }
 }

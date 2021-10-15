@@ -11,6 +11,10 @@ namespace Dartin.Models
     public class Leg : AHasWinner
     {
         private BindingList<Turn> _turns;
+        public int Index { get; set; }
+        public string LegToString => String.Format("Leg {0} - {1} turns", Index + 1, Turns.Count);
+        public Player Winner { get; set; } = null;
+
         public int GetTotalScoreForPlayer(Player player) => _turns.Where(turn => turn.PlayerId == player.Id && turn.Valid).Sum(turn => turn.Score);
         public List<int> GetRemaindersForPlayer(Player player, int maxScore, bool onlyValid = false)
         {
@@ -32,11 +36,8 @@ namespace Dartin.Models
             }
             return turnScores;
         }
-        // 501 of 301
-        public int Index { get; set; }
-        public string LegToString => String.Format("Leg {0} - {1} turns", Index + 1, Turns.Count);
-        public List<Turn> Turns { get; set; }
-        public Player Winner { get; private set; } = null;
+
+
 
         public BindingList<Turn> Turns
         {

@@ -9,7 +9,8 @@ namespace Dartin.Models
     {
         private int _score;
         private int _multiplier;
-
+        public int Index { get; set; }
+        public string TossToString => String.Format("Toss {0} - {1}x{2}", Index + 1, Multiplier, Score);
         public int Score
         {
             get => _score;
@@ -37,11 +38,5 @@ namespace Dartin.Models
             Score = score;
             Multiplier = multiplier;
         }
-    public class Toss
-    {
-        public int Index { get; set; }
-        public int Score { get; set; }
-        public int Multiplier { get; set; }
-        public string TossToString => String.Format("Toss {0} - {1}x{2}", Index + 1, Multiplier, Score);
     }
 }

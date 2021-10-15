@@ -17,146 +17,14 @@ namespace Dartin.ViewModels
         private MatchDefinition _currentMatch;
 
         public string ViewName { get; }
+        public MatchDefinition Match => _currentMatch;
         public string PlayerOne => PlayerString(0);
         public string PlayerTwo => PlayerString(1);
         public MatchDefinition MatchInfo1 => SetsPerPlayer(0);
         public MatchDefinition MatchInfo2 => SetsPerPlayer(1);
-        public BindingList<MatchDefinition> ExistingMatches => State.Instance.Matches;
-        public MatchDefinition Match => _currentMatch;
+        public MatchStatsPlayer player1Stats { get; set; }
+        public MatchStatsPlayer player2Stats { get; set; }
 
-        public int TotalSetsWonP1 => TotalSetsWon(MatchInfo1);
-        public int TotalSetsWonP2 => TotalSetsWon(MatchInfo2);
-        public int TotalLegsWonP1 => TotalLegsWon(MatchInfo1);
-        public int TotalLegsWonP2 => TotalLegsWon(MatchInfo2);
-        public int MatchAverageP1 => MatchAverage(MatchInfo1);
-        public int MatchAverageP2 => MatchAverage(MatchInfo2);
-        public int TotalDartsThrownP1 => TotalDartsThrown(0);
-        public int TotalDartsThrownP2 => TotalDartsThrown(1);
-        public int TotalThreeDartersP1 => TotalThreeDarters(MatchInfo1);
-        public int TotalThreeDartersP2 => TotalThreeDarters(MatchInfo2);
-        public int TotalScoreAboveHundredP1 => TotalScoreByAmountPlusTwenty(MatchInfo1, 100);
-        public int TotalScoreAboveHundredP2 => TotalScoreByAmountPlusTwenty(MatchInfo2, 100);
-
-
-        public int MatchCount => State.Instance.Matches.Count;
-
-        public MatchDefinition getMatchDef(int playerId)
-        {
-            MatchDefinition match;
-            if (playerId == 0) match = MatchInfo1; else match = MatchInfo2;
-            return match;
-        }
-
-        public int TotalDartsThrown(int playerId)
-        {
-            MatchDefinition match = getMatchDef(playerId);
-            int Total = 0;
-
-            match.Sets.ForEach(s => s.Legs.ForEach(l => l.Turns.ForEach(t => Total += t.Tosses.Count)));
-
-            return Total;
-        }
-
-        public int TotalLegsWon(MatchDefinition match)
-        {
-            Player Player = match.Players[0];
-            int Total = 0;
-
-            match.Sets.ForEach(s =>
-            {
-                Total += s.Legs.FindAll(l =>
-                {
-                    if (l.Winner != null && l.Winner.Name == Player.Name)
-                    {
-                        return true;
-                    }
-                    return false;
-                }).Count;
-
-            });
-
-            return Total;
-        }
-
-        public int TotalSetsWon(MatchDefinition match)
-        {
-            Player Player = match.Players[0];
-
-            return match.Sets.FindAll(s =>
-            {
-                if (s.Winner != null && s.Winner.Name == Player.Name)
-                {
-                    return true;
-                }
-                return false;
-            }).Count;
-        }
-
-        public int TotalThreeDarters(MatchDefinition match)
-        {
-            int Total = 0;
-            int TempScore = 0;
-
-            match.Sets.ForEach(s => s.Legs.ForEach(l => l.Turns.ForEach(t =>
-            {
-                t.Tosses.ForEach(t => TempScore += (t.Multiplier * t.Score));
-
-                if (TempScore == 180)
-                {
-                    TempScore = 0;
-                    Total++;
-                }
-            })));
-
-            return Total;
-        }
-
-        public int TotalScoreByAmountPlusTwenty(MatchDefinition match, int number)
-        {
-            int Total = 0;
-            int TempScore = 0;
-
-            match.Sets.ForEach(s => s.Legs.ForEach(l => l.Turns.ForEach(t =>
-            {
-                t.Tosses.ForEach(t => TempScore += (t.Multiplier * t.Score));
-
-                if (TempScore >= number && TempScore <= (TempScore + 20))
-                {
-                    TempScore = 0;
-                    Total++;
-                }
-            })));
-
-            return Total;
-        }
-
-        public int MatchAverage(MatchDefinition match)
-        {
-            int TotalThrows = 0;
-            int TotalScore = 0;
-
-            match.Sets.ForEach(s => s.Legs.ForEach(l => l.Turns.ForEach(t => t.Tosses.ForEach(to =>
-            {
-                TotalThrows++;
-                TotalScore += (to.Multiplier * to.Score);
-            }))));
-
-            return TotalScore / TotalThrows;
-        }
-
-        public void ListViewSelection(object sender, MouseButtonEventArgs e)
-        {
-            var item = sender as MatchDefinition;
-            if (item != null)
-            {
-                changeMatch(item);
-            }
-        }
-
-        public void changeMatch(MatchDefinition selectedMatch)
-        {
-            _currentMatch = selectedMatch;
-        }
 
         public void OnExit()
         {
@@ -175,13 +43,12 @@ namespace Dartin.ViewModels
                 s.Index = deepcopy.Sets.IndexOf(s);
                 foreach (Leg l in s.Legs)
                 {
-                    // TODO -> aanpassen naar ID
-                    l.Turns = l.Turns.FindAll(t => t.Player.Name == player.Name);
+                    l.Turns = new BindingList<Turn>(l.Turns.Where(t => t.PlayerId.Equals(player.Id)).Cast<Turn>().ToList());
                     l.Index = s.Legs.IndexOf(l);
                     foreach (Turn t in l.Turns)
                     {
                         t.Index = l.Turns.IndexOf(t);
-                        foreach(Toss to in t.Tosses)
+                        foreach (Toss to in t.Tosses)
                         {
                             to.Index = t.Tosses.IndexOf(to);
                         }
@@ -191,75 +58,19 @@ namespace Dartin.ViewModels
             return deepcopy;
         }
 
-        public MatchReportViewModel()
+        public MatchReportViewModel(MatchDefinition match)
         {
-            _currentMatch = State.Instance.Matches[1];
-            //_currentMatch = new MatchDefinition();
-            //Player p1 = new Player();
-            //Player p2 = new Player();
-            //p1.Name = "Jacco";
-            //p2.Name = "Tjeerd";
-            //_currentMatch.Players.Add(p1);
-            //_currentMatch.Players.Add(p2);
-            
-            //Toss t1 = new Toss();
-            //t1.Score = 20;
-            //t1.Multiplier = 3;
+            _currentMatch = match;
+            player1Stats = new MatchStatsPlayer(MatchInfo1);
+            player2Stats = new MatchStatsPlayer(MatchInfo2);
 
-            //Toss t2 = new Toss();
-            //t2.Score = 20;
-            //t2.Multiplier = 2;
-
-            //Toss t3 = new Toss();
-            //t3.Score = 20;
-            //t3.Multiplier = 1;
-
-            //Turn tu = new Turn();
-            //tu.Player = p1;
-            //tu.TurnScore = 120;
-            //tu.Tosses.Add(t1);
-            //tu.Tosses.Add(t2);
-            //tu.Tosses.Add(t3);
-
-            //Turn tu2 = new Turn();
-            //tu2.Player = p2;
-            //tu2.TurnScore = 120;
-            //tu2.Tosses.Add(t1);
-            //tu2.Tosses.Add(t2);
-            //tu2.Tosses.Add(t3);
-
-            //Leg l = new Leg();
-            //l.Turns.Add(tu);
-            //l.Turns.Add(tu2);
-            ////l.Winner.Name = p2.Name;
-
-            //Set s = new Set();
-            //s.Legs = new List<Leg>();
-            //s.LegsToWinSet = 1;
-
-            //s.Legs.Add(l);
-            //s.Winner = p2;
-
-            //_currentMatch.Name = "Lmfao";
-            //_currentMatch.Sets.Add(s);
-
-
-            //State.Instance.Matches.Add(_currentMatch);
         }
 
 
 
         public string PlayerString(int id)
         {
-            if (_currentMatch != null)
-            {
                 return _currentMatch.Players[id].Name;
-
-            }
-            else
-            {
-                return "Willem" + id;
-            }
         }
 
 
