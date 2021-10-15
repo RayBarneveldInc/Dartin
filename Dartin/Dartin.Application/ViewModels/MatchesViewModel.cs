@@ -8,13 +8,64 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using Dartin.Managers;
 using Microsoft.Win32;
+using System.Collections.Generic;
 
 namespace Dartin.ViewModels
 {
     public class MatchesViewModel : Screen, IViewModel
     {
-        private int _selectedIndex;
         private string _searchText;
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                NotifyOfPropertyChange(() => SearchText);
+                FilterMatchesOnPlayerName(_searchText);
+            }
+        }
+        private int _selectedIndex;
+        public int SelectedIndex
+        {
+            get => _selectedIndex;
+            set
+            {
+                _selectedIndex = value;
+                NotifyOfPropertyChange(() => SelectedIndex);
+            }
+        }
+        private DateTime _selectedFilterDate;
+        public DateTime SelectedFilterDate
+        {
+            get => _selectedFilterDate;
+            set
+            {
+                _selectedFilterDate = value;
+                NotifyOfPropertyChange(() => SelectedFilterDate);
+                FilterMatchesOnDate(_selectedFilterDate);
+            }
+        }
+        private bool _playerFilterSelected;
+        public bool PlayerFilterSelected
+        {
+            get => _playerFilterSelected;
+            set
+            {
+                _playerFilterSelected = value;
+                NotifyOfPropertyChange(() => PlayerFilterSelected);
+            }
+        }
+        private bool _dateFilterSelected;
+        public bool DateFilterSelected
+        {
+            get => _dateFilterSelected;
+            set
+            {
+                _dateFilterSelected = value;
+                NotifyOfPropertyChange(() => DateFilterSelected);
+            }
+        }
         private BindableCollection<MatchDefinition> _currentCollection;
         public BindableCollection<MatchDefinition> CurrentCollection
         {
@@ -29,20 +80,34 @@ namespace Dartin.ViewModels
 
         public MatchesViewModel(BindingList<MatchDefinition> matches)
         {
+            SelectedFilterDate = DateTime.Now.Date;
             OriginalCollection = matches;
 
             CurrentCollection = new BindableCollection<MatchDefinition>();
             foreach (MatchDefinition matchDefinition in OriginalCollection)
-            { 
+            {
                 CurrentCollection.Add(matchDefinition);
             }
         }
-
-        private void FilterMatches(string filter)
+        private void FilterMatchesOnDate(DateTime selectedFilterDate)
+        {
+            if (DateFilterSelected)
+            {
+                CurrentCollection.Clear();
+                foreach (MatchDefinition match in OriginalCollection)
+                {
+                    if (match.Date == selectedFilterDate)
+                    {
+                        CurrentCollection.Add(match);
+                    }
+                }
+            }
+        }
+        private void FilterMatchesOnPlayerName(string filter)
         {
             if (string.IsNullOrEmpty(filter))
             {
-                CurrentCollection = new BindableCollection<MatchDefinition>();
+                CurrentCollection.Clear();
                 foreach (MatchDefinition matchDefinition in OriginalCollection)
                 {
                     CurrentCollection.Add(matchDefinition);
@@ -50,35 +115,23 @@ namespace Dartin.ViewModels
             }
             else
             {
-                CurrentCollection = OriginalCollection.Where(match => match.Name.Contains(filter, StringComparison.OrdinalIgnoreCase)) as BindableCollection<MatchDefinition>;
-            }
-        }
-
-        public string SearchText
-        {
-            get => _searchText;
-            set
-            {
-                _searchText = value;
-                FilterMatches(_searchText);
-            }
-        }
-
-        public int SelectedIndex
-        {
-            get => _selectedIndex;
-            set
-            {
-                _selectedIndex = value;
-                NotifyOfPropertyChange(() => SelectedIndex);
+                CurrentCollection.Clear();
+                foreach (MatchDefinition match in OriginalCollection)
+                {
+                    if (match.Name.Contains(filter, StringComparison.OrdinalIgnoreCase))
+                    {
+                        CurrentCollection.Add(match);
+                    }
+                }
             }
         }
 
         public string ViewName { get; }
 
+        #region Buttons
         public void OnExit()
         {
-            throw new NotImplementedException();
+            ScreenManager.GetInstance().SwitchViewModel(new MainMenuViewModel());
         }
         public void Edit()
         {
@@ -89,16 +142,22 @@ namespace Dartin.ViewModels
             }
             catch
             {
-                MessageBox.Show("No match was selected to be edited!", "Edit Match Error", MessageBoxButton.OK, MessageBoxImage.Warning); 
+                MessageBox.Show("No match was selected to be edited!", "Edit Match Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
         public void MoreInfo()
         {
-            MatchDefinition match = CurrentCollection[SelectedIndex];
-
-            // Hier moet die screen van Tjeerd en Jacco
-            //ScreenManager.GetInstance().SwitchViewModel(new Matches(new MatchDefinition()));
+            try
+            {
+                MatchDefinition match = CurrentCollection[SelectedIndex];
+                // Hier moet die screen van Tjeerd en Jacco
+                //ScreenManager.GetInstance().SwitchViewModel(new Matches(new MatchDefinition()));
+            }
+            catch
+            {
+                MessageBox.Show("No match was selected to be edited!", "More info Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         public void Add()
@@ -109,6 +168,6 @@ namespace Dartin.ViewModels
         {
             ScreenManager.GetInstance().SwitchViewModel(new MatchDefinitionViewModel(State.Instance.Matches.AddNew()));
         }
-
+        #endregion
     }
 }

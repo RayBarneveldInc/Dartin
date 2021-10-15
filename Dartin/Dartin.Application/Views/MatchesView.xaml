@@ -5,32 +5,37 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dartin.Views"
              xmlns:models="clr-namespace:Dartin.Models"
+             xmlns:conv ="clr-namespace:Dartin.Converters"
              mc:Ignorable="d" 
              Background="White"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
 
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
         </Grid.RowDefinitions>
-        <!--PlayerList-->
-        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding CurrentCollection}" SelectedIndex="{Binding SelectedIndex}">
+
+        <RadioButton Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="Filter op speler" GroupName="Filter" IsChecked="{Binding PlayerFilterSelected}"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Text ="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding PlayerFilterSelected, Converter={conv:BoolInverterConverter}}"/>
+        <RadioButton Grid.Row="0" Grid.Column="2" VerticalAlignment="Center"  Content="Filter op datum" GroupName="Filter" IsChecked="{Binding DateFilterSelected}"/>
+        <DatePicker Grid.Row="0" Grid.Column="3" SelectedDate="{Binding SelectedFilterDate}" Visibility="{Binding DateFilterSelected, Converter={conv:BoolToVisibilityConverter}}"/>
+
+        <ListBox Grid.Row="1" Grid.ColumnSpan="4" ItemsSource="{Binding CurrentCollection}" SelectedIndex="{Binding SelectedIndex}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="g_1"/>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="g_2"/>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="g_3"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="{Binding Name}" Grid.Column="0"/>
                         <Label Content="{Binding BestOfDescription}" Grid.Column="1"/>
@@ -40,19 +45,20 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <TextBox Text="{Binding SearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-        <!--Buttons-->
-        <Grid Grid.Row="2" Grid.ColumnSpan="2">
+        <Grid Grid.Row="2" Grid.ColumnSpan="4">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="OnExit" Grid.Column="0" Content="Back"></Button>
-            <Button x:Name="MoreInfo" Grid.Column="0" Content="More info"></Button>
-            <Button x:Name="Edit" Grid.Column="1" Content="Edit"></Button>
-            <Button x:Name="Add" Grid.Column="2" Content="Add"></Button>
-            <Button x:Name="StartMatch" Grid.Column="2" Content="Start match"></Button>
+            <Button x:Name="MoreInfo" Grid.Column="1" Content="More info"></Button>
+            <Button x:Name="Edit" Grid.Column="2" Content="Edit"></Button>
+            <Button x:Name="Add" Grid.Column="3" Content="Add"></Button>
+            <Button x:Name="StartMatch" Grid.Column="4" Content="Start match"></Button>
         </Grid>
+        
     </Grid>
 </UserControl>

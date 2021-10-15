@@ -34,12 +34,9 @@ namespace Dartin.Models
 
         public string Name => FirstName + " " + LastName;
 
-        public Player(string firstName, string lastName)
+        public Player()
         {
             Id = Guid.NewGuid();
-            FirstName = firstName;
-            LastName = lastName;
         }
     }
-
 }

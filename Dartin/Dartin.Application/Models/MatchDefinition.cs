@@ -1,10 +1,7 @@
 ﻿using Dartin.Abstracts;
-using Dartin.Extensions;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using Dartin.Abstracts;
 
 namespace Dartin.Models
 {
@@ -12,7 +9,6 @@ namespace Dartin.Models
     {
         public string Name => GetMatchName();
         public string BestOfDescription => GetBestOfDescription();
-
         private DateTime _date;
         public DateTime Date
         {
@@ -93,9 +89,9 @@ namespace Dartin.Models
             }
         }
 
-        public MatchDefinition(string name, DateTime date, BindingList<Player> players, BindingList<Set> sets, MatchConfiguration configuration)
+        public MatchDefinition()
         {
-            Date = DateTime.Now;
+            Date = DateTime.Now.Date;
             Players = new BindingList<Player>();
             Sets = new BindingList<Set>();
         }
@@ -115,7 +111,7 @@ namespace Dartin.Models
             if (Players.Count > 0)
             {
                 return string.Format(CultureInfo.CurrentCulture,
-                    "{0} vs {1}", this.Players[0].Name, this.Players[1].Name); // needs static resources
+                    "{0} vs {1}", this.Players[0].Name, this.Players[1].Name);
             }
             else
             {
