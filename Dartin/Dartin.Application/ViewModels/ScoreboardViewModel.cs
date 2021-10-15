@@ -231,29 +231,12 @@ namespace Dartin.ViewModels
             }
         }
 
-        public ScoreboardViewModel()
-        {
-            State.Instance.Players.Add(new Player("Thimo", "de Zwart"));
-            State.Instance.Players.Add(new Player("Jasper", "van der Lugt"));
-            Match = new MatchDefinition("Premier League Final 2017", DateTime.Today, new BindingList<Player>() { State.Instance.Players[0], State.Instance.Players[1] }, new BindingList<Set>(), new MatchConfiguration(5, 3, 501));
-            State.Instance.Matches.Add(Match);
-            SetSet();
-            SetSetText();
-            SetLegText();
-        }
-
         public ScoreboardViewModel(MatchDefinition match)
         {
             Match = match;
-
             State.Instance.Matches.Add(Match);
-
             SetSet();
-
-            TogglePlayerTurnIndicator(true);
-
             SetSetText();
-
             SetLegText();
         }
 
