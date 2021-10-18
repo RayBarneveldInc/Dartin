@@ -23,4 +23,4 @@ a main menu will appear from which you can choose to add a new match, look throu
 Press F1 if you'd like additional help regarding filling in matchdata etc.
 
 ### Contributing
-See `[CONTRIBUTING.md](CONTRIBUTING.md)` for detailed guidelines.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
