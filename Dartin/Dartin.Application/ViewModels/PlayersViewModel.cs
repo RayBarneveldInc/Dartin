@@ -200,14 +200,23 @@ namespace Dartin.ViewModels
 
         public void History()
         {
+            if (SelectedIndex < 0 || SelectedIndex >= Players.Count)
+            {
+                return;
+            }
+            
             var player = Players[SelectedIndex];
 
-            throw new NotImplementedException();
+            ScreenManager.GetInstance().SwitchViewModel(new MatchesViewModel(State.Instance.Matches)
+            {
+                PlayerFilterSelected = true,
+                SearchText = player.Name
+            });
         }
 
         public void Back()
         {
-            ScreenManager.GetInstance().RevertToPreviousViewModel();
+            ScreenManager.GetInstance().SwitchViewModel(new MainMenuViewModel());
         }
 
         public void OnExit()
