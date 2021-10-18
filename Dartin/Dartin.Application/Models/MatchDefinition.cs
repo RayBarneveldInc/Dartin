@@ -1,4 +1,5 @@
 ﻿using Dartin.Abstracts;
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -10,6 +11,12 @@ namespace Dartin.Models
         public string Name => GetMatchName();
         public string BestOfDescription => GetBestOfDescription();
         private DateTime _date;
+        public Guid Id { get; }
+
+        public override bool Equals(object obj) => obj != null && Equals(obj as MatchDefinition);
+        public bool Equals(MatchDefinition obj) => obj != null && obj.Id == Id;
+        public override int GetHashCode() => (Id).GetHashCode();
+
         public DateTime Date
         {
             get
@@ -91,10 +98,16 @@ namespace Dartin.Models
 
         public MatchDefinition()
         {
+            Id = Guid.NewGuid();
             Date = DateTime.Now.Date;
             Players = new BindingList<Player>();
             Sets = new BindingList<Set>();
         }
+
+        [JsonConstructor]
+        public MatchDefinition(Guid id) => Id = id;
+
+
         private string GetBestOfDescription()
         {
             if (SetsToWin > 1)
