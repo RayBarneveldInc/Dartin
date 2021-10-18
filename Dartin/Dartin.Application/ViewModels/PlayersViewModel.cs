@@ -174,9 +174,12 @@ namespace Dartin.ViewModels
             Title = "Add Player";
             ModalButtonText = "Add";
 
+            FirstName = string.Empty;
+            LastName = string.Empty;
+
             PlayerAction = () =>
             {
-                State.Instance.Players.Add(new Player());
+                State.Instance.Players.Add(new Player(FirstName,LastName));
             };
             
             ToggleModal();

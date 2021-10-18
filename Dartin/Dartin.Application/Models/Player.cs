@@ -39,6 +39,13 @@ namespace Dartin.Models
             Id = Guid.NewGuid();
         }
 
+        public Player(string firstName, string lastName)
+        {
+            Id = Guid.NewGuid();
+            FirstName = firstName;
+            LastName = lastName; 
+        }
+
         [JsonConstructor]
         public Player(Guid id, string firstName, string lastName)
         {
