@@ -36,8 +36,8 @@ namespace Dartin.ViewModels
         private BindableCollection<Turn> _player2Turns;
         private BindableCollection<int> _player1Remainders;
         private BindableCollection<int> _player2Remainders;
-        private int _player1Counter180;
-        private int _player2Counter180;
+        private long _player1Counter180;
+        private long _player2Counter180;
 
         public string TossOneInput
         {
@@ -228,7 +228,7 @@ namespace Dartin.ViewModels
             }
         }
 
-        public int Player1Counter180
+        public long Player1Counter180
         {
             get => _player1Counter180;
             set
@@ -237,7 +237,7 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => Player1Counter180);
             }
         }
-        public int Player2Counter180
+        public long Player2Counter180
         {
             get => _player2Counter180;
             set
@@ -249,12 +249,16 @@ namespace Dartin.ViewModels
 
         public ScoreboardViewModel(MatchDefinition match)
         {
-            Match = match;             
+            Match = match;
             SetSet();
             TogglePlayerTurnIndicator();
             SetSetText();
             SetLegText();
+            Player1Counter180 = Get180CounterForPlayer(Player1);
+            Player2Counter180 = Get180CounterForPlayer(Player2);
         }
+
+        private long Get180CounterForPlayer(Player player) => Match.Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Count(turn => turn.Score == 180 && turn.PlayerId == player.Id && turn.Valid)));
 
         public void OnExit()
         {
@@ -442,12 +446,9 @@ namespace Dartin.ViewModels
             Player2Remainders.Clear();
         }
 
-        //TODO FIX THIS CODE 
         public int GetCurrentPlayerScore()
         {
-            Guid activePlayerId = GetActivePlayerId();
-
-            return _currentLeg.Turns.Where(turn => turn.PlayerId == activePlayerId && turn.Valid).Sum(turn => turn.Score);
+            return _currentLeg.Turns.Where(turn => turn.PlayerId == GetActivePlayerId() && turn.Valid).Sum(turn => turn.Score);
         }
 
         public int CalculatePlayerScoreLeft()
@@ -555,10 +556,13 @@ namespace Dartin.ViewModels
             ProcessTossInputTurn(TossTwoInput);
             ProcessTossInputTurn(TossThreeInput);
 
+
             if (currentTurn.Tosses.Any())
             {
                 HandlePlayerScore();
                 HandleLastTurn();
+                Player1Counter180 = Get180CounterForPlayer(Player1);
+                Player2Counter180 = Get180CounterForPlayer(Player2);
             }
         }
 
