@@ -34,11 +34,16 @@ namespace Dartin.Models
 
         public string Name => FirstName + " " + LastName;
 
+        public Player()
+        {
+            Id = Guid.NewGuid();
+        }
+
         public Player(string firstName, string lastName)
         {
             Id = Guid.NewGuid();
             FirstName = firstName;
-            LastName = lastName;
+            LastName = lastName; 
         }
 
         [JsonConstructor]
@@ -49,5 +54,4 @@ namespace Dartin.Models
             LastName = lastName;
         }
     }
-
 }

@@ -17,10 +17,26 @@ namespace UnitTests
         [Fact]
         public void FilterPlayers()
         {
-            var player1 = new Player("yob", "ama");
-            var player2 = new Player("ama", "yob");
-            var player3 = new Player("oby", "maa");
-            var player4 = new Player("boy", "aam");
+            var player1 = new Player()
+            {
+                FirstName = "yob",
+                LastName = "ama"
+            };
+            var player2 = new Player()
+            {
+                FirstName = "oby", 
+                LastName = "maa"
+            };
+            var player3 = new Player()
+            {
+                FirstName = "boy", 
+                LastName = "aam"
+            };
+            var player4 = new Player()
+            {
+                FirstName = "boy",
+                LastName = "Yob"
+            };
 
             State.Instance.Players.Add(player1);
             State.Instance.Players.Add(player2);
@@ -34,7 +50,6 @@ namespace UnitTests
                     player1,
                     player2,
                     player3,
-                    player4,
                 },
                 SearchText = "yob"
             };

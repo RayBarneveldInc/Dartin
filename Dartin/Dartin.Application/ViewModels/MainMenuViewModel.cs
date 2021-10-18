@@ -1,16 +1,17 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using Caliburn.Micro;
 using Dartin.Managers;
+using Dartin.Models;
 
 namespace Dartin.ViewModels
 {
     class MainMenuViewModel : Screen, IViewModel
     {
-        public string ViewName => throw new System.NotImplementedException();
-        
+        public string ViewName => throw new NotImplementedException();
+
         public void Matches()
         {
-            // TODO: wait for matchesviewmodel implementation
-            // ScreenManager.GetInstance().SwitchViewModel(new MatchDefinitionViewModel());
+            ScreenManager.GetInstance().SwitchViewModel(new MatchesViewModel(State.Instance.Matches));
         }
 
         public void Darters()
@@ -20,12 +21,12 @@ namespace Dartin.ViewModels
 
         public void Settings()
         {
-            // ScreenManager.GetInstance().SwitchViewModel(new MatchDefinitionViewModel());
+            throw new NotImplementedException();
         }
 
         public void OnExit()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public MainMenuViewModel() {
