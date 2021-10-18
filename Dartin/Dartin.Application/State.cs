@@ -49,8 +49,8 @@ namespace Dartin
 
         public void Merge(State state)
         {
-            Matches = new BindingList<MatchDefinition>(state.Matches.Union(Matches).ToList());
-            Players = new BindingList<Player>(state.Players.Union(Players).ToList());
+            Matches = new BindingList<MatchDefinition>(Matches.Union(state.Matches).ToList());
+            Players = new BindingList<Player>(Players.Union(state.Players).ToList());
         }
 
         public void Save(string filepath)

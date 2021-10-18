@@ -13,18 +13,9 @@ namespace Dartin.Models
         private DateTime _date;
         public Guid Id { get; }
 
-        public override bool Equals(object obj)
-        {
-            return obj != null && Equals(obj as MatchDefinition);
-        }
-
-        public bool Equals(MatchDefinition obj)
-        {
-            return obj != null && obj.Id == Id;
-        }
-
+        public override bool Equals(object obj) => obj != null && Equals(obj as MatchDefinition);
+        public bool Equals(MatchDefinition obj) => obj != null && obj.Id == Id;
         public override int GetHashCode() => (Id).GetHashCode();
-
 
         public DateTime Date
         {
@@ -114,13 +105,8 @@ namespace Dartin.Models
         }
 
         [JsonConstructor]
-        public MatchDefinition(Guid id, DateTime date, BindingList<Player> players, BindingList<Set> sets)
-        {
-            Id = id;
-            Date = date;
-            Players = players;
-            Sets = sets;
-        }
+        public MatchDefinition(Guid id) => Id = id;
+
 
         private string GetBestOfDescription()
         {
