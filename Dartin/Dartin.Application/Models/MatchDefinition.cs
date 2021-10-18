@@ -1,74 +1,122 @@
 ﻿using Dartin.Abstracts;
-using Dartin.Extensions;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Windows.Controls;
+using System.Globalization;
 
 namespace Dartin.Models
 {
-    public class MatchDefinition : AHasWinner
+    public class MatchDefinition : APropertyChanged
     {
-        private string _name;
+        public string Name => GetMatchName();
+        public string BestOfDescription => GetBestOfDescription();
         private DateTime _date;
-        private MatchConfiguration _configuration;
-        private BindingList<Player> _players;
-        private BindingList<Set> _sets;
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                _name = value;
-                NotifyPropertyChanged();
-            }
-        }
         public DateTime Date
         {
-            get => _date;
+            get
+            {
+                return _date;
+            }
             set
             {
                 _date = value;
                 NotifyPropertyChanged();
             }
         }
+        private int _setsToWin;
+        public int SetsToWin
+        {
+            get
+            {
+                return _setsToWin;
+            }
+            set
+            {
+                _setsToWin = value;
+                NotifyPropertyChanged();
+            }
+        }
+        private int _legsToWinSet;
+        public int LegsToWinSet
+        {
+            get
+            {
+                return _legsToWinSet;
+            }
+            set
+            {
+                _legsToWinSet = value;
+                NotifyPropertyChanged();
+            }
+        }
+        private int _scoreToWinLeg;
+        public int ScoreToWinLeg
+        {
+            get
+            {
+                return _scoreToWinLeg;
+            }
+            set
+            {
+                _scoreToWinLeg = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private BindingList<Player> _players;
         public BindingList<Player> Players
         {
-            get => _players;
+            get
+            {
+                return _players;
+            }
             set
             {
                 _players = value;
                 NotifyPropertyChanged();
             }
         }
+        private BindingList<Set> _sets;
         public BindingList<Set> Sets
         {
-            get => _sets;
+            get
+            {
+                return _sets;
+            }
             set
             {
                 _sets = value;
                 NotifyPropertyChanged();
             }
         }
-        public MatchConfiguration Configuration
+
+        public MatchDefinition()
         {
-            get => _configuration;
-            set
+            Date = DateTime.Now.Date;
+            Players = new BindingList<Player>();
+            Sets = new BindingList<Set>();
+        }
+        private string GetBestOfDescription()
+        {
+            if (SetsToWin > 1)
             {
-                _configuration = value;
-                NotifyPropertyChanged();
+                return string.Format(CultureInfo.CurrentCulture, "Best of {0} sets", SetsToWin);
+            }
+            else
+            {
+                return string.Format(CultureInfo.CurrentCulture, "Best of {0} legs", LegsToWinSet);
             }
         }
-
-        public MatchDefinition(string name, DateTime date, BindingList<Player> players, BindingList<Set> sets, MatchConfiguration configuration)
+        private string GetMatchName()
         {
-            Name = name;
-            Date = date;
-            Players = players;
-            Sets = sets;
-            Configuration = configuration;
+            if (Players.Count > 0)
+            {
+                return string.Format(CultureInfo.CurrentCulture,
+                    "{0} vs {1}", this.Players[0].Name, this.Players[1].Name);
+            }
+            else
+            {
+                return "No players have been added";
+            }
         }
     }
 }

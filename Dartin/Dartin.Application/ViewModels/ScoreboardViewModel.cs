@@ -203,7 +203,7 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => Player2Remainders);
             }
         }
-        public string BestOf => $"Best of {Match.Configuration.SetsToWin} sets ({Match.Configuration.LegsToWinSet} legs per set)";
+        public string BestOf => $"Best of {Match.SetsToWin} sets ({Match.LegsToWinSet} legs per set)";
         public MatchDefinition Match { get; }
         public string LegText
         {
@@ -233,9 +233,9 @@ namespace Dartin.ViewModels
 
         public ScoreboardViewModel(MatchDefinition match)
         {
-            State.Instance.Matches.Add(Match);
-            Match = match;
+            Match = match;             
             SetSet();
+            TogglePlayerTurnIndicator(true);
             SetSetText();
             SetLegText();
         }
@@ -251,7 +251,7 @@ namespace Dartin.ViewModels
 
             Match.Sets.Last().Legs.Add(_currentLeg);
         }
-        
+
         public void SetSet()
         {
             _currentSet = new Set(new BindingList<Leg>());
@@ -270,7 +270,7 @@ namespace Dartin.ViewModels
         {
             return Match.Sets.Any() && Match.Sets.Last().Legs.Any() ? Match.Sets.Last().Legs.Count(leg => leg.WinnerId == player.Id) : 0;
         }
-        
+
         public int GetSetScore(Player player)
         {
             return Match.Sets.Any() ? Match.Sets.Count(set => set.WinnerId == player.Id) : 0;
@@ -375,7 +375,7 @@ namespace Dartin.ViewModels
                 Player activePlayer = GetActivePlayer();
                 int currentPlayerScore = GetCurrentPlayerScore();
 
-                if (currentPlayerScore + toss.TotalScore < Match.Configuration.ScoreToWinLeg)
+                if (currentPlayerScore + toss.TotalScore < Match.ScoreToWinLeg)
                 {
                     currentTurn.Tosses.Add(toss);
                 }
@@ -388,7 +388,7 @@ namespace Dartin.ViewModels
                 }
                 else if (
                     (ComparePlayerScoreWithScoreToWinLeg(currentPlayerScore, toss) && toss.Multiplier != 2) ||
-                    (currentPlayerScore + toss.TotalScore) > Match.Configuration.ScoreToWinLeg)
+                    (currentPlayerScore + toss.TotalScore) > Match.ScoreToWinLeg)
                 {
                     currentTurn.Tosses.Add(toss);
                     currentTurn.Valid = false;
@@ -396,7 +396,7 @@ namespace Dartin.ViewModels
 
                 var wonLegs = Match.Sets.Last().Legs.Count(leg => leg.WinnerId == activePlayer.Id);
 
-                if (Match.Configuration.LegsToWinSet == wonLegs)
+                if (Match.LegsToWinSet == wonLegs)
                 {
                     _currentSet.WinnerId = activePlayer.Id;
                 }
@@ -405,7 +405,7 @@ namespace Dartin.ViewModels
 
         public bool ComparePlayerScoreWithScoreToWinLeg(int currentPlayerScore, Toss toss)
         {
-            return (currentPlayerScore + toss.TotalScore) == Match.Configuration.ScoreToWinLeg;
+            return (currentPlayerScore + toss.TotalScore) == Match.ScoreToWinLeg;
         }
 
         public Turn GetCurrentTurn()
@@ -426,6 +426,7 @@ namespace Dartin.ViewModels
             Player2Remainders.Clear();
         }
 
+        //TODO FIX THIS CODE 
         public int GetCurrentPlayerScore()
         {
             Player activePlayer = GetActivePlayer();
@@ -435,7 +436,7 @@ namespace Dartin.ViewModels
 
         public int CalculatePlayerScoreLeft()
         {
-            return Match.Configuration.ScoreToWinLeg - _currentLeg.Turns.Where(turn => turn.PlayerId == _currentLeg.Turns.Last().PlayerId && turn.Valid).Sum(turn => turn.Score);
+            return Match.ScoreToWinLeg - _currentLeg.Turns.Where(turn => turn.PlayerId == _currentLeg.Turns.Last().PlayerId && turn.Valid).Sum(turn => turn.Score);
         }
 
         public BindableCollection<Turn> GetPlayerTurnsCollection(Player player)
@@ -521,19 +522,19 @@ namespace Dartin.ViewModels
                 SetScores();
             }
 
-            if (Match.Sets.Count(set => set.WinnerId == activePlayer.Id) == Match.Configuration.SetsToWin)
+            if (Match.Sets.Count(set => set.WinnerId == activePlayer.Id) == Match.SetsToWin)
             {
                 Debug.WriteLine($"{activePlayer.Name} wins the match!");
             }
 
             if (activePlayer == Player1)
             {
-                Player1Remainders = new BindableCollection<int>(_currentLeg.GetRemaindersForPlayer(Player1, Match.Configuration.ScoreToWinLeg));
+                Player1Remainders = new BindableCollection<int>(_currentLeg.GetRemaindersForPlayer(Player1, Match.ScoreToWinLeg));
             }
             else
             {
-                Player2Remainders = new BindableCollection<int>(_currentLeg.GetRemaindersForPlayer(Player2, Match.Configuration.ScoreToWinLeg));
-        }
+                Player2Remainders = new BindableCollection<int>(_currentLeg.GetRemaindersForPlayer(Player2, Match.ScoreToWinLeg));
+            }
         }
 
         /// <summary>
