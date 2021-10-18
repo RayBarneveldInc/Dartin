@@ -44,5 +44,7 @@ namespace Dartin.Models
         {
             Turns = turns;
         }
+
+        public Guid StartingPlayerId => Turns.Any() ? Turns.First().PlayerId : Guid.Empty;
     }
 }
