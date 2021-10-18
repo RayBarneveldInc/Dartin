@@ -235,7 +235,7 @@ namespace Dartin.ViewModels
         {
             Match = match;             
             SetSet();
-            TogglePlayerTurnIndicator(true);
+            TogglePlayerTurnIndicator();
             SetSetText();
             SetLegText();
         }
