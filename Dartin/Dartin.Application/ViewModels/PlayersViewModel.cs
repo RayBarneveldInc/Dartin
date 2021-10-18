@@ -136,7 +136,7 @@ namespace Dartin.ViewModels
 
             foreach (var player in State.Instance.Players)
             {
-                if (player.Name.ToLower().Contains(filter.ToLower()))
+                if (player.Name.Contains(filter, StringComparison.OrdinalIgnoreCase))
                 {
                     Players.Add(player);
                 }
@@ -145,7 +145,7 @@ namespace Dartin.ViewModels
 
         public void Edit()
         {
-            if ((SelectedIndex < 0 || SelectedIndex >= Players.Count))
+            if (SelectedIndex < 0 || SelectedIndex >= Players.Count)
             {
                 return;
             }
@@ -177,10 +177,9 @@ namespace Dartin.ViewModels
             FirstName = string.Empty;
             LastName = string.Empty;
 
-            
             PlayerAction = () =>
             {
-                State.Instance.Players.Add(new Player(FirstName, LastName));
+                State.Instance.Players.Add(new Player(FirstName,LastName));
             };
             
             ToggleModal();

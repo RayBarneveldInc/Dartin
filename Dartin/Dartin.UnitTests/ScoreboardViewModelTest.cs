@@ -9,6 +9,7 @@ using Xunit;
 using System.ComponentModel;
 using Dartin;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace UnitTests
 {
@@ -33,8 +34,7 @@ namespace UnitTests
         public void TestSetLeg()
         {
             ClearState();
-
-            var vm = new ScoreboardViewModel();
+            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
             vm.SetLeg();
 
             Assert.Single(vm.Match.Sets.Last().Legs);
@@ -45,7 +45,7 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel();
+            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
             vm.SetSet();
 
             Assert.Equal(2, vm.Match.Sets.Count);
@@ -56,7 +56,7 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel();
+            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
             Player player = vm.Match.Players.First();
             int resultOne = vm.GetLegScore(player);
 
@@ -83,7 +83,7 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel();
+            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
             Player player = vm.Match.Players.First();
             int resultOne = vm.GetSetScore(player);
 
@@ -105,45 +105,41 @@ namespace UnitTests
             Assert.Equal(3, resultTwo);
         }
 
+        [Fact]
+        public void TestStartPlayerTurn()
+        {
+            ClearState();
 
-        // BUG: Is broken out of range exception 
-        
-        //[Fact]
-        //public void TestStartPlayerTurn()
-        //{
-        //    ClearState();
+            // This test should also test for turn after set or leg is won.
 
-        //    // This test should also test for turn after set or leg is won.
+            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            vm.SetLeg();
 
-        //    var vm = new ScoreboardViewModel();
-        //    vm.SetLeg();
+            Player playerOne = vm.Player1;
+            Player playerTwo = vm.Player2;
 
-        //    Player playerOne = vm.Player1;
-        //    Player playerTwo = vm.Player2;
+            Turn turn = vm.StartPlayerTurn();
+            var turns = vm.Match.Sets.Last().Legs.Last().Turns;
 
-        //    Turn turn = vm.StartPlayerTurn();
-        //    var turns = vm.Match.Sets.Last().Legs.Last().Turns;
+            Assert.Single(turns);
+            Assert.True(turn.PlayerId == playerOne.Id);
 
-        //    Assert.Single(turns);
-        //    Assert.True(turn.PlayerId == playerOne.Id);
+            turn.Tosses.Add(new Toss(10, 2));
+            turn.Tosses.Add(new Toss(10, 2));
+            turn.Tosses.Add(new Toss(10, 2));
+            turn = vm.StartPlayerTurn();
+            turns = vm.Match.Sets.Last().Legs.Last().Turns;
 
-        //    turn.Tosses.Add(new Toss(10, 2));
-        //    turn.Tosses.Add(new Toss(10, 2));
-        //    turn.Tosses.Add(new Toss(10, 2));
-        //    turn = vm.StartPlayerTurn();
-        //    turns = vm.Match.Sets.Last().Legs.Last().Turns;
-
-        //    Assert.Equal(2, turns.Count);
-        //    Assert.True(turn.PlayerId == playerTwo.Id);
-        //}
+            Assert.Equal(2, turns.Count);
+            Assert.True(turn.PlayerId == playerTwo.Id);
+        }
 
         [Fact]
         public void TestComparePlayerScoreWithScoreToWinLeg()
         {
             ClearState();
-
-            var vm = new ScoreboardViewModel();
-            vm.Match.Configuration.ScoreToWinLeg = 501;
+            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            vm.Match.ScoreToWinLeg = 501;
             bool result = vm.ComparePlayerScoreWithScoreToWinLeg(180, new Toss(20, 3));
 
             Assert.False(result);
@@ -153,14 +149,14 @@ namespace UnitTests
             Assert.True(result);
         }
 
+
         [Fact]
         public void TestGetPlayerRemainders()
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel();
-
-            vm.Match.Configuration.ScoreToWinLeg = 501;
+            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            vm.Match.ScoreToWinLeg = 501;
 
             SubmitTossInputs(vm, "t20", "t20", "t20");
             SubmitTossInputs(vm, "t20", "t10", "t5");
@@ -169,15 +165,27 @@ namespace UnitTests
 
             Leg leg = vm.Match.Sets.Last().Legs.Last();
 
-            List<int> remainders = leg.GetRemaindersForPlayer(vm.Player1, vm.Match.Configuration.ScoreToWinLeg);
+            List<int> remainders = leg.GetRemaindersForPlayer(vm.Player1, vm.Match.ScoreToWinLeg);
 
             Assert.Equal(321, remainders[0]);
             Assert.Equal(260, remainders[1]);
 
-            remainders = leg.GetRemaindersForPlayer(vm.Player2, vm.Match.Configuration.ScoreToWinLeg);
+            remainders = leg.GetRemaindersForPlayer(vm.Player2, vm.Match.ScoreToWinLeg);
 
             Assert.Equal(396, remainders[0]);
             Assert.Equal(303, remainders[1]);
+        }
+
+        private static MatchDefinition CreateMatchDefinitionWithPlayers()
+        {
+            State.Instance.Players.Add(new Player("Henk", "de Vries"));
+            State.Instance.Players.Add(new Player("Jan", "Jansma"));
+            MatchDefinition matchDefinition = new MatchDefinition();
+            matchDefinition.Players = new BindingList<Player>() { State.Instance.Players.Last(), State.Instance.Players.ElementAt(State.Instance.Players.Count - 2) };
+            matchDefinition.ScoreToWinLeg = 501;
+            matchDefinition.SetsToWin = 3;
+            matchDefinition.LegsToWinSet = 3;
+            return matchDefinition;
         }
 
         [Fact] 
@@ -185,7 +193,7 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel();
+            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
 
             SubmitTossInputs(vm, "t20", "t20", "t20");
             SubmitTossInputs(vm, "t20", "t20", "t20");
