@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Documents;
@@ -9,6 +10,8 @@ namespace Dartin.Managers
     public class ScreenManager
     {
         private static ScreenManager _instance;
+
+        private IViewModel previous;
 
         private ShellViewModel _shellViewModel;
 
@@ -27,8 +30,20 @@ namespace Dartin.Managers
             _shellViewModel ??= shell;
         }
 
+        public void RevertToPreviousViewModel()
+        {
+            if (previous == null)
+            {
+                return;
+            }
+            
+            _shellViewModel.ActivateItemAsync(previous);
+        }
+
         public void SwitchViewModel(IViewModel viewModel)
         {
+            previous = _shellViewModel.ActiveItem;
+            
             _shellViewModel.ActivateItemAsync(viewModel);
         }
     }
