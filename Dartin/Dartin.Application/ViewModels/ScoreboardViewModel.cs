@@ -283,7 +283,6 @@ namespace Dartin.ViewModels
         public void SetLeg()
         {
             _currentLeg = new Leg(new BindingList<Turn>());
-
             Match.Sets.Last().Legs.Add(_currentLeg);
         }
 
@@ -340,11 +339,16 @@ namespace Dartin.ViewModels
             {
                 if (!_currentLeg.Turns.Any() && legs.Count >= 2 && legs[legs.Count - 2].StartingPlayerId != Guid.Empty)
                 {
-                    var lastStartingPlayer = legs[legs.Count - 2].StartingPlayerId;
-                    if (lastStartingPlayer == Player1.Id)
+                    Guid previousLegStartingPlayerId = legs[legs.Count - 2].StartingPlayerId;
+                    
+                    if (previousLegStartingPlayerId == Player1.Id)
+                    {
                         _currentLeg.Turns.Add(new Turn(Player2, new BindingList<Toss>()));
+                    }
                     else
+                    {
                         _currentLeg.Turns.Add(new Turn(Player1, new BindingList<Toss>()));
+                    }
                 }
                 else if (!_currentLeg.Turns.Any() && legs.Last().StartingPlayerId == Guid.Empty)
                 {
@@ -358,7 +362,6 @@ namespace Dartin.ViewModels
                 {
                     _currentLeg.Turns.Add(new Turn(Player2, new BindingList<Toss>()));
                 }
-                TogglePlayerTurnIndicator();
             }
 
             return GetCurrentTurn();
@@ -511,12 +514,16 @@ namespace Dartin.ViewModels
         /// </summary>
         public void HandleLastTurn()
         {
+            bool toggleTurnIndicator = true;
             Turn currentTurn = GetCurrentTurn();
             Guid activePlayerId = GetActivePlayerId();
 
             if (currentTurn.WinningTurn)
             {
                 ClearScoreListViews();
+
+                if (currentTurn.PlayerId != _currentLeg.StartingPlayerId)
+                    toggleTurnIndicator = false;
 
                 if (_currentSet.WinnerId == activePlayerId)
                 {
@@ -541,6 +548,9 @@ namespace Dartin.ViewModels
             {
                 Player2Remainders = new BindableCollection<int>(_currentLeg.GetRemaindersForPlayer(Player2, Match.ScoreToWinLeg));
             }
+
+            if (toggleTurnIndicator)
+                TogglePlayerTurnIndicator();
         }
 
         /// <summary>
