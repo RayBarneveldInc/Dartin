@@ -64,6 +64,14 @@ namespace Dartin.ViewModels
             {
                 _dateFilterSelected = value;
                 NotifyOfPropertyChange(() => DateFilterSelected);
+                if (!_dateFilterSelected)
+                {
+                    CurrentCollection.Clear();
+                    foreach (MatchDefinition match in OriginalCollection)
+                    {
+                        CurrentCollection.Add(match);
+                    }
+                }
             }
         }
         private BindableCollection<MatchDefinition> _currentCollection;
@@ -166,7 +174,15 @@ namespace Dartin.ViewModels
         }
         public void StartMatch()
         {
-            ScreenManager.GetInstance().SwitchViewModel(new MatchDefinitionViewModel(State.Instance.Matches.AddNew()));
+            try
+            {
+                MatchDefinition match = CurrentCollection[SelectedIndex];
+                ScreenManager.GetInstance().SwitchViewModel(new ScoreboardViewModel(match));
+            }
+            catch
+            {
+                MessageBox.Show("No match was selected to be edited!", "Edit Match Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
         #endregion
     }
