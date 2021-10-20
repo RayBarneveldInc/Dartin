@@ -132,12 +132,12 @@ namespace Dartin.Models
                 return "No players have been added";
             }
         }
-        public double GetTurnAverage() => Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Average(turn => turn.Score)));
+        public double GetTurnAverage() => Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Where(turn => turn.Valid).Average(turn => turn.Score)));
         public double GetAverageForPlayer(Player player)
         {
             if (Players.Contains(player) && Sets.Any())
             {
-                return Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Where(turn => turn.PlayerId == player.Id).Average(turn => turn.Score)));
+                return Sets.Average(set => set.Legs.Average(leg => leg.Turns.Where(turn => turn.PlayerId == player.Id && turn.Valid).Average(turn => turn.Score)));
             }
             return -1;
         }

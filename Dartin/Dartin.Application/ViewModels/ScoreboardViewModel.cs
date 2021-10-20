@@ -565,7 +565,6 @@ namespace Dartin.ViewModels
 
             if (currentTurn.Tosses.Any())
             {
-
                 HandlePlayerScore();
 
                 if (GetActivePlayerId() == Player1.Id)
