@@ -113,6 +113,9 @@ namespace Dartin.ViewModels
         }
         public string ViewName => nameof(ScoreboardViewModel);
         public static BrushColorConverter BrushColorConverter = new BrushColorConverter();
+        private double _player1Average;
+        private double _player2Average;
+
         public Player Player1 => Match.Players.First();
         public Player Player2 => Match.Players[1];
         public BindableCollection<Turn> Player1Turns
@@ -165,7 +168,6 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => Player1SetScore);
             }
         }
-
         public int Player2SetScore
         {
             get
@@ -242,12 +244,29 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => Player2Counter180);
             }
         }
+        public double Player1Average
+        {
+            get => Math.Round(_player1Average, 2);
+            set
+            {
+                _player1Average = value;
+                NotifyOfPropertyChange(() => Player1Average);
+            }
+        }
+        public double Player2Average
+        {
+            get => Math.Round(_player2Average, 2);
+            set
+            {
+                _player2Average = value;
+                NotifyOfPropertyChange(() => Player2Average);
+            }
+        }
 
         public ScoreboardViewModel(MatchDefinition match)
         {
             Match = match;
             SetSet();
-            TogglePlayerTurnIndicator();
             SetSetText();
             SetLegText();
             Player1Counter180 = Get180CounterForPlayer(Player1);
@@ -549,6 +568,11 @@ namespace Dartin.ViewModels
                 HandleLastTurn();
                 Player1Counter180 = Get180CounterForPlayer(Player1);
                 Player2Counter180 = Get180CounterForPlayer(Player2);
+
+                if (GetActivePlayerId() == Player1.Id)
+                    Player1Average = Match.GetAverageForPlayer(Player1);
+                else
+                    Player2Average = Match.GetAverageForPlayer(Player2);
             }
         }
 

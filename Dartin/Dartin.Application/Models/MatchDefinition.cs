@@ -137,7 +137,7 @@ namespace Dartin.Models
         {
             if (Players.Contains(player))
             {
-                return Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Where(leg => leg.PlayerId == player.Id).Average(turn => turn.Score)));
+                return Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Where(turn => turn.PlayerId == player.Id).Average(turn => turn.Score)));
             }
             return -1;
         }
