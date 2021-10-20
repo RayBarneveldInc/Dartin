@@ -132,10 +132,7 @@ namespace Dartin.Models
                 return "No players have been added";
             }
         }
-        public double GetTurnAverage()
-        {
-            return Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Average(turn => turn.Score)));
-        }
+        public double GetTurnAverage() => Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Average(turn => turn.Score)));
         public double GetAverageForPlayer(Player player)
         {
             if (Players.Contains(player))
@@ -144,5 +141,7 @@ namespace Dartin.Models
             }
             return -1;
         }
+        public int GetAmountOfLegsWon(Player player) => Sets.Any() && Sets.Last().Legs.Any() ? Sets.Last().Legs.Count(leg => leg.WinnerId == player.Id) : 0;
+        public int GetAmountOfSetsWon(Player player) => Sets.Any() ? Sets.Count(set => set.WinnerId == player.Id) : 0;
     }
 }

@@ -259,20 +259,10 @@ namespace Dartin.ViewModels
 
         public void SetScores()
         {
-            Player1LegScore = GetLegScore(Player1);
-            Player1SetScore = GetSetScore(Player1);
-            Player2LegScore = GetLegScore(Player2);
-            Player2SetScore = GetSetScore(Player2);
-        }
-
-        public int GetLegScore(Player player)
-        {
-            return Match.Sets.Any() && Match.Sets.Last().Legs.Any() ? Match.Sets.Last().Legs.Count(leg => leg.WinnerId == player.Id) : 0;
-        }
-
-        public int GetSetScore(Player player)
-        {
-            return Match.Sets.Any() ? Match.Sets.Count(set => set.WinnerId == player.Id) : 0;
+            Player1LegScore = Match.GetAmountOfLegsWon(Player1);
+            Player1SetScore = Match.GetAmountOfSetsWon(Player1);
+            Player2LegScore = Match.GetAmountOfLegsWon(Player2);
+            Player2SetScore = Match.GetAmountOfSetsWon(Player2);
         }
 
         public void SetLegText()
@@ -425,7 +415,6 @@ namespace Dartin.ViewModels
             Player2Remainders.Clear();
         }
 
-        //TODO FIX THIS CODE 
         public int GetCurrentPlayerScore()
         {
             Player activePlayer = GetActivePlayer();
