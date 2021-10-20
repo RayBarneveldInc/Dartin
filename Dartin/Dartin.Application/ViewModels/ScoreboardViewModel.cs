@@ -116,7 +116,6 @@ namespace Dartin.ViewModels
 
         public string ViewName => nameof(ScoreboardViewModel);
         public static BrushColorConverter BrushColorConverter = new BrushColorConverter();
-        private MatchDefinition currentObject;
 
         public Player Player1 => Match.Players.First();
         public Player Player2 => Match.Players[1];

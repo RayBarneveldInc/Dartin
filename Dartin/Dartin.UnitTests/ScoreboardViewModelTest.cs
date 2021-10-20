@@ -34,7 +34,7 @@ namespace UnitTests
         public void TestSetLeg()
         {
             ClearState();
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             vm.SetLeg();
 
             Assert.Single(vm.Match.Sets.Last().Legs);
@@ -45,7 +45,7 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             vm.SetSet();
 
             Assert.Equal(2, vm.Match.Sets.Count);
@@ -56,7 +56,7 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             Player player = vm.Match.Players.First();
             int resultOne = vm.GetLegScore(player);
 
@@ -83,7 +83,7 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             Player player = vm.Match.Players.First();
             int resultOne = vm.GetSetScore(player);
 
@@ -112,7 +112,7 @@ namespace UnitTests
 
             // This test should also test for turn after set or leg is won.
 
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             vm.SetLeg();
 
             Player playerOne = vm.Player1;
@@ -138,7 +138,7 @@ namespace UnitTests
         public void TestComparePlayerScoreWithScoreToWinLeg()
         {
             ClearState();
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             vm.Match.ScoreToWinLeg = 501;
             bool result = vm.ComparePlayerScoreWithScoreToWinLeg(180, new Toss(20, 3));
 
@@ -155,7 +155,7 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             vm.Match.ScoreToWinLeg = 501;
 
             SubmitTossInputs(vm, "t20", "t20", "t20");
@@ -176,24 +176,12 @@ namespace UnitTests
             Assert.Equal(303, remainders[1]);
         }
 
-        private static MatchDefinition CreateMatchDefinitionWithPlayers()
-        {
-            State.Instance.Players.Add(new Player("Henk", "de Vries"));
-            State.Instance.Players.Add(new Player("Jan", "Jansma"));
-            MatchDefinition matchDefinition = new MatchDefinition();
-            matchDefinition.Players = new BindingList<Player>() { State.Instance.Players.Last(), State.Instance.Players.ElementAt(State.Instance.Players.Count - 2) };
-            matchDefinition.ScoreToWinLeg = 501;
-            matchDefinition.SetsToWin = 3;
-            matchDefinition.LegsToWinSet = 3;
-            return matchDefinition;
-        }
-
         [Fact] 
         public void TestSubmit()
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
 
             SubmitTossInputs(vm, "t20", "t20", "t20");
             SubmitTossInputs(vm, "t20", "t20", "t20");

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 
 namespace Dartin.Models
 {
@@ -130,6 +131,18 @@ namespace Dartin.Models
             {
                 return "No players have been added";
             }
+        }
+        public double GetTurnAverage()
+        {
+            return Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Average(turn => turn.Score)));
+        }
+        public double GetAverageForPlayer(Player player)
+        {
+            if (Players.Contains(player))
+            {
+                return Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Where(leg => leg.PlayerId == player.Id).Average(turn => turn.Score)));
+            }
+            return -1;
         }
     }
 }
