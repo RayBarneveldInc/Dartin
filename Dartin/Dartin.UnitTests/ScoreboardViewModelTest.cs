@@ -58,7 +58,7 @@ namespace UnitTests
 
             var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             Player player = vm.Match.Players.First();
-            int resultOne = vm.GetLegScore(player);
+            int resultOne = vm.Match.GetAmountOfLegsWon(player);
 
             Leg legOne = new Leg(new BindingList<Turn>());
             Leg legTwo = new Leg(new BindingList<Turn>());
@@ -72,7 +72,7 @@ namespace UnitTests
             vm.Match.Sets.Last().Legs.Add(legTwo);
             vm.Match.Sets.Last().Legs.Add(legThree);
 
-            int resultTwo = vm.GetLegScore(player);
+            int resultTwo = vm.Match.GetAmountOfLegsWon(player);
 
             Assert.Equal(0, resultOne);
             Assert.Equal(3, resultTwo);
@@ -85,7 +85,7 @@ namespace UnitTests
 
             var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             Player player = vm.Match.Players.First();
-            int resultOne = vm.GetSetScore(player);
+            int resultOne = vm.Match.GetAmountOfSetsWon(player);
 
             Set setOne = new Set(new BindingList<Leg>());
             Set setTwo = new Set(new BindingList<Leg>());
@@ -99,7 +99,7 @@ namespace UnitTests
             vm.Match.Sets.Add(setTwo);
             vm.Match.Sets.Add(setThree);
 
-            int resultTwo = vm.GetSetScore(player);
+            int resultTwo = vm.Match.GetAmountOfSetsWon(player);
 
             Assert.Equal(0, resultOne);
             Assert.Equal(3, resultTwo);
@@ -197,7 +197,7 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
 
             SubmitTossInputs(vm, "t20", "t20", "t20");
             SubmitTossInputs(vm, "t20", "t20", "t20");

@@ -562,17 +562,20 @@ namespace Dartin.ViewModels
             ProcessTossInputTurn(TossThreeInput);
 
 
+
             if (currentTurn.Tosses.Any())
             {
+
                 HandlePlayerScore();
-                HandleLastTurn();
-                Player1Counter180 = Get180CounterForPlayer(Player1);
-                Player2Counter180 = Get180CounterForPlayer(Player2);
 
                 if (GetActivePlayerId() == Player1.Id)
                     Player1Average = Match.GetAverageForPlayer(Player1);
                 else
                     Player2Average = Match.GetAverageForPlayer(Player2);
+
+                HandleLastTurn();
+                Player1Counter180 = Get180CounterForPlayer(Player1);
+                Player2Counter180 = Get180CounterForPlayer(Player2);
             }
         }
 

@@ -135,7 +135,7 @@ namespace Dartin.Models
         public double GetTurnAverage() => Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Average(turn => turn.Score)));
         public double GetAverageForPlayer(Player player)
         {
-            if (Players.Contains(player))
+            if (Players.Contains(player) && Sets.Any())
             {
                 return Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Where(turn => turn.PlayerId == player.Id).Average(turn => turn.Score)));
             }
