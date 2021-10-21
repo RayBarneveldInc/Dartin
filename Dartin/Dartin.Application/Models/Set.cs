@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Windows;
 
 namespace Dartin.Models
 {
@@ -12,6 +13,7 @@ namespace Dartin.Models
         public int LegsToWinSet { get; set; }
 
         private BindingList<Leg> _legs;
+
         public BindingList<Leg> Legs
         {
             get => _legs;
