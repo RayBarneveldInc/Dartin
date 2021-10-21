@@ -10,8 +10,6 @@ namespace Dartin.Models
     {
         private Player _winner = null;
         public int LegsToWinSet { get; set; }
-        public int Index { get; set; }
-        public string SetToString => String.Format("Set {0} - legs played: {1}", Index + 1, Legs.Count);
 
         private BindingList<Leg> _legs;
         public BindingList<Leg> Legs

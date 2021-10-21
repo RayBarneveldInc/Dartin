@@ -4,10 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:VM="clr-namespace:Dartin.Models"
-             xmlns:local="clr-namespace:Dartin.Views"
-             mc:Ignorable="d" 
+             xmlns:local="clr-namespace:Dartin.Views" xmlns:System="clr-namespace:System;assembly=netstandard"
+             mc:Ignorable="d"
+             xmlns:converters="clr-namespace:Dartin.Converters"
              d:DesignHeight="450" d:DesignWidth="800">
 
+    <UserControl.Resources>
+        <converters:IndexPlusOneConverter x:Key="IndexPlusOneConverter"></converters:IndexPlusOneConverter>
+        <converters:WonOrLostConverter x:Key="WonOrLostConverter"></converters:WonOrLostConverter>
+        <System:Int32 x:Key="playeroneint">1</System:Int32>
+        <System:Int32 x:Key="playertwoint">2</System:Int32>
+    </UserControl.Resources>
+    
     <Grid Background="#123456">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
@@ -55,30 +63,63 @@
                         </Grid.RowDefinitions>
 
                         <Grid Grid.Row="0">
-                            <TextBlock Text="{Binding PlayerOne}" FontSize="20"></TextBlock>
+                            <TextBlock Text="{Binding playerOne.Name}" FontSize="20"></TextBlock>
                         </Grid>
 
                         <Grid Grid.Row="1">
-                            <TreeView ItemsSource="{Binding MatchInfo1.Sets}">
+                            <TreeView ItemsSource="{Binding MatchInfo1.Sets}" AlternationCount="100">
                                 <TreeView.ItemTemplate>
                                     <HierarchicalDataTemplate ItemsSource="{Binding Legs}" DataType="{x:Type VM:Set}">
-                                        <Label Content="{Binding SetToString}"></Label>
+                                        <Label>
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{} Set {0}" Converter="{StaticResource WonOrLostConverter}">
+                                                        <Binding Path="Winner" />
+                                                        <Binding Source="{StaticResource playeroneint}"/>
+                                                        <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{StaticResource IndexPlusOneConverter}"/>
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </Label>
                                         <HierarchicalDataTemplate.ItemTemplate>
                                             <HierarchicalDataTemplate ItemsSource="{Binding Turns}" DataType="{x:Type VM:Leg}">
-                                                <Label Content="{Binding LegToString}"></Label>
+                                                <Label>
+                                                    <TextBlock>
+                                                        <TextBlock.Text>
+                                                            <MultiBinding StringFormat="{} Leg {0}" Converter="{StaticResource WonOrLostConverter}">
+                                                                <Binding Path="Winner" />
+                                                                <Binding Source="{StaticResource playeroneint}"/>
+                                                                <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{StaticResource IndexPlusOneConverter}"/>
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </Label>
                                                 <HierarchicalDataTemplate.ItemTemplate>
                                                     <HierarchicalDataTemplate ItemsSource="{Binding Tosses}" DataType="{x:Type VM:Turn}">
-                                                        <Label Content="{Binding TurnToString}"></Label>
+                                                        <Label>
+                                                            <TextBlock>
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding StringFormat="{} Turn {0} - Tosses {1} - Score {2}">
+                                                                        <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{StaticResource IndexPlusOneConverter}"/>
+                                                                        <Binding Path="Tosses.Count"></Binding>
+                                                                        <Binding Path="Score"></Binding>
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </Label>
                                                         <HierarchicalDataTemplate.ItemTemplate>
                                                             <DataTemplate DataType="{x:Type VM:Toss}">
-                                                                    <Label Content="{Binding TossToString}"></Label>
-                                                                
-                                                                <!--<StackPanel Orientation="Horizontal">
-                                                                    
-                                                                    <TextBlock Text="{Binding Multiplier}"></TextBlock>
-                                                                    <TextBlock Text=" "></TextBlock>
-                                                                    <TextBlock Text="{Binding Score}"></TextBlock>
-                                                                </StackPanel>-->
+                                                                <Label>
+                                                                    <TextBlock>
+                                                                        <TextBlock.Text>
+                                                                            <MultiBinding StringFormat="{} Toss {0} - {1}x{2}">
+                                                                                <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{StaticResource IndexPlusOneConverter}"/>
+                                                                                <Binding Path="Multiplier"></Binding>
+                                                                                <Binding Path="Score"></Binding>
+                                                                            </MultiBinding>
+                                                                        </TextBlock.Text>
+                                                                    </TextBlock>
+                                                                </Label>
                                                             </DataTemplate>
                                                         </HierarchicalDataTemplate.ItemTemplate>
                                                     </HierarchicalDataTemplate>
@@ -86,7 +127,6 @@
                                             </HierarchicalDataTemplate>
                                         </HierarchicalDataTemplate.ItemTemplate>
                                     </HierarchicalDataTemplate>
-
                                 </TreeView.ItemTemplate>
                             </TreeView>
                         </Grid>
@@ -106,24 +146,59 @@
 
                         <Grid Grid.Row="1">
 
-                            <TreeView ItemsSource="{Binding MatchInfo2.Sets}">
+                            <TreeView ItemsSource="{Binding MatchInfo2.Sets}" AlternationCount="100">
                                 <TreeView.ItemTemplate>
                                     <HierarchicalDataTemplate ItemsSource="{Binding Legs}" DataType="{x:Type VM:Set}">
-                                        <Label Content="{Binding SetToString}"></Label>
+                                        <Label>
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{} Set {0}" Converter="{StaticResource WonOrLostConverter}">
+                                                        <Binding Path="Winner" />
+                                                        <Binding Source="{StaticResource playertwoint}"/>
+                                                        <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{StaticResource IndexPlusOneConverter}"/>
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </Label>
                                         <HierarchicalDataTemplate.ItemTemplate>
                                             <HierarchicalDataTemplate ItemsSource="{Binding Turns}" DataType="{x:Type VM:Leg}">
-                                                <Label Content="{Binding LegToString}"></Label>
+                                                <Label>
+                                                    <TextBlock>
+                                                        <TextBlock.Text>
+                                                            <MultiBinding StringFormat="{} Leg {0}" Converter="{StaticResource WonOrLostConverter}">
+                                                                <Binding Path="Winner" />
+                                                                <Binding Source="{StaticResource playertwoint}"/>
+                                                                <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{StaticResource IndexPlusOneConverter}"/>
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </Label>
                                                 <HierarchicalDataTemplate.ItemTemplate>
                                                     <HierarchicalDataTemplate ItemsSource="{Binding Tosses}" DataType="{x:Type VM:Turn}">
-                                                        <Label Content="{Binding TurnToString}"></Label>
+                                                        <Label>
+                                                            <TextBlock>
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding StringFormat="{} Turn {0} - Tosses {1} - Score {2}">
+                                                                        <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{StaticResource IndexPlusOneConverter}"/>
+                                                                        <Binding Path="Tosses.Count"></Binding>
+                                                                        <Binding Path="Score"></Binding>
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </Label>
                                                         <HierarchicalDataTemplate.ItemTemplate>
                                                             <DataTemplate DataType="{x:Type VM:Toss}">
-                                                                <Label Content="{Binding TossToString}"></Label>
-                                                                <!--<StackPanel Orientation="Horizontal">
-                                                                    <TextBlock Text="{Binding Multiplier}"> </TextBlock>
-                                                                    <TextBlock Text=" "></TextBlock>
-                                                                    <TextBlock Text="{Binding Score}"></TextBlock>
-                                                                </StackPanel>-->
+                                                                <Label>
+                                                                    <TextBlock>
+                                                                        <TextBlock.Text>
+                                                                            <MultiBinding StringFormat="{} Toss {0} - {1}x{2}">
+                                                                                <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{StaticResource IndexPlusOneConverter}"/>
+                                                                                <Binding Path="Multiplier"></Binding>
+                                                                                <Binding Path="Score"></Binding>
+                                                                            </MultiBinding>
+                                                                        </TextBlock.Text>
+                                                                    </TextBlock>
+                                                                </Label>
                                                             </DataTemplate>
                                                         </HierarchicalDataTemplate.ItemTemplate>
                                                     </HierarchicalDataTemplate>
@@ -131,7 +206,6 @@
                                             </HierarchicalDataTemplate>
                                         </HierarchicalDataTemplate.ItemTemplate>
                                     </HierarchicalDataTemplate>
-
                                 </TreeView.ItemTemplate>
                             </TreeView>
 

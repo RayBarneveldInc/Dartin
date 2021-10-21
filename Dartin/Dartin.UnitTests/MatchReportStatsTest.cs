@@ -162,8 +162,8 @@ namespace UnitTests
             setje.Winner = p1;
             sets.Add(setje);
 
-            MatchConfiguration configlol = new MatchConfiguration(2, 2, 501);
-            return new MatchDefinition("Lmfao", DateTime.Now, spelers, sets, configlol);
+            //MatchConfiguration configlol = new MatchConfiguration(2, 2, 501);
+            //return new MatchDefinition("Lmfao", DateTime.Now, spelers, sets, configlol);
         }
 
         public MatchStatsPlayer playerStats(MatchDefinition match)
