@@ -335,6 +335,7 @@ namespace Dartin.ViewModels
         public Turn StartPlayerTurn()
         {
             var legs = Match.Sets.Last().Legs;
+
             if (!_currentLeg.Turns.Any() || !_currentLeg.Turns.Last().Valid || _currentLeg.Turns.Last().WinningTurn || _currentLeg.Turns.Last().Tosses.Count == 3)
             {
                 if (!_currentLeg.Turns.Any() && legs.Count >= 2 && legs[legs.Count - 2].StartingPlayerId != Guid.Empty)
@@ -342,6 +343,19 @@ namespace Dartin.ViewModels
                     Guid previousLegStartingPlayerId = legs[legs.Count - 2].StartingPlayerId;
                     
                     if (previousLegStartingPlayerId == Player1.Id)
+                    {
+                        _currentLeg.Turns.Add(new Turn(Player2, new BindingList<Toss>()));
+                    }
+                    else
+                    {
+                        _currentLeg.Turns.Add(new Turn(Player1, new BindingList<Toss>()));
+                    }
+                }
+                else if (!_currentLeg.Turns.Any() && legs.Count == 1 && Match.Sets.Count >= 2)
+                {
+                    var previousSet = Match.Sets[Match.Sets.Count - 2];
+                    var previousLeg = previousSet.Legs.Last();
+                    if (previousLeg.StartingPlayerId == Player1.Id)
                     {
                         _currentLeg.Turns.Add(new Turn(Player2, new BindingList<Toss>()));
                     }
@@ -412,7 +426,6 @@ namespace Dartin.ViewModels
                     currentTurn.Tosses.Add(toss);
                     currentTurn.WinningTurn = true;
                     _currentLeg.WinnerId = activePlayerId;
-                    ToggleLegStartedIndicator();
                 }
                 else if (
                     (ComparePlayerScoreWithScoreToWinLeg(currentPlayerScore, toss) && toss.Multiplier != 2) ||
@@ -515,11 +528,13 @@ namespace Dartin.ViewModels
         public void HandleLastTurn()
         {
             bool toggleTurnIndicator = true;
+            bool toggleLegStartedIndicator = false;
             Turn currentTurn = GetCurrentTurn();
             Guid activePlayerId = GetActivePlayerId();
 
             if (currentTurn.WinningTurn)
             {
+                toggleLegStartedIndicator = true;
                 ClearScoreListViews();
 
                 if (currentTurn.PlayerId != _currentLeg.StartingPlayerId)
@@ -529,10 +544,8 @@ namespace Dartin.ViewModels
                 {
                     SetSet();
                 }
-                else
-                {
-                    SetLeg();
-                }
+
+                SetLeg();
 
                 SetSetText();
                 SetLegText();
@@ -551,6 +564,9 @@ namespace Dartin.ViewModels
 
             if (toggleTurnIndicator)
                 TogglePlayerTurnIndicator();
+
+            if (toggleLegStartedIndicator)
+                ToggleLegStartedIndicator();
         }
 
         /// <summary>
