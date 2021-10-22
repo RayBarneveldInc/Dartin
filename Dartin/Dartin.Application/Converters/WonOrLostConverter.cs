@@ -18,8 +18,16 @@ namespace Dartin.Converters
             Player player = (Player)values[0];
             Guid winnerID = player.Id;
             Guid playerID;
+            string text = $"{values[2].ToString()}";
+
             if ((int)values[1] == 1) playerID = (Guid)App.Current.Properties["playeroneID"]; else playerID = (Guid)App.Current.Properties["playertwoID"];
-            if (playerID == winnerID) return values[2].ToString() + " - Won"; else return values[2].ToString() + " - lost";
+            if (values.Length == 4) {
+                if (playerID == (Guid)values[3]) text += " - Started";
+            }
+            if (playerID == winnerID) text += " - Won";
+
+            return text;
+            //if (playerID == winnerID) return values[2].ToString() + " - Won"; else return values[2].ToString() + "";
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

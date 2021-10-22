@@ -24,7 +24,7 @@ namespace Dartin.ViewModels
         public string PlayerTwo => PlayerString(1);
         public Player playerTwo => Match.Players[1];
         public MatchDefinition MatchInfo1 => SetsPerPlayer(0);
-        public MatchDefinition MatchInfo2 => SetsPerPlayer(0);
+        public MatchDefinition MatchInfo2 => SetsPerPlayer(1);
         public MatchStatsPlayer player1Stats { get; set; }
         public MatchStatsPlayer player2Stats { get; set; }
 
@@ -38,6 +38,8 @@ namespace Dartin.ViewModels
             var copyser = JsonConvert.SerializeObject(Match, Formatting.Indented);
             MatchDefinition deepcopy = JsonConvert.DeserializeObject<MatchDefinition>(copyser);
             Player player = deepcopy.Players[i];
+            deepcopy.Players.Clear();
+            deepcopy.Players.Add(player);
 
             foreach (Set s in deepcopy.Sets)
             {
@@ -77,23 +79,30 @@ namespace Dartin.ViewModels
             gooien1.Add(t2);
             gooien1.Add(t3);
             Turn tu = new Turn(p1, gooien1);
+            Turn tup2 = new Turn(p2, gooien1);
 
             BindingList<Toss> gooien2 = new BindingList<Toss>();
             gooien2.Add(t4);
             gooien2.Add(t5);
             gooien2.Add(t6);
             Turn tu2 = new Turn(p1, gooien2);
+            Turn tu2p2 = new Turn(p2, gooien2);
 
             BindingList<Toss> gooien3 = new BindingList<Toss>();
             gooien3.Add(t7);
             gooien3.Add(t8);
             gooien3.Add(t9);
             Turn tu3 = new Turn(p1, gooien3);
+            Turn tu3p2 = new Turn(p2, gooien3);
 
             BindingList<Turn> turnss = new BindingList<Turn>();
+            BindingList<Turn> turnssp2 = new BindingList<Turn>();
             turnss.Add(tu);
             turnss.Add(tu2);
             turnss.Add(tu3);
+            turnss.Add(tup2);
+            turnss.Add(tu2p2);
+            turnss.Add(tu3p2);
 
             BindingList<Leg> legs = new BindingList<Leg>();
             Leg legje = new Leg(turnss);
@@ -119,8 +128,6 @@ namespace Dartin.ViewModels
             player2Stats = new MatchStatsPlayer(MatchInfo2);
 
         }
-
-
 
         public string PlayerString(int id)
         {
