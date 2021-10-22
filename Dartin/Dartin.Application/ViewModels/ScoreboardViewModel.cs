@@ -423,25 +423,25 @@ namespace Dartin.ViewModels
         /// <summary>
         /// Revert turn to write new turn.
         /// </summary>
-        public void RevertTurn()
+        public void RevertTurn(bool togglePlayerTurnIndicator = true)
         {
             if (_currentLeg != null && _currentLeg.Turns.Any())
             {
                 var playerId = GetActivePlayerId();
-                _currentLeg.Turns.RemoveLast();
-                if (playerId == Player1.Id)
+                _currentLeg.Turns.TryRemoveLast();
+                if (playerId == Player1.Id && togglePlayerTurnIndicator)
                 {
-                    Player1Remainders.RemoveLast();
-                    Player1Turns.RemoveLast();
+                    Player1Remainders.TryRemoveLast();
+                    Player1Turns.TryRemoveLast();
                 }
-                else
+                else if (togglePlayerTurnIndicator)
                 {
-                    Player2Remainders.RemoveLast();
-                    Player2Turns.RemoveLast();
+                    Player2Remainders.TryRemoveLast();
+                    Player2Turns.TryRemoveLast();
+                    TogglePlayerTurnIndicator();
                 }
-                TogglePlayerTurnIndicator();
             }
-            else
+            else if (togglePlayerTurnIndicator)
             {
                 MessageBox.Show("There was no turn to revert.");
             }
@@ -528,7 +528,13 @@ namespace Dartin.ViewModels
             ProcessTossInputTurn(TossTwoInput);
             ProcessTossInputTurn(TossThreeInput);
 
-            if (currentTurn.Tosses.Any())
+            if ((currentTurn.Tosses.Count != 3 && !currentTurn.WinningTurn) || (currentTurn.Tosses.Any(toss => toss == null) && !currentTurn.WinningTurn))
+            {
+                RevertTurn(togglePlayerTurnIndicator: false);
+                MessageBox.Show("Invalid turn!");
+            }
+
+            else if (currentTurn.Tosses.Any() && (currentTurn.Tosses.Count(toss => toss != null) == 3 || currentTurn.WinningTurn))
             {
                 HandlePlayerScore();
 

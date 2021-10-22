@@ -29,7 +29,10 @@ namespace Dartin.Managers
                 }
 
                 var multiplier = score.Groups[1].ToString().ToLower();
-                var points = Convert.ToInt32(score.Groups[2].ToString());
+                var intCouldBeParsed = int.TryParse(score.Groups[2].ToString(), out var points);
+
+                if (!intCouldBeParsed)
+                    return null;
 
                 if (points > 20 && !(points == 25 || points == 50))
                 {
