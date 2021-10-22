@@ -491,6 +491,8 @@ namespace Dartin.ViewModels
                 SetScores();
             }
 
+            if (!currentTurn.WinningTurn && currentTurn.Tosses.Count != 3)
+                toggleTurnIndicator = false;
 
             if (activePlayerId == Player1.Id)
             {
@@ -525,8 +527,6 @@ namespace Dartin.ViewModels
             ProcessTossInputTurn(TossOneInput);
             ProcessTossInputTurn(TossTwoInput);
             ProcessTossInputTurn(TossThreeInput);
-
-
 
             if (currentTurn.Tosses.Any())
             {
