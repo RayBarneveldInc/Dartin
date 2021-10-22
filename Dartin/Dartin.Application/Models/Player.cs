@@ -12,6 +12,18 @@ namespace Dartin.Models
         private string _lastName;
         public Guid Id { get; }
 
+        public override bool Equals(object obj)
+        {
+            return obj != null && Equals(obj as Player);
+        }
+
+        public bool Equals(Player obj)
+        {
+            return obj != null && obj.Id == Id;
+        }
+
+        public override int GetHashCode() => (Id).GetHashCode();
+
         public string FirstName
         {
             get => _firstName;

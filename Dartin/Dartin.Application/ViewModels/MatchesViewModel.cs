@@ -131,7 +131,7 @@ namespace Dartin.ViewModels
         #region Buttons
         public void OnExit()
         {
-            ScreenManager.GetInstance().SwitchViewModel(new MainMenuViewModel());
+            ScreenManager.GetInstance().RevertToPreviousViewModel();
         }
         public void Edit()
         {
