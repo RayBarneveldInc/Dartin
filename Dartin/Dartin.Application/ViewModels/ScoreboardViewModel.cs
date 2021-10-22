@@ -200,32 +200,6 @@ namespace Dartin.ViewModels
         }
         public string BestOf => $"Best of {Match.SetsToWin} sets ({Match.LegsToWinSet} legs per set)";
         public MatchDefinition Match { get; }
-        public string LegText
-        {
-            get
-            {
-                return _legText;
-            }
-            set
-            {
-                _legText = value;
-                NotifyOfPropertyChange(() => LegText);
-            }
-        }
-
-        public string SetText
-        {
-            get
-            {
-                return _setText;
-            }
-            set
-            {
-                _setText = value;
-                NotifyOfPropertyChange(() => SetText);
-            }
-        }
-
         public long Player1Counter180
         {
             get => _player1Counter180;
@@ -267,8 +241,6 @@ namespace Dartin.ViewModels
         {
             Match = match;
             SetSet();
-            SetSetText();
-            SetLegText();
             Player1Counter180 = Get180CounterForPlayer(Player1);
             Player2Counter180 = Get180CounterForPlayer(Player2);
         }
@@ -298,38 +270,6 @@ namespace Dartin.ViewModels
             Player1SetScore = Match.GetAmountOfSetsWon(Player1);
             Player2LegScore = Match.GetAmountOfLegsWon(Player2);
             Player2SetScore = Match.GetAmountOfSetsWon(Player2);
-        }
-
-        public void SetLegText()
-        {
-            int legCount;
-
-            if (Match.Sets.Any() && Match.Sets.Last().Legs.Any())
-            {
-                legCount = Match.Sets.Last().Legs.Count;
-            }
-            else
-            {
-                legCount = 1;
-            }
-
-            LegText = $"Leg {legCount}";
-        }
-
-        public void SetSetText()
-        {
-            int setCount;
-
-            if (Match.Sets.Any())
-            {
-                setCount = Match.Sets.Count;
-            }
-            else
-            {
-                setCount = 1;
-            }
-
-            SetText = $"Set {setCount}";
         }
 
         public Turn StartPlayerTurn()
@@ -547,8 +487,6 @@ namespace Dartin.ViewModels
 
                 SetLeg();
 
-                SetSetText();
-                SetLegText();
                 SetScores();
             }
 
