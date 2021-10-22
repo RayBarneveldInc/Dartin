@@ -427,7 +427,7 @@ namespace Dartin.ViewModels
         /// </summary>
         public void RevertTurn()
         {
-            if (_currentLeg.Turns.Any())
+            if (_currentLeg != null && _currentLeg.Turns.Any())
             {
                 var playerId = GetActivePlayerId();
                 _currentLeg.Turns.RemoveLast();
@@ -442,6 +442,10 @@ namespace Dartin.ViewModels
                     Player2Turns.RemoveLast();
                 }
                 TogglePlayerTurnIndicator();
+            }
+            else
+            {
+                MessageBox.Show("There was no turn to revert.");
             }
         }
 
@@ -486,7 +490,6 @@ namespace Dartin.ViewModels
                 }
 
                 SetLeg();
-
                 SetScores();
             }
 
