@@ -26,8 +26,6 @@ namespace Dartin.ViewModels
         private string _tossOneInput;
         private string _tossTwoInput;
         private string _tossThreeInput;
-        private string _legText;
-        private string _setText;
         private Visibility _playerOneTurnIndicatorIsVisible = Visibility.Visible;
         private Visibility _playerTwoTurnIndicatorIsVisible = Visibility.Hidden;
         private Visibility _playerOneStartedLegIndicatorIsVisible = Visibility.Visible;
