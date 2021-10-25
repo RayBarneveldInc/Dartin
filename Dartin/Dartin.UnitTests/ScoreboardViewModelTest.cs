@@ -218,6 +218,7 @@ namespace UnitTests
             ClearState();
 
             var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
+            vm.MessageBoxEnabled = false;
 
             for (int i = 0; i < 25; i++)
             {

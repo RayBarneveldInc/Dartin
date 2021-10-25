@@ -223,8 +223,8 @@ namespace Dartin.ViewModels
                 _firstTextBoxIsFocused = false;
                 NotifyOfPropertyChange(() => FirstTextBoxIsFocused);
             }
-
         }
+        public bool MessageBoxEnabled { get; set; } = true;
 
         public ScoreboardViewModel(MatchDefinition match)
         {
@@ -392,7 +392,8 @@ namespace Dartin.ViewModels
             }
             else if (togglePlayerTurnIndicator)
             {
-                MessageBox.Show("There was no turn to revert.");
+                if (MessageBoxEnabled)
+                    MessageBox.Show("There was no turn to revert.");
             }
         }
 
@@ -435,7 +436,9 @@ namespace Dartin.ViewModels
                     if (Match.CheckWinner(activePlayer))
                     {
                         InputIsDisabled = true;
-                        MessageBox.Show($"{activePlayer.Name} has won the match!");
+
+                        if (MessageBoxEnabled)
+                            MessageBox.Show($"{activePlayer.Name} has won the match!");
                     }
                 }
 
@@ -486,7 +489,9 @@ namespace Dartin.ViewModels
             if ((currentTurn.Tosses.Count != 3 && !currentTurn.WinningTurn) || (currentTurn.Tosses.Any(toss => toss == null) && !currentTurn.WinningTurn))
             {
                 RevertTurn(togglePlayerTurnIndicator: false);
-                MessageBox.Show("Invalid turn!");
+
+                if (MessageBoxEnabled)
+                    MessageBox.Show("Invalid turn!");
             }
             else if (currentTurn.Tosses.Any() && (currentTurn.Tosses.Count(toss => toss != null) == 3 || currentTurn.WinningTurn))
             {
