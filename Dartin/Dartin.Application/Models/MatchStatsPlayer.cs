@@ -8,68 +8,68 @@ namespace Dartin.Models
 {
     public class MatchStatsPlayer
     {
-        public int avgScore { get; set; }
-        public int setsWon { get; set; }
-        public int legsWon { get; set; }
+        public int AvgScore { get; set; }
+        public int SetsWon { get; set; }
+        public int LegsWon { get; set; }
         public int AvgScoreFirstNineDarts { get; set; }
-        public int dartsThrown { get; set; }
-        public int hundredEighty { get; set; }
-        public int hundredSixtyPlus { get; set; }
-        public int hundredFourtyPlus { get; set; }
-        public int hundredTwentyPlus { get; set; }
-        public int hundredPlus { get; set; }
-        public int nineDarters { get; set; }
+        public int DartsThrown { get; set; }
+        public int HundredEighty { get; set; }
+        public int HundredSixtyPlus { get; set; }
+        public int HundredFourtyPlus { get; set; }
+        public int HundredTwentyPlus { get; set; }
+        public int HundredPlus { get; set; }
+        public int NineDarters { get; set; }
         public MatchStatsPlayer(MatchDefinition playerStats)
         {
             TotalWins(playerStats);
-            MatchAverages(playerStats);
+            SetMatchAverages(playerStats);
         }
 
         public void TotalWins(MatchDefinition match)
         {
-            legsWon = 0;
-            setsWon = 0;
+            LegsWon = 0;
+            SetsWon = 0;
             foreach (Set s in match.Sets)
             {
-                if (s.WinnerId == match.Players[0].Id) setsWon++;
-                foreach (Leg l in s.Legs) if (l.Winner.Id == match.Players[0].Id) legsWon++;
+                if (s.WinnerId == match.Players[0].Id) SetsWon++;
+                foreach (Leg l in s.Legs) if (l.Winner.Id == match.Players[0].Id) LegsWon++;
             }
         }
-        public void MatchAverages(MatchDefinition match)
+        public void SetMatchAverages(MatchDefinition match)
         {
-            dartsThrown = 0;
-            nineDarters = 0;
-            int TotalScore = 0;
-            int FirstNineDartsTotal = 0;
-            int LegCount = 0;
+            DartsThrown = 0;
+            NineDarters = 0;
+            int totalScore = 0;
+            int firstNineDartsTotal = 0;
+            int legCount = 0;
             
-            foreach (Set s in match.Sets) foreach (Leg l in s.Legs)
+            foreach (Set set in match.Sets) foreach (Leg leg in set.Legs)
                 {
-                    LegCount += s.Legs.Count;
+                    legCount += set.Legs.Count;
                     int legScoreForNineDarter = 0;
-                    foreach (Turn t in l.Turns)
+                    foreach (Turn turn in leg.Turns)
                     {
                         int turnTotal = 0;
-                        foreach (Toss to in t.Tosses)
+                        foreach (Toss toss in turn.Tosses)
                         {
-                            dartsThrown++;
-                            turnTotal += to.TotalScore;
-                            TotalScore += to.TotalScore;
+                            DartsThrown++;
+                            turnTotal += toss.TotalScore;
+                            totalScore += toss.TotalScore;
                         }
 
-                        if (l.Turns.IndexOf(t) <= 2)
+                        if (leg.Turns.IndexOf(turn) <= 2)
                         {
-                            FirstNineDartsTotal += turnTotal;
+                            firstNineDartsTotal += turnTotal;
                         }
 
                         legScoreForNineDarter += turnTotal;
-                        if (l.Turns.Count == 3 && legScoreForNineDarter == 501) nineDarters++;
+                        if (leg.Turns.Count == 3 && legScoreForNineDarter == 501) NineDarters++;
 
                         TotalThreeDartValues(turnTotal);
                     }
                 }
-            AvgScoreFirstNineDarts = FirstNineDartsTotal / LegCount; 
-            avgScore = TotalScore / dartsThrown;
+            AvgScoreFirstNineDarts = firstNineDartsTotal / legCount; 
+            AvgScore = totalScore / DartsThrown;
         }
 
         public void TotalThreeDartValues(int turnTotal)
@@ -77,23 +77,23 @@ namespace Dartin.Models
             switch (turnTotal)
             {
                 case 180:
-                    hundredEighty++;
+                    HundredEighty++;
                     break;
 
                 case >= 160:
-                    hundredSixtyPlus++;
+                    HundredSixtyPlus++;
                     break;
 
                 case >= 140:
-                    hundredFourtyPlus++;
+                    HundredFourtyPlus++;
                     break;
 
                 case >= 120:
-                    hundredTwentyPlus++;
+                    HundredTwentyPlus++;
                     break;
 
                 case >= 100:
-                    hundredPlus++;
+                    HundredPlus++;
                     break;
 
                 default:

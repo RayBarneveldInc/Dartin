@@ -18,161 +18,160 @@ namespace UnitTests
 
 
         [Fact]
-        public void averageScoreFirstNine()
+        public void TestAverageScoreFirstNine()
         {
-            MatchDefinition testMatch = matchDef();
-            MatchStatsPlayer player1Stats = playerStats(testMatch);
+            MatchDefinition testMatch = MatchDef();
+            MatchStatsPlayer player1Stats = PlayerStats(testMatch);
             Assert.Equal(501, player1Stats.AvgScoreFirstNineDarts);
         }
 
         [Fact]
-        public void averageScore()
+        public void TestAverageScore()
         {
-            MatchDefinition testMatch = matchDef();
-            MatchStatsPlayer player1Stats = playerStats(testMatch);
-            Assert.Equal(55, (int)player1Stats.avgScore);
+            MatchDefinition testMatch = MatchDef();
+            MatchStatsPlayer player1Stats = PlayerStats(testMatch);
+            Assert.Equal(55, (int)player1Stats.AvgScore);
         }
 
         [Fact]
-        public void dartsThrown()
+        public void TestDartsThrown()
         {
-            MatchDefinition testMatch = matchDef();
-            MatchStatsPlayer player1Stats = playerStats(testMatch);
-            Assert.Equal(9, player1Stats.dartsThrown);
+            MatchDefinition testMatch = MatchDef();
+            MatchStatsPlayer player1Stats = PlayerStats(testMatch);
+            Assert.Equal(9, player1Stats.DartsThrown);
         }
 
         [Fact]
-        public void NinedartTest()
+        public void TestNineDarters()
         {
-            MatchDefinition testMatch = matchDef();
-            MatchStatsPlayer player1Stats = playerStats(testMatch);
-            Assert.Equal(1, player1Stats.nineDarters);
+            MatchDefinition testMatch = MatchDef();
+            MatchStatsPlayer player1Stats = PlayerStats(testMatch);
+            Assert.Equal(1, player1Stats.NineDarters);
         }
 
         [Fact]
-        public void HundredEighties()
+        public void TestHundredEighties()
         {
-            MatchDefinition testMatch = matchDef();
-            MatchStatsPlayer player1Stats = playerStats(testMatch);
-            Assert.Equal(2, player1Stats.hundredEighty);
+            MatchDefinition testMatch = MatchDef();
+            MatchStatsPlayer player1Stats = PlayerStats(testMatch);
+            Assert.Equal(2, player1Stats.HundredEighty);
         }
 
         [Fact]
-        public void HundredSixtyPlus()
+        public void TestHundredSixtyPlus()
         {
-            MatchDefinition testMatch = matchDef();
-            MatchStatsPlayer player1Stats = playerStats(testMatch);
-            Assert.Equal(0, player1Stats.hundredSixtyPlus);
+            MatchDefinition testMatch = MatchDef();
+            MatchStatsPlayer player1Stats = PlayerStats(testMatch);
+            Assert.Equal(0, player1Stats.HundredSixtyPlus);
         }
 
         [Fact]
-        public void hundredFourtyPlus()
+        public void TestHundredFourtyPlus()
         {
-            MatchDefinition testMatch = matchDef();
-            MatchStatsPlayer player1Stats = playerStats(testMatch);
-            Assert.Equal(1, player1Stats.hundredFourtyPlus);
+            MatchDefinition testMatch = MatchDef();
+            MatchStatsPlayer player1Stats = PlayerStats(testMatch);
+            Assert.Equal(1, player1Stats.HundredFourtyPlus);
         }
 
         [Fact]
-        public void hundredTwentyPlus()
+        public void TestHundredTwentyPlus()
         {
-            MatchDefinition testMatch = matchDef();
-            MatchStatsPlayer player1Stats = playerStats(testMatch);
-            Assert.Equal(0, player1Stats.hundredTwentyPlus);
+            MatchDefinition testMatch = MatchDef();
+            MatchStatsPlayer player1Stats = PlayerStats(testMatch);
+            Assert.Equal(0, player1Stats.HundredTwentyPlus);
         }
 
         [Fact]
-        public void hundredPlus()
+        public void TestHundredPlus()
         {
-            MatchDefinition testMatch = matchDef();
-            MatchStatsPlayer player1Stats = playerStats(testMatch);
-            Assert.Equal(0, player1Stats.hundredPlus);
+            MatchDefinition testMatch = MatchDef();
+            MatchStatsPlayer player1Stats = PlayerStats(testMatch);
+            Assert.Equal(0, player1Stats.HundredPlus);
         }
 
         [Fact]
-        public void setsWon()
+        public void TestSetsWon()
         {
-            MatchDefinition testMatch = matchDef();
-            MatchStatsPlayer player1Stats = playerStats(testMatch);
-            Assert.Equal(1, player1Stats.setsWon);
+            MatchDefinition testMatch = MatchDef();
+            MatchStatsPlayer player1Stats = PlayerStats(testMatch);
+            Assert.Equal(1, player1Stats.SetsWon);
         }
 
         [Fact]
-        public void legsWon()
+        public void TestLegsWon()
         {
-            MatchDefinition testMatch = matchDef();
-            MatchStatsPlayer player1Stats = playerStats(testMatch);
-            Assert.Equal(1, player1Stats.legsWon);
+            MatchDefinition testMatch = MatchDef();
+            MatchStatsPlayer player1Stats = PlayerStats(testMatch);
+            Assert.Equal(1, player1Stats.LegsWon);
         }
 
 
-        public MatchDefinition matchDef()
+        public MatchDefinition MatchDef()
         {
             Player p1 = new Player("Jacco", "Blokje");
             Player p2 = new Player("Tjeerd", "Geld");
 
             MatchDefinition match = new MatchDefinition();
 
-            BindingList<Player> spelers = new BindingList<Player>();
-            spelers.Add(p1);
-            spelers.Add(p2);
+            BindingList<Player> players = new BindingList<Player>();
+            players.Add(p1);
+            players.Add(p2);
 
-            Toss t1 = new Toss(20, 3);
-            Toss t2 = new Toss(20, 3);
-            Toss t3 = new Toss(20, 3);
+            Toss throw1 = new Toss(20, 3);
+            Toss throw2 = new Toss(20, 3);
+            Toss throw3 = new Toss(20, 3);
 
-            Toss t4 = new Toss(20, 3);
-            Toss t5 = new Toss(20, 3);
-            Toss t6 = new Toss(20, 3);
+            Toss throw4 = new Toss(20, 3);
+            Toss throw5 = new Toss(20, 3);
+            Toss throw6 = new Toss(20, 3);
 
-            Toss t7 = new Toss(20, 3);
-            Toss t8 = new Toss(19, 3);
-            Toss t9 = new Toss(12, 2);
+            Toss throw7 = new Toss(20, 3);
+            Toss throw8 = new Toss(19, 3);
+            Toss throw9 = new Toss(12, 2);
 
-            BindingList<Toss> gooien1 = new BindingList<Toss>();
-            gooien1.Add(t1);
-            gooien1.Add(t2);
-            gooien1.Add(t3);
-            Turn tu = new Turn(p1, gooien1);
+            BindingList<Toss> throws1 = new BindingList<Toss>();
+            throws1.Add(throw1);
+            throws1.Add(throw2);
+            throws1.Add(throw3);
+            Turn turn = new Turn(p1, throws1);
 
-            BindingList<Toss> gooien2 = new BindingList<Toss>();
-            gooien2.Add(t4);
-            gooien2.Add(t5);
-            gooien2.Add(t6);
-            Turn tu2 = new Turn(p1, gooien2);
+            BindingList<Toss> throws2 = new BindingList<Toss>();
+            throws2.Add(throw4);
+            throws2.Add(throw5);
+            throws2.Add(throw6);
+            Turn turn2 = new Turn(p1, throws2);
 
-            BindingList<Toss> gooien3 = new BindingList<Toss>();
-            gooien3.Add(t7);
-            gooien3.Add(t8);
-            gooien3.Add(t9);
-            Turn tu3 = new Turn(p1, gooien3);
+            BindingList<Toss> throws3 = new BindingList<Toss>();
+            throws3.Add(throw7);
+            throws3.Add(throw8);
+            throws3.Add(throw9);
+            Turn turn3 = new Turn(p1, throws3);
 
-            BindingList<Turn> turnss = new BindingList<Turn>();
-            turnss.Add(tu);
-            turnss.Add(tu2);
-            turnss.Add(tu3);
+            BindingList<Turn> turns = new BindingList<Turn>();
+            turns.Add(turn);
+            turns.Add(turn2);
+            turns.Add(turn3);
 
             BindingList<Leg> legs = new BindingList<Leg>();
-            Leg legje = new Leg(turnss);
-            legje.WinnerId = p1.Id;
-            legje.Winner = p1;
-            legs.Add(legje);
+            Leg leg = new Leg(turns);
+            leg.WinnerId = p1.Id;
+            leg.Winner = p1;
+            legs.Add(leg);
 
             BindingList<Set> sets = new BindingList<Set>();
-            Set setje = new Set(legs);
-            setje.WinnerId = p1.Id;
-            setje.Winner = p1;
-            sets.Add(setje);
+            Set set = new Set(legs);
+            set.WinnerId = p1.Id;
+            set.Winner = p1;
+            sets.Add(set);
 
             match.Sets = sets;
-            match.Players = spelers;
+            match.Players = players;
             match.Date = new DateTime();
 
-            //MatchConfiguration configlol = new MatchConfiguration(2, 2, 501);
             return match;
         }
 
-        public MatchStatsPlayer playerStats(MatchDefinition match)
+        public MatchStatsPlayer PlayerStats(MatchDefinition match)
         {
             return new MatchStatsPlayer(match);
         }

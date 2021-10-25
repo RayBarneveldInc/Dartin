@@ -6,28 +6,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Markup;
 using System.Windows.Media;
 
 
 namespace Dartin.Converters
 {
-    public class WonOrLostConverter : IMultiValueConverter
+    public class WonOrLostConverter : MarkupExtension, IMultiValueConverter
     {
+        private static WonOrLostConverter _instance; 
+        public override object ProvideValue(IServiceProvider serviceProvider) 
+        { 
+            return _instance ??= new WonOrLostConverter();
+        }
+
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            Player player = (Player)values[0];
-            Guid winnerID = player.Id;
+            Guid winnerID = (Guid)values[0];
             Guid playerID;
             string text = $"{values[2].ToString()}";
 
-            if ((int)values[1] == 1) playerID = (Guid)App.Current.Properties["playeroneID"]; else playerID = (Guid)App.Current.Properties["playertwoID"];
-            if (values.Length == 4) {
-                if (playerID == (Guid)values[3]) text += " - Started";
-            }
-            if (playerID == winnerID) text += " - Won";
+            if ((int)values[1] == 1) 
+                playerID = (Guid)App.Current.Properties["playeroneID"]; 
+            else 
+                playerID = (Guid)App.Current.Properties["playertwoID"];
+
+            //if (values.Length >= 4 && playerID == (Guid)values[3]) 
+            //    text += " - Started";
+
+            if (playerID == winnerID) 
+                text += " - Won";
 
             return text;
-            //if (playerID == winnerID) return values[2].ToString() + " - Won"; else return values[2].ToString() + "";
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

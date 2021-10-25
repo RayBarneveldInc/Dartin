@@ -4,14 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:VM="clr-namespace:Dartin.Models"
+             xmlns:conv ="clr-namespace:Dartin.Converters"
              xmlns:local="clr-namespace:Dartin.Views" xmlns:System="clr-namespace:System;assembly=netstandard"
              mc:Ignorable="d"
              xmlns:converters="clr-namespace:Dartin.Converters"
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-        <converters:IndexPlusOneConverter x:Key="IndexPlusOneConverter"></converters:IndexPlusOneConverter>
-        <converters:WonOrLostConverter x:Key="WonOrLostConverter"></converters:WonOrLostConverter>
         <System:Int32 x:Key="playeroneint">1</System:Int32>
         <System:Int32 x:Key="playertwoint">2</System:Int32>
     </UserControl.Resources>
@@ -65,7 +64,7 @@
                         </Grid.RowDefinitions>
 
                         <Grid Grid.Row="0">
-                            <TextBlock Text="{Binding playerOne.Name}" FontSize="20"></TextBlock>
+                            <TextBlock Text="{Binding PlayerOne.Name}" FontSize="20"></TextBlock>
                         </Grid>
 
                         <Grid Grid.Row="1">
@@ -75,10 +74,10 @@
                                         <Label>
                                             <TextBlock>
                                                 <TextBlock.Text>
-                                                    <MultiBinding StringFormat="{} Set {0}" Converter="{StaticResource WonOrLostConverter}">
-                                                        <Binding Path="Winner" />
+                                                    <MultiBinding StringFormat="{} Set {0}" Converter="{conv:WonOrLostConverter}">
+                                                        <Binding Path="Winner.Id" />
                                                         <Binding Source="{StaticResource playeroneint}"/>
-                                                        <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{StaticResource IndexPlusOneConverter}"/>
+                                                        <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
                                                     </MultiBinding>
                                                 </TextBlock.Text>
                                             </TextBlock>
@@ -88,10 +87,10 @@
                                                 <Label>
                                                     <TextBlock>
                                                         <TextBlock.Text>
-                                                            <MultiBinding StringFormat="{} Leg {0}" Converter="{StaticResource WonOrLostConverter}">
-                                                                <Binding Path="Winner" />
+                                                            <MultiBinding StringFormat="{} Leg {0}" Converter="{conv:WonOrLostConverter}">
+                                                                <Binding Path="Winner.Id" />
                                                                 <Binding Source="{StaticResource playeroneint}"/>
-                                                                <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{StaticResource IndexPlusOneConverter}"/>
+                                                                <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
                                                                 <Binding Path="StartingPlayerId"></Binding>
 
                                                             </MultiBinding>
@@ -103,8 +102,8 @@
                                                         <Label>
                                                             <TextBlock>
                                                                 <TextBlock.Text>
-                                                                    <MultiBinding StringFormat="{} Turn {0} - Tosses {1} - Score {2}">
-                                                                        <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{StaticResource IndexPlusOneConverter}"/>
+                                                                    <MultiBinding StringFormat="{} Turn {0} - Throws {1} - Score {2}">
+                                                                        <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
                                                                         <Binding Path="Tosses.Count"></Binding>
                                                                         <Binding Path="Score"></Binding>
                                                                     </MultiBinding>
@@ -116,8 +115,8 @@
                                                                 <Label>
                                                                     <TextBlock>
                                                                         <TextBlock.Text>
-                                                                            <MultiBinding StringFormat="{} Toss {0} - {1}x{2}">
-                                                                                <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{StaticResource IndexPlusOneConverter}"/>
+                                                                            <MultiBinding StringFormat="{} Throw {0} - {1}x{2}">
+                                                                                <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
                                                                                 <Binding Path="Multiplier"></Binding>
                                                                                 <Binding Path="Score"></Binding>
                                                                             </MultiBinding>
@@ -145,7 +144,7 @@
                         </Grid.RowDefinitions>
 
                         <Grid Grid.Row="0">
-                            <TextBlock Text="{Binding PlayerTwo}" FontSize="20"></TextBlock>
+                            <TextBlock Text="{Binding PlayerTwo.Name}" FontSize="20"></TextBlock>
                         </Grid>
 
                         <Grid Grid.Row="1">
@@ -156,10 +155,10 @@
                                         <Label>
                                             <TextBlock>
                                                 <TextBlock.Text>
-                                                    <MultiBinding StringFormat="{} Set {0}" Converter="{StaticResource WonOrLostConverter}">
-                                                        <Binding Path="Winner" />
+                                                    <MultiBinding StringFormat="{} Set {0}" Converter="{conv:WonOrLostConverter}">
+                                                        <Binding Path="Winner.Id" />
                                                         <Binding Source="{StaticResource playertwoint}"/>
-                                                        <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{StaticResource IndexPlusOneConverter}"/>
+                                                        <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
                                                     </MultiBinding>
                                                 </TextBlock.Text>
                                             </TextBlock>
@@ -169,10 +168,10 @@
                                                 <Label>
                                                     <TextBlock>
                                                         <TextBlock.Text>
-                                                            <MultiBinding StringFormat="{} Leg {0}" Converter="{StaticResource WonOrLostConverter}">
-                                                                <Binding Path="Winner" />
+                                                            <MultiBinding StringFormat="{} Leg {0}" Converter="{conv:WonOrLostConverter}">
+                                                                <Binding Path="Winner.Id" />
                                                                 <Binding Source="{StaticResource playertwoint}"/>
-                                                                <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{StaticResource IndexPlusOneConverter}"/>
+                                                                <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
                                                                 <Binding Path="StartingPlayerId"></Binding>
                                                             </MultiBinding>
                                                         </TextBlock.Text>
@@ -183,8 +182,8 @@
                                                         <Label>
                                                             <TextBlock>
                                                                 <TextBlock.Text>
-                                                                    <MultiBinding StringFormat="{} Turn {0} - Tosses {1} - Score {2}">
-                                                                        <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{StaticResource IndexPlusOneConverter}"/>
+                                                                    <MultiBinding StringFormat="{} Turn {0} - Throws {1} - Score {2}">
+                                                                        <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
                                                                         <Binding Path="Tosses.Count"></Binding>
                                                                         <Binding Path="Score"></Binding>
                                                                     </MultiBinding>
@@ -196,8 +195,8 @@
                                                                 <Label>
                                                                     <TextBlock>
                                                                         <TextBlock.Text>
-                                                                            <MultiBinding StringFormat="{} Toss {0} - {1}x{2}">
-                                                                                <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{StaticResource IndexPlusOneConverter}"/>
+                                                                            <MultiBinding StringFormat="{} Throw {0} - {1}x{2}">
+                                                                                <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
                                                                                 <Binding Path="Multiplier"></Binding>
                                                                                 <Binding Path="Score"></Binding>
                                                                             </MultiBinding>
@@ -234,10 +233,10 @@
 
                 <!-- row 1 -->
                 <Grid Grid.Row="0" Grid.Column="0">
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding playerOne.LastName}" FontSize="16"></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding PlayerOne.LastName}" FontSize="16"></TextBlock>
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="2">
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding playerTwo.LastName}" FontSize="16"></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding PlayerTwo.LastName}" FontSize="16"></TextBlock>
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="0">
@@ -255,17 +254,17 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="{Binding player1Stats.setsWon}" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="{Binding player1Stats.legsWon}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="2" Text="{Binding player1Stats.avgScore}" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="3" Text="{Binding player1Stats.nineDarters}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="0" Text="{Binding player1Stats.SetsWon}" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="{Binding player1Stats.LegsWon}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="2" Text="{Binding player1Stats.AvgScore}" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="3" Text="{Binding player1Stats.NineDarters}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
                     <TextBlock Grid.Row="4" Text="{Binding player1Stats.AvgScoreFirstNineDarts}" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="5" Text="{Binding player1Stats.dartsThrown}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="6" Text="{Binding player1Stats.hundredPlus}" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="7" Text="{Binding player1Stats.hundredTwentyPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="8" Text="{Binding player1Stats.hundredFourtyPlus}" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="9" Text="{Binding player1Stats.hundredSixtyPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="10" Text="{Binding player1Stats.hundredEighty}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="5" Text="{Binding player1Stats.DartsThrown}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="6" Text="{Binding player1Stats.HundredPlus}" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="7" Text="{Binding player1Stats.HundredTwentyPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="8" Text="{Binding player1Stats.HundredFourtyPlus}" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="9" Text="{Binding player1Stats.HundredSixtyPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="10" Text="{Binding player1Stats.HundredEighty}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
                 </Grid>
                 <Grid Grid.Row="1" Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -310,17 +309,17 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="{Binding player2Stats.setsWon}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="{Binding player2Stats.legsWon}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="2" Text="{Binding player2Stats.avgScore}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="3" Text="{Binding player2Stats.nineDarters}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="0" Text="{Binding player2Stats.SetsWon}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="1" Text="{Binding player2Stats.LegsWon}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="2" Text="{Binding player2Stats.AvgScore}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="3" Text="{Binding player2Stats.NineDarters}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
                     <TextBlock Grid.Row="4" Text="{Binding player2Stats.AvgScoreFirstNineDarts}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="5" Text="{Binding player2Stats.dartsThrown}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="6" Text="{Binding player2Stats.hundredPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="7" Text="{Binding player2Stats.hundredTwentyPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="8" Text="{Binding player2Stats.hundredFourtyPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="9" Text="{Binding player2Stats.hundredSixtyPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="10" Text="{Binding player2Stats.hundredEighty}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="5" Text="{Binding player2Stats.DartsThrown}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="6" Text="{Binding player2Stats.HundredPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="7" Text="{Binding player2Stats.HundredTwentyPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="8" Text="{Binding player2Stats.HundredFourtyPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="9" Text="{Binding player2Stats.HundredSixtyPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="10" Text="{Binding player2Stats.HundredEighty}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
                 </Grid>
             </Grid>
         </Grid>
