@@ -1,5 +1,6 @@
 ﻿using Dartin.Abstracts;
 using Dartin.Extensions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -61,6 +62,7 @@ namespace Dartin.Models
             Tosses = tosses;
         }
 
+        [JsonConstructor]
         public Turn(Guid playerId, BindingList<Toss> tosses)
         {
             PlayerId = playerId;

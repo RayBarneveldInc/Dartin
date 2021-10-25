@@ -31,6 +31,16 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
 
+            <Grid.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding FirstTextBoxIsFocused}" Value="True">
+                            <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=FirstTextBox}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+
             <Label Grid.Row="0" Grid.Column="0" Content="{Binding Match.Name}" HorizontalAlignment="Left" Padding="12" FontSize="16" FontWeight="Bold"></Label>
             <Label Grid.Row="0" Grid.Column="2" Content="{Binding BestOf}" HorizontalAlignment="Right" Padding="12" FontSize="16" FontWeight="Bold"></Label>
 
@@ -197,7 +207,7 @@
                 </Grid>
             </Border>
 
-            <Button Grid.Row="4" Grid.Column="0" x:Name="RevertTurn" Content="Revert turn" Padding="12" Margin="0"></Button>
+            <Button Grid.Row="4" Grid.Column="0" x:Name="RevertTurn" Content="Revert turn" Padding="12" Margin="0" IsEnabled="{Binding InputIsDisabled, Converter={conv:InverseBoolToVisibilityConverter}}"></Button>
             
             <Grid Grid.Row="4" Grid.Column="1">
                 <Grid.ColumnDefinitions>
@@ -210,12 +220,12 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding TossOneInput, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Padding="0,12,0,12" Margin="0" Width="40" MaxLength="3" FontSize="20" TextAlignment="Center" cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding TossTwoInput, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Padding="0,12,0,12" Margin="0" Width="40" MaxLength="3" FontSize="20" TextAlignment="Center" cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]"/>
-                <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding TossThreeInput, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Padding="0,12,0,12" Margin="0" Width="40" MaxLength="3" FontSize="20" TextAlignment="Center" cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]"/>
+                <TextBox Name="FirstTextBox" Grid.Row="0" Grid.Column="0" Text="{Binding TossOneInput, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InputIsDisabled}" HorizontalAlignment="Center" Padding="0,12,0,12" Margin="0" Width="40" MaxLength="3" FontSize="20" TextAlignment="Center" cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding TossTwoInput, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InputIsDisabled}" HorizontalAlignment="Center" Padding="0,12,0,12" Margin="0" Width="40" MaxLength="3" FontSize="20" TextAlignment="Center" cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]"/>
+                <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding TossThreeInput, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InputIsDisabled}" HorizontalAlignment="Center" Padding="0,12,0,12" Margin="0" Width="40" MaxLength="3" FontSize="20" TextAlignment="Center" cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]"/>
             </Grid>
 
-            <Button Grid.Row="4" Grid.Column="2" x:Name="Submit" Content="Submit" Padding="12" Margin="0"></Button>
+            <Button Grid.Row="4" Grid.Column="2" x:Name="Submit" Content="Submit" Padding="12" Margin="0" IsEnabled="{Binding InputIsDisabled, Converter={conv:InverseBoolToVisibilityConverter}}"></Button>
         </Grid>
     </Border>
 </UserControl>

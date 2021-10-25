@@ -32,6 +32,10 @@ namespace Dartin.ViewModels
         private BindableCollection<int> _player2Remainders;
         private long _player1Counter180;
         private long _player2Counter180;
+        private bool _playerLegStartIndicator = true;
+        private bool _playerTurnIndicator = true;
+        private bool _inputIsDisabled = false;
+        private bool _firstTextBoxIsFocused = false;
 
         public string TossOneInput
         {
@@ -162,7 +166,6 @@ namespace Dartin.ViewModels
             }
         }
 
-        private bool _playerTurnIndicator = true;
         public bool PlayerTurnIndicator
         {
             get => _playerTurnIndicator;
@@ -172,7 +175,6 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => PlayerTurnIndicator);
             }
         }
-        private bool _playerLegStartIndicator = true;
         public bool PlayerLegStartIndicator
         {
             get => _playerLegStartIndicator;
@@ -182,7 +184,6 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => PlayerLegStartIndicator);
             }
         }
-
         public double Player1Average
         {
             get => Math.Round(_player1Average, 2);
@@ -200,6 +201,29 @@ namespace Dartin.ViewModels
                 _player2Average = value;
                 NotifyOfPropertyChange(() => Player2Average);
             }
+        }
+
+        public bool InputIsDisabled
+        {
+            get => _inputIsDisabled;
+            set
+            {
+                _inputIsDisabled = value;
+                NotifyOfPropertyChange(() => InputIsDisabled);
+            }
+        }
+
+        public bool FirstTextBoxIsFocused
+        {
+            get => _firstTextBoxIsFocused;
+            set
+            {
+                _firstTextBoxIsFocused = value;
+                NotifyOfPropertyChange(() => FirstTextBoxIsFocused);
+                _firstTextBoxIsFocused = false;
+                NotifyOfPropertyChange(() => FirstTextBoxIsFocused);
+            }
+
         }
 
         public ScoreboardViewModel(MatchDefinition match)
@@ -406,6 +430,13 @@ namespace Dartin.ViewModels
                 if (_currentSet.WinnerId == activePlayerId)
                 {
                     SetSet();
+                    var activePlayer = activePlayerId.ToPlayer();
+
+                    if (Match.CheckWinner(activePlayer))
+                    {
+                        InputIsDisabled = true;
+                        MessageBox.Show($"{activePlayer.Name} has won the match!");
+                    }
                 }
 
                 SetLeg();
@@ -436,6 +467,9 @@ namespace Dartin.ViewModels
         /// </summary>
         public void Submit()
         {
+            if (Match.WinnerId != Guid.Empty)
+                return;
+
             if (_currentLeg == null)
             {
                 SetLeg();
@@ -467,6 +501,8 @@ namespace Dartin.ViewModels
                 Player1Counter180 = Get180CounterForPlayer(Player1);
                 Player2Counter180 = Get180CounterForPlayer(Player2);
             }
+            ClearTossInputs();
+            FirstTextBoxIsFocused = true;
         }
 
         /// <summary>

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Dartin.Models
 {
-    public class MatchDefinition : APropertyChanged
+    public class MatchDefinition : AHasWinner
     {
         public string Name => GetMatchName();
         public string BestOfDescription => GetBestOfDescription();
@@ -107,8 +107,6 @@ namespace Dartin.Models
 
         [JsonConstructor]
         public MatchDefinition(Guid id) => Id = id;
-
-
         private string GetBestOfDescription()
         {
             if (SetsToWin > 1)
@@ -143,5 +141,17 @@ namespace Dartin.Models
         }
         public int GetAmountOfLegsWonOnCurrentSet(Player player) => Sets.Last().Legs.Count(leg => leg.WinnerId == player.Id);
         public int GetAmountOfSetsWon(Player player) => Sets.Count(set => set.WinnerId.Equals(player.Id));
+        public bool CheckWinner(Player player)
+        {
+            //Math.Ceiling((decimal)Match.SetsAmount / 2) Best of?
+
+            if (SetsToWin == GetAmountOfSetsWon(player))
+            {
+                WinnerId = player.Id;
+                return true;
+            }
+
+            return false;
+        }
     }
 }
