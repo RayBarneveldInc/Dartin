@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
-using Caliburn.Micro;
-using Dartin;
 using Dartin.Models;
-using Dartin.ViewModels;
 using System.ComponentModel;
-using System.Linq;
 
 namespace UnitTests
 {
