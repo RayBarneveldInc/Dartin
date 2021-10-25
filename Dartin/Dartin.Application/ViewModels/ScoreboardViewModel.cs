@@ -338,7 +338,6 @@ namespace Dartin.ViewModels
                 {
                     currentTurn.Tosses.Add(toss);
                     currentTurn.WinningTurn = true;
-                    _currentLeg.WinnerId = activePlayer.Id;
                     PlayerLegStartIndicator = !PlayerLegStartIndicator; 
                 }
                 else if (
