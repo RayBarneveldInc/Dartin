@@ -3,6 +3,7 @@ using Dartin.Models;
 using System;
 using System.Linq;
 using System.Windows;
+using Dartin.Managers;
 using Action = System.Action;
 
 namespace Dartin.ViewModels
@@ -199,11 +200,24 @@ namespace Dartin.ViewModels
 
         public void History()
         {
+            if (SelectedIndex < 0 || SelectedIndex >= Players.Count)
+            {
+                return;
+            }
+            
             var player = Players[SelectedIndex];
 
-            throw new NotImplementedException();
+            ScreenManager.GetInstance().SwitchViewModel(new MatchesViewModel(State.Instance.Matches)
+            {
+                PlayerFilterSelected = true,
+                SearchText = player.Name
+            });
         }
 
+        public void Back()
+        {
+            ScreenManager.GetInstance().SwitchViewModel(new MainMenuViewModel());
+        }
 
         public void OnExit()
         {

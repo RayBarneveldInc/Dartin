@@ -203,5 +203,22 @@ namespace UnitTests
 
             Assert.Single(vm.Match.Sets.Last().Legs.Where(leg => leg.WinnerId == vm.Player1.Id));
         }
+
+        [Fact]
+        public void Test180Counter()
+        {
+            ClearState();
+
+            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+
+            SubmitTossInputs(vm, "t20", "t20", "t20");
+            SubmitTossInputs(vm, "t20", "t20", "t20");
+            SubmitTossInputs(vm, "t20", "t20", "t20");
+            SubmitTossInputs(vm, "t20", "t20", "t20");
+            SubmitTossInputs(vm, "t20", "t15", "d18");
+
+            Assert.Equal(2, vm.Player1Counter180);
+            Assert.Equal(2, vm.Player2Counter180);
+        }
     }
 }

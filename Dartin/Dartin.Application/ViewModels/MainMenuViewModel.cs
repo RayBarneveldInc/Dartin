@@ -21,7 +21,7 @@ namespace Dartin.ViewModels
 
         public void Settings()
         {
-            throw new NotImplementedException();
+            ScreenManager.GetInstance().SwitchViewModel(new ImportExportViewModel());
         }
 
         public void OnExit()
