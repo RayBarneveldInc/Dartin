@@ -111,6 +111,8 @@ namespace UnitTests
             Player p1 = new Player("Jacco", "Blokje");
             Player p2 = new Player("Tjeerd", "Geld");
 
+            MatchDefinition match = new MatchDefinition();
+
             BindingList<Player> spelers = new BindingList<Player>();
             spelers.Add(p1);
             spelers.Add(p2);
@@ -162,8 +164,12 @@ namespace UnitTests
             setje.Winner = p1;
             sets.Add(setje);
 
+            match.Sets = sets;
+            match.Players = spelers;
+            match.Date = new DateTime();
+
             //MatchConfiguration configlol = new MatchConfiguration(2, 2, 501);
-            //return new MatchDefinition("Lmfao", DateTime.Now, spelers, sets, configlol);
+            return match;
         }
 
         public MatchStatsPlayer playerStats(MatchDefinition match)
