@@ -141,7 +141,7 @@ namespace Dartin.Models
             }
             return -1;
         }
-        public int GetAmountOfLegsWon(Player player) => Sets.Any() && Sets.Last().Legs.Any() ? Sets.Last().Legs.Count(leg => leg.WinnerId == player.Id) : 0;
-        public int GetAmountOfSetsWon(Player player) => Sets.Any() ? Sets.Count(set => set.WinnerId == player.Id) : 0;
+        public int GetAmountOfLegsWonOnCurrentSet(Player player) => Sets.Last().Legs.Count(leg => leg.WinnerId == player.Id);
+        public int GetAmountOfSetsWon(Player player) => Sets.Count(set => set.WinnerId.Equals(player.Id));
     }
 }

@@ -11,26 +11,24 @@ namespace Dartin.ViewModels
 {
     public class MatchDefinitionViewModel : Screen, IViewModel
     {
-        private bool _isChecked301;
         private bool _isChecked501;
-
-        public bool IsChecked301
-        {
-            get => _isChecked301;
-            set
-            {
-                _isChecked301 = OriginalMatch.ScoreToWinLeg.Equals(301) ? true : value;
-                NotifyOfPropertyChange(() => IsChecked301);
-            }
-        }
-
         public bool IsChecked501
         {
             get => _isChecked501;
             set
             {
-                _isChecked501 = OriginalMatch.ScoreToWinLeg.Equals(501) ? true : value;
+                _isChecked501 = value;
                 NotifyOfPropertyChange(() => IsChecked501);
+            }
+        }
+        private bool _isChecked301;
+        public bool IsChecked301
+        {
+            get => _isChecked301;
+            set
+            {
+                _isChecked301 = value;
+                NotifyOfPropertyChange(() => IsChecked301);
             }
         }
         private Player _selectedPlayerOne;
@@ -59,18 +57,6 @@ namespace Dartin.ViewModels
 
         public MatchDefinitionViewModel(MatchDefinition match)
         {
-            if (!match.Players.Count.Equals(0))
-            {
-                if (match.Players[0] != null)
-                {
-                    SelectedPlayerOne = match.Players[0];
-                }
-                if (match.Players[1] != null)
-                {
-                    SelectedPlayerTwo = match.Players[1];
-                }
-            }
-
             CurrentObject = new MatchDefinition
             {
                 Date = match.Date,
@@ -78,68 +64,116 @@ namespace Dartin.ViewModels
                 LegsToWinSet = match.LegsToWinSet,
                 ScoreToWinLeg = match.ScoreToWinLeg
             };
+
             OriginalMatch = match;
-        }
 
-        public void Exit()
-        {
-            ScreenManager.GetInstance().SwitchViewModel(new MatchesViewModel(State.Instance.Matches));
-        }
-
-        public void SaveGameAndExit()
-        {
-            if (SetMatchDefinition())
+            if (!match.Players.Count().Equals(0))
             {
-                ScreenManager.GetInstance().SwitchViewModel(new MatchesViewModel(State.Instance.Matches));
+                foreach (Player p in Players)
+                {
+                    if (match.Players[0].Id == p.Id)
+                    {
+                        SelectedPlayerOne = p;
+                    }
+                    if (match.Players[1].Id == p.Id)
+                    {
+                        SelectedPlayerTwo = p;
+                    }
+                }
+            }
+            if (match.ScoreToWinLeg == 501 || match.ScoreToWinLeg == 0)
+            {
+                IsChecked501 = true;
+                IsChecked301 = false;
             }
             else
             {
-                // TODO Show error dialog OF knop disable
+                IsChecked501 = false;
+                IsChecked301 = true;
             }
         }
 
         public void SaveAndStartGame()
         {
-            if (SetMatchDefinition())
+            switch (checkMatchDefinition())
             {
-                ScreenManager.GetInstance().SwitchViewModel(new ScoreboardViewModel(OriginalMatch));
+                case ErrorDialogEnum.Ok:
+                    SetMatchDefinition();
+                    ScreenManager.GetInstance().SwitchViewModel(new ScoreboardViewModel(OriginalMatch));
+                    break;
+                case ErrorDialogEnum.SelectedPlayersAreEqual:
+                    MessageBox.Show("Players can't play against themselves", "Match Warning Message", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    break;
+                case ErrorDialogEnum.NotAllPlayersAreSelected:
+                    MessageBox.Show("Not all players are filled in. Please select two players.", "Match Warning Message", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    break;
+            }
+        }
+        private enum ErrorDialogEnum
+        {
+            Ok,
+            NotAllPlayersAreSelected,
+            SelectedPlayersAreEqual
+        };
+        private ErrorDialogEnum checkMatchDefinition()
+        {
+            if (SelectedPlayerOne == null)
+                return ErrorDialogEnum.NotAllPlayersAreSelected;
+            if (SelectedPlayerTwo == null)
+                return ErrorDialogEnum.NotAllPlayersAreSelected;
+            if (SelectedPlayerOne == SelectedPlayerTwo)
+                return ErrorDialogEnum.SelectedPlayersAreEqual;
+            return ErrorDialogEnum.Ok;
+        }
+        private void SetMatchDefinition()
+        {
+            if (OriginalMatch.Players.Count.Equals(0))
+            {
+                OriginalMatch.Players.Add(SelectedPlayerOne);
+                OriginalMatch.Players.Add(SelectedPlayerTwo);
             }
             else
             {
-                // TODO Show error dialog OF knop disable
+                OriginalMatch.Players[0] = SelectedPlayerOne;
+                OriginalMatch.Players[1] = SelectedPlayerTwo;
             }
 
-        }
-
-        private bool SetMatchDefinition()
-        {
-            if (SelectedPlayerOne == SelectedPlayerTwo)
-                return false;
-
             OriginalMatch.Date = CurrentObject.Date;
-            OriginalMatch.Players.Add(SelectedPlayerOne);
-            OriginalMatch.Players.Add(SelectedPlayerTwo);
             OriginalMatch.LegsToWinSet = CurrentObject.LegsToWinSet;
             OriginalMatch.SetsToWin = CurrentObject.SetsToWin;
 
-            if (IsChecked301)
-                OriginalMatch.ScoreToWinLeg = 301;
-            else if (IsChecked501)
+            if (IsChecked501)
                 OriginalMatch.ScoreToWinLeg = 501;
-
-            return true;
+            else
+                OriginalMatch.ScoreToWinLeg = 301;
         }
 
         public void DeleteMatch()
         {
-            throw new NotImplementedException(); 
+            if (MessageBox.Show("Are you sure you want to delete this match?", "Delete Match Message", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                State.Instance.Matches.Remove(OriginalMatch);
+                ScreenManager.GetInstance().SwitchViewModel(new MatchesViewModel(State.Instance.Matches));
+            }
         }
 
         public string ViewName { get; }
 
         public void OnExit()
         {
-            throw new NotImplementedException();
+            switch (checkMatchDefinition())
+            {
+                case ErrorDialogEnum.Ok:
+                    SetMatchDefinition();
+                    ScreenManager.GetInstance().SwitchViewModel(new MatchesViewModel(State.Instance.Matches));
+                    break;
+                case ErrorDialogEnum.SelectedPlayersAreEqual:
+                    MessageBox.Show("Players can't play against themselves", "Match Warning Message", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    break;
+                case ErrorDialogEnum.NotAllPlayersAreSelected:
+                    MessageBox.Show("Not all players are filled in. Please select two players.", "Match Warning Message", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    break;
+            }
         }
     }
 }

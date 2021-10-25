@@ -12,7 +12,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -28,10 +28,10 @@
         <Label x:Uid="Label_0" Content="Match date" Grid.Row="0" Grid.Column="0"/>
         <DatePicker x:Uid="DatePicker_0" SelectedDate="{Binding CurrentObject.Date}" Grid.Row="0" Grid.Column="1"/>
 
-        <ComboBox ItemsSource="{Binding Players}" SelectedItem="{Binding Path=SelectedPlayerOne}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="0"/>
+        <ComboBox ItemsSource="{Binding Players}" SelectedItem="{Binding SelectedPlayerOne}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="0"/>
 
         <Label Content="versus" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
-        <ComboBox ItemsSource="{Binding Players}" SelectedItem="{Binding Path=SelectedPlayerTwo}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="2"/>
+        <ComboBox ItemsSource="{Binding Players}" SelectedItem="{Binding SelectedPlayerTwo}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="2"/>
 
         <Label Content="Sets to win" Grid.Row="2" Grid.Column="0"/>
         <TextBox Text="{Binding CurrentObject.SetsToWin, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1"/>
@@ -42,19 +42,17 @@
         <Label Content="Score to win leg" Grid.Row="4" Grid.Column="0"/>
 
         <RadioButton Grid.Row="4" Grid.Column="1" IsChecked="{Binding IsChecked501, UpdateSourceTrigger=PropertyChanged}" GroupName="ScoreToWin" Content="501"/>
-        <RadioButton Grid.Row="4" Grid.Column="1" Margin="0, 15, 15, 15" IsChecked="{ Binding IsChecked301, UpdateSourceTrigger=PropertyChanged}" GroupName="ScoreToWin" Content="301"/>
+        <RadioButton Grid.Row="4" Grid.Column="1" Margin="0, 15, 15, 15" IsChecked="{Binding IsChecked301, UpdateSourceTrigger=PropertyChanged}" GroupName="ScoreToWin" Content="301"/>
 
         <Grid Grid.Row="6" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="Exit" Content="Back" Grid.Column="0"/>
-            <Button x:Name="DeleteMatch" Content="Delete match" Grid.Column="1"/>
-            <Button x:Name="SaveGameAndExit" Content="Save game and exit" Grid.Column="2"/>
-            <Button x:Name="SaveAndStartGame" Content="Save and start game" Grid.Column="3"/>
+            <Button x:Name="OnExit" Content="Save and back" Grid.Column="0"/>
+            <Button x:Name="DeleteMatch" Content="Delete" Grid.Column="1"/>
+            <Button x:Name="SaveAndStartGame" Content="Save and start" Grid.Column="2"/>
         </Grid>
     </Grid>
 </UserControl>

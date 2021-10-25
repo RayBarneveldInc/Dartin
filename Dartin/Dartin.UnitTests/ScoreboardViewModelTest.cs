@@ -58,7 +58,7 @@ namespace UnitTests
 
             var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             Player player = vm.Match.Players.First();
-            int resultOne = vm.Match.GetAmountOfLegsWon(player);
+            int resultOne = vm.Match.GetAmountOfLegsWonOnCurrentSet(player);
 
             Leg legOne = new Leg(new BindingList<Turn>());
             Leg legTwo = new Leg(new BindingList<Turn>());
@@ -72,7 +72,7 @@ namespace UnitTests
             vm.Match.Sets.Last().Legs.Add(legTwo);
             vm.Match.Sets.Last().Legs.Add(legThree);
 
-            int resultTwo = vm.Match.GetAmountOfLegsWon(player);
+            int resultTwo = vm.Match.GetAmountOfLegsWonOnCurrentSet(player);
 
             Assert.Equal(0, resultOne);
             Assert.Equal(3, resultTwo);
