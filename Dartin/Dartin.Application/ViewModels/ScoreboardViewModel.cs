@@ -169,7 +169,7 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => SetText);
             }
         }
-        private bool _playerTurnIndicator;
+        private bool _playerTurnIndicator = true;
         public bool PlayerTurnIndicator
         {
             get => _playerTurnIndicator;
@@ -213,7 +213,6 @@ namespace Dartin.ViewModels
         {
             Match = match;
             SetSet();
-            PlayerTurnIndicator = true;
             SetSetText();
             SetLegText();
             Player1Counter180 = Get180CounterForPlayer(Player1);
@@ -338,6 +337,7 @@ namespace Dartin.ViewModels
                 {
                     currentTurn.Tosses.Add(toss);
                     currentTurn.WinningTurn = true;
+                    _currentLeg.WinnerId = activePlayerId;
                     PlayerLegStartIndicator = !PlayerLegStartIndicator; 
                 }
                 else if (
