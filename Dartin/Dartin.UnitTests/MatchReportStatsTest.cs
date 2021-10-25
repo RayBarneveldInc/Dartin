@@ -108,14 +108,14 @@ namespace UnitTests
 
         public MatchDefinition MatchDef()
         {
-            Player p1 = new Player("Jacco", "Blokje");
-            Player p2 = new Player("Tjeerd", "Geld");
+            Player player1 = new Player("Jacco", "Blokje");
+            Player player2 = new Player("Tjeerd", "Geld");
 
             MatchDefinition match = new MatchDefinition();
 
             BindingList<Player> players = new BindingList<Player>();
-            players.Add(p1);
-            players.Add(p2);
+            players.Add(player1);
+            players.Add(player2);
 
             Toss throw1 = new Toss(20, 3);
             Toss throw2 = new Toss(20, 3);
@@ -133,19 +133,19 @@ namespace UnitTests
             throws1.Add(throw1);
             throws1.Add(throw2);
             throws1.Add(throw3);
-            Turn turn = new Turn(p1, throws1);
+            Turn turn = new Turn(player1, throws1);
 
             BindingList<Toss> throws2 = new BindingList<Toss>();
             throws2.Add(throw4);
             throws2.Add(throw5);
             throws2.Add(throw6);
-            Turn turn2 = new Turn(p1, throws2);
+            Turn turn2 = new Turn(player1, throws2);
 
             BindingList<Toss> throws3 = new BindingList<Toss>();
             throws3.Add(throw7);
             throws3.Add(throw8);
             throws3.Add(throw9);
-            Turn turn3 = new Turn(p1, throws3);
+            Turn turn3 = new Turn(player1, throws3);
 
             BindingList<Turn> turns = new BindingList<Turn>();
             turns.Add(turn);
@@ -154,14 +154,14 @@ namespace UnitTests
 
             BindingList<Leg> legs = new BindingList<Leg>();
             Leg leg = new Leg(turns);
-            leg.WinnerId = p1.Id;
-            leg.Winner = p1;
+            leg.WinnerId = player1.Id;
+            leg.Winner = player1;
             legs.Add(leg);
 
             BindingList<Set> sets = new BindingList<Set>();
             Set set = new Set(legs);
-            set.WinnerId = p1.Id;
-            set.Winner = p1;
+            set.WinnerId = player1.Id;
+            set.Winner = player1;
             sets.Add(set);
 
             match.Sets = sets;
