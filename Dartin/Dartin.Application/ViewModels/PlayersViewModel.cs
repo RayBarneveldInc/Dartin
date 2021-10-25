@@ -17,10 +17,15 @@ namespace Dartin.ViewModels
         private BindableCollection<Player> _players;
         private int _selectedIndex;
         private Visibility _crudModalVisibility;
+        private Visibility _deleteModalVisibility;
+
         private string _lastName;
         private string _firstName;
         private string _modalButtonText;
         private string _title;
+        
+        public Action PlayerAction { get; set; }
+        public Action DeleteAction { get; set; }
 
         // CrudModel
         public string Title
@@ -33,7 +38,7 @@ namespace Dartin.ViewModels
             }
         }
 
-        public Action PlayerAction { get; set; }
+        
 
         public string FirstName
         {
@@ -74,6 +79,16 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => CrudModalVisibility);
             }
         }
+        
+        public Visibility DeleteModalVisibility
+        {
+            get => _deleteModalVisibility;
+            set
+            {
+                _deleteModalVisibility = value;
+                NotifyOfPropertyChange(() => DeleteModalVisibility);
+            }
+        }
 
 
         public PlayersViewModel()
@@ -81,6 +96,8 @@ namespace Dartin.ViewModels
             Players = new BindableCollection<Player>();
 
             CrudModalVisibility = Visibility.Hidden;
+            DeleteModalVisibility = Visibility.Hidden;
+
 
             InitializePlayers();
         }
@@ -195,10 +212,23 @@ namespace Dartin.ViewModels
 
             InitializePlayers();
         }
-
+        
+        
         public void ToggleModal() => CrudModalVisibility = ~CrudModalVisibility;
 
 
+        public void ConfirmDelete()
+        {
+            DeleteAction.Invoke();
+
+            DeleteModalVisibility = ~DeleteModalVisibility;
+        }
+
+        public void CancelDelete()
+        {
+            DeleteModalVisibility = ~DeleteModalVisibility;
+        }
+        
         public void Delete()
         {
             if (SelectedIndex < 0 || SelectedIndex >= Players.Count)
@@ -208,21 +238,29 @@ namespace Dartin.ViewModels
 
             var player = Players[SelectedIndex];
 
-            State.Instance.Players.Remove(player);
-
-            var bindinglist = new BindingList<MatchDefinition>();
-
-            foreach (var match in State.Instance.Matches)
+            DeleteAction = () =>
             {
-                if (!match.Players.Contains(player))
+               
+                State.Instance.Players.Remove(player);
+
+                var newMatchList = new BindingList<MatchDefinition>();
+
+                foreach (var match in State.Instance.Matches)
                 {
-                    bindinglist.Add(match);
+                    if (!match.Players.Contains(player))
+                    {
+                        newMatchList.Add(match);
+                    }
                 }
-            }
 
-            State.Instance.Matches = bindinglist;
+                State.Instance.Matches = newMatchList;
+                
+                InitializePlayers();
 
-            SearchText = SearchText;
+            };
+
+            DeleteModalVisibility = ~DeleteModalVisibility;
+            
         }
 
         public void History()

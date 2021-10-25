@@ -15,12 +15,13 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="29*"></RowDefinition>
+            <RowDefinition Height="10*"/>
             <RowDefinition Height="40"></RowDefinition>
         </Grid.RowDefinitions>
         <!--PlayerList-->
         <TextBox Text="{Binding SearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Players}" SelectedIndex="{Binding SelectedIndex}">
+        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Players}" SelectedIndex="{Binding SelectedIndex}" Grid.RowSpan="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -31,7 +32,7 @@
         </ListBox>
 
         <!--Buttons-->
-        <Grid Grid.Row="2" Grid.ColumnSpan="2">
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -47,7 +48,7 @@
         </Grid>
 
         <!--edit-->
-        <Grid Visibility="{Binding CrudModalVisibility, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="3" Opacity=".9"  Background="#111111">
+        <Grid Visibility="{Binding CrudModalVisibility, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="4" Opacity=".9"  Background="#111111">
             <Grid Margin="100" Background="White">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"></RowDefinition>
@@ -74,6 +75,26 @@
             </Grid>
         </Grid>
 
+
+        <!--deletepopup-->
+        <Grid Visibility="{Binding DeleteModalVisibility, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="4" Opacity=".9"  Background="#111111">
+            <Grid Margin="140" Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="25"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+             
+                <TextBlock VerticalAlignment="Center" TextAlignment="Center" Text="Are you sure, this will also remove the associated matches with this player" Grid.Row="0" Grid.ColumnSpan="2" ></TextBlock>
+                <!--Apply-->
+                <Button Content="No"  x:Name="CancelDelete"  Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="1" Background="Red" Grid.Column="0" ></Button>
+                <Button Content="Yes" x:Name="ConfirmDelete" Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="1" Background="Green" Grid.Column="1"></Button>
+            </Grid>
+        </Grid>
 
     </Grid>
 </UserControl>
