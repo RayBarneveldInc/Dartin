@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using Dartin.Managers;
 using Action = System.Action;
+using System.ComponentModel;
 
 namespace Dartin.ViewModels
 {
@@ -197,6 +198,32 @@ namespace Dartin.ViewModels
 
         public void ToggleModal() => CrudModalVisibility = ~CrudModalVisibility;
 
+
+        public void Delete()
+        {
+            if (SelectedIndex < 0 || SelectedIndex >= Players.Count)
+            {
+                return;
+            }
+
+            var player = Players[SelectedIndex];
+
+            State.Instance.Players.Remove(player);
+
+            var bindinglist = new BindingList<MatchDefinition>();
+
+            foreach (var match in State.Instance.Matches)
+            {
+                if (!match.Players.Contains(player))
+                {
+                    bindinglist.Add(match);
+                }
+            }
+
+            State.Instance.Matches = bindinglist;
+
+            SearchText = SearchText;
+        }
 
         public void History()
         {

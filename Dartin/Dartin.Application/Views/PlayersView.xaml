@@ -37,11 +37,13 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button x:Name="Back" Grid.Column="0" Content="Back"></Button>
             <Button x:Name="Add" Grid.Column="1" Content="Add"></Button>
             <Button x:Name="Edit" Grid.Column="2" Content="Edit"></Button>
-            <Button x:Name="History" Grid.Column="3" Content="History"></Button>
+            <Button x:Name="Delete" Grid.Column="3" Content="Delete"></Button>
+            <Button x:Name="History" Grid.Column="4" Content="History"></Button>
         </Grid>
 
         <!--edit-->
