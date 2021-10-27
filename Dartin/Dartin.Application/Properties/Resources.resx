@@ -117,6 +117,36 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddPlayerButton" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="AddPlayerTitle" xml:space="preserve">
+    <value>Add Player</value>
+  </data>
+  <data name="BestOfLegsFormat" xml:space="preserve">
+    <value>Best of {0} legs</value>
+  </data>
+  <data name="BestOfSetsFormat" xml:space="preserve">
+    <value>Best of {0} sets</value>
+  </data>
+  <data name="BullsEye" xml:space="preserve">
+    <value>bull</value>
+  </data>
+  <data name="DeleteMatchWarningMessage" xml:space="preserve">
+    <value>Are you sure you want to delete this match?</value>
+  </data>
+  <data name="Double" xml:space="preserve">
+    <value>d</value>
+  </data>
+  <data name="DuplicatePlayersSelected" xml:space="preserve">
+    <value>Players can't play against themselves. Please select two distinct players.</value>
+  </data>
+  <data name="EditPlayerButton" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EditPlayerTitle" xml:space="preserve">
+    <value>Edit Player</value>
+  </data>
   <data name="HelpText" xml:space="preserve">
     <value>Notation for score.
 
@@ -134,7 +164,64 @@ Obull/obull	= Outer Bullseye
 50	= Bullseye 
 25 	= Outer Bullseye</value>
   </data>
-  <data name="TestString" xml:space="preserve">
-    <value>Hello</value>
+  <data name="InvalidTurnMessage" xml:space="preserve">
+    <value>Invalid turn!</value>
+  </data>
+  <data name="InvalidTurnTitle" xml:space="preserve">
+    <value>Invalid turn!</value>
+  </data>
+  <data name="JSONSaveScreenTitle" xml:space="preserve">
+    <value>Save the database file</value>
+  </data>
+  <data name="JSONSelectorFilter" xml:space="preserve">
+    <value>JSON Database|*.json</value>
+  </data>
+  <data name="JSONSelectorScreenTitle" xml:space="preserve">
+    <value>Import a database file</value>
+  </data>
+  <data name="MatchNameDefaultText" xml:space="preserve">
+    <value>No players have been added</value>
+  </data>
+  <data name="MatchNameFormat" xml:space="preserve">
+    <value>{0} vs {1}</value>
+  </data>
+  <data name="MatchSelectedErrorText" xml:space="preserve">
+    <value>No match was selected!</value>
+  </data>
+  <data name="MatchSelectedErrorTitle" xml:space="preserve">
+    <value>No Match Selected Error</value>
+  </data>
+  <data name="MatchWarningTitle" xml:space="preserve">
+    <value>Match Warning Message</value>
+  </data>
+  <data name="MatchWonMessage" xml:space="preserve">
+    <value>{0} has won the match!</value>
+  </data>
+  <data name="MatchWonTitle" xml:space="preserve">
+    <value>Match Winner</value>
+  </data>
+  <data name="NoTurnToRevertMessage" xml:space="preserve">
+    <value>There was no turn to revert.</value>
+  </data>
+  <data name="NoTurnToRevertTitle" xml:space="preserve">
+    <value>Revert Error</value>
+  </data>
+  <data name="OnePlayerIsNull" xml:space="preserve">
+    <value>Not all players are filled in. Please select two players.</value>
+  </data>
+  <data name="OuterBullsEye" xml:space="preserve">
+    <value>obull</value>
+  </data>
+  <data name="SaveFilePath" xml:space="preserve">
+    <value>./Saved/saved.json</value>
+  </data>
+  <data name="SavePath" xml:space="preserve">
+    <value>./Saved/</value>
+  </data>
+  <data name="Triple" xml:space="preserve">
+    <value>t</value>
+  </data>
+  <data name="WonFormat" xml:space="preserve">
+    <value>- Won</value>
   </data>
 </root>

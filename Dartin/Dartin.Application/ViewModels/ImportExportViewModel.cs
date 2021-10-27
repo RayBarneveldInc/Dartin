@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using Dartin.Managers;
+using Dartin.Properties;
 using Newtonsoft.Json;
 using System.IO;
 
@@ -7,15 +8,13 @@ namespace Dartin.ViewModels
 {
     class ImportExportViewModel : Screen, IViewModel
     {
-        public string ViewName => throw new System.NotImplementedException();
-
         public static void Import()
         {
             // Create OpenFileDialog.
             Microsoft.Win32.OpenFileDialog openFileDlg = new();
             // Limit filetype.
-            openFileDlg.Filter = "JSON Database|*.json";
-            openFileDlg.Title = "Import a database file";
+            openFileDlg.Filter = Resources.JSONSelectorFilter;
+            openFileDlg.Title = Resources.JSONSelectorScreenTitle;
 
             // Launch OpenFileDialog by calling ShowDialog method.
             bool? result = openFileDlg.ShowDialog();
@@ -33,8 +32,8 @@ namespace Dartin.ViewModels
             // Create OpenFileDialog.
             Microsoft.Win32.SaveFileDialog saveFileDlg = new();
             // Limit filetype.
-            saveFileDlg.Filter = "JSON Database|*.json";
-            saveFileDlg.Title = "Save the database file";
+            saveFileDlg.Filter = Resources.JSONSelectorFilter;
+            saveFileDlg.Title = Resources.JSONSaveScreenTitle;
 
             // Launch OpenFileDialog by calling ShowDialog method.
             saveFileDlg.ShowDialog();

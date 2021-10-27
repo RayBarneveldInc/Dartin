@@ -16,8 +16,6 @@ namespace Dartin.ViewModels
     class MatchReportViewModel : Screen, IViewModel
     {
         private MatchDefinition _currentMatch;
-
-        public string ViewName { get; }
         public MatchDefinition Match => _currentMatch;
         public Player PlayerOne => Match.Players[0];
         public Player PlayerTwo => Match.Players[1];
@@ -49,9 +47,7 @@ namespace Dartin.ViewModels
             return deepcopy;
         }
 
-        public MatchReportViewModel(
-            MatchDefinition match
-            )
+        public MatchReportViewModel(MatchDefinition match)
         {
             _currentMatch = match;
             App.Current.Properties["playeroneID"] = PlayerOne.Id;

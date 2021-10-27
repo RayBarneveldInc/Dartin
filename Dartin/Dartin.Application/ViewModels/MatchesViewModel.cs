@@ -2,13 +2,9 @@
 using Dartin.Models;
 using System;
 using System.ComponentModel;
-using System.Linq;
-using System.ServiceModel.Channels;
-using System.Text.RegularExpressions;
 using System.Windows;
 using Dartin.Managers;
-using Microsoft.Win32;
-using System.Collections.Generic;
+using Dartin.Properties;
 
 namespace Dartin.ViewModels
 {
@@ -134,13 +130,15 @@ namespace Dartin.ViewModels
             }
         }
 
-        public string ViewName { get; }
-
         #region Buttons
         public void OnExit()
         {
-            ScreenManager.GetInstance().RevertToPreviousViewModel();
+            if (ScreenManager.GetInstance().Previous.GetType() == typeof(PlayersViewModel))
+                ScreenManager.GetInstance().RevertToPreviousViewModel();
+            else
+                ScreenManager.GetInstance().SwitchViewModel(new MainMenuViewModel());
         }
+
         public void Edit()
         {
             try
@@ -150,7 +148,7 @@ namespace Dartin.ViewModels
             }
             catch
             {
-                MessageBox.Show("No match was selected to be edited!", "Edit Match Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Resources.MatchSelectedErrorText, Resources.MatchSelectedErrorTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -159,12 +157,11 @@ namespace Dartin.ViewModels
             try
             {
                 MatchDefinition match = CurrentCollection[SelectedIndex];
-                // Hier moet die screen van Tjeerd en Jacco
                 ScreenManager.GetInstance().SwitchViewModel(new MatchReportViewModel(match));
             }
             catch
             {
-                MessageBox.Show("No match was selected to be edited!", "More info Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Resources.MatchSelectedErrorText, Resources.MatchSelectedErrorTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -181,7 +178,7 @@ namespace Dartin.ViewModels
             }
             catch
             {
-                MessageBox.Show("No match was selected to be edited!", "Edit Match Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Resources.MatchSelectedErrorText, Resources.MatchSelectedErrorTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
         #endregion

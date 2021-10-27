@@ -1,4 +1,5 @@
 ﻿using Dartin.Models;
+using Dartin.Properties;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -24,7 +25,7 @@ namespace Dartin.Converters
         {
             Guid winnerID = (Guid)values[0];
             Guid playerID;
-            string text = $"{values[2].ToString()}";
+            string text = $"{values[2]}";
 
             if ((int)values[1] == 1) 
                 playerID = (Guid)App.Current.Properties["playeroneID"]; 
@@ -35,7 +36,7 @@ namespace Dartin.Converters
             //    text += " - Started";
 
             if (playerID == winnerID) 
-                text += " - Won";
+                text += Resources.WonFormat;
 
             return text;
         }
