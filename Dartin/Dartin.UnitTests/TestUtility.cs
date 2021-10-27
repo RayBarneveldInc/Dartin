@@ -18,8 +18,8 @@ namespace UnitTests
             MatchDefinition matchDefinition = new MatchDefinition();
             matchDefinition.Players = new BindingList<Player>() { State.Instance.Players.Last(), State.Instance.Players.ElementAt(State.Instance.Players.Count - 2) };
             matchDefinition.ScoreToWinLeg = 501;
-            matchDefinition.SetsToWin = 3;
-            matchDefinition.LegsToWinSet = 3;
+            matchDefinition.TotalSets = 5;
+            matchDefinition.LegsPerSet = 5;
             return matchDefinition;
         }
 

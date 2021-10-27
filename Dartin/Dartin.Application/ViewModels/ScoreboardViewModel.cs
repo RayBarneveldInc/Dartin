@@ -145,7 +145,7 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => Player2Remainders);
             }
         }
-        public string BestOf => $"Best of {Match.SetsToWin} sets ({Match.LegsToWinSet} legs per set)";
+        public string BestOf => $"Best of {Match.TotalSets} sets ({Match.LegsPerSet} legs per set)";
         public MatchDefinition Match { get; }
         public long Player1Counter180
         {
@@ -336,7 +336,7 @@ namespace Dartin.ViewModels
 
                 var wonLegs = Match.Sets.Last().Legs.Count(leg => leg.WinnerId == activePlayerId);
 
-                if (Match.LegsToWinSet == wonLegs)
+                if (Math.Ceiling((decimal)Match.LegsPerSet / 2) == wonLegs)
                 {
                     _currentSet.WinnerId = activePlayerId;
                 }
