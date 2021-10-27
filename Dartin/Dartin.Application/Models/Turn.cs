@@ -58,8 +58,7 @@ namespace Dartin.Models
 
         public Turn(Player player, BindingList<Toss> tosses)
         {
-            PlayerId = player.Id;
-            Tosses = tosses;
+            if (player == null) PlayerId = Guid.Empty; else PlayerId = player.Id;
         }
 
         [JsonConstructor]
@@ -68,6 +67,5 @@ namespace Dartin.Models
             PlayerId = playerId;
             Tosses = tosses;
         }
-
     }
 }

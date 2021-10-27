@@ -61,6 +61,96 @@ namespace Dartin.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string AddPlayerButton {
+            get {
+                return ResourceManager.GetString("AddPlayerButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Player.
+        /// </summary>
+        public static string AddPlayerTitle {
+            get {
+                return ResourceManager.GetString("AddPlayerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Best of {0} legs.
+        /// </summary>
+        public static string BestOfLegsFormat {
+            get {
+                return ResourceManager.GetString("BestOfLegsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Best of {0} sets.
+        /// </summary>
+        public static string BestOfSetsFormat {
+            get {
+                return ResourceManager.GetString("BestOfSetsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to bull.
+        /// </summary>
+        public static string BullsEye {
+            get {
+                return ResourceManager.GetString("BullsEye", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this match?.
+        /// </summary>
+        public static string DeleteMatchWarningMessage {
+            get {
+                return ResourceManager.GetString("DeleteMatchWarningMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to d.
+        /// </summary>
+        public static string Double {
+            get {
+                return ResourceManager.GetString("Double", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Players can&apos;t play against themselves. Please select two distinct players..
+        /// </summary>
+        public static string DuplicatePlayersSelected {
+            get {
+                return ResourceManager.GetString("DuplicatePlayersSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string EditPlayerButton {
+            get {
+                return ResourceManager.GetString("EditPlayerButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Player.
+        /// </summary>
+        public static string EditPlayerTitle {
+            get {
+                return ResourceManager.GetString("EditPlayerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notation for score.
         ///
         ///[x score]
@@ -84,11 +174,182 @@ namespace Dartin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hello.
+        ///   Looks up a localized string similar to Invalid turn!.
         /// </summary>
-        public static string TestString {
+        public static string InvalidTurnMessage {
             get {
-                return ResourceManager.GetString("TestString", resourceCulture);
+                return ResourceManager.GetString("InvalidTurnMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid turn!.
+        /// </summary>
+        public static string InvalidTurnTitle {
+            get {
+                return ResourceManager.GetString("InvalidTurnTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save the database file.
+        /// </summary>
+        public static string JSONSaveScreenTitle {
+            get {
+                return ResourceManager.GetString("JSONSaveScreenTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to JSON Database|*.json.
+        /// </summary>
+        public static string JSONSelectorFilter {
+            get {
+                return ResourceManager.GetString("JSONSelectorFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import a database file.
+        /// </summary>
+        public static string JSONSelectorScreenTitle {
+            get {
+                return ResourceManager.GetString("JSONSelectorScreenTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No players have been added.
+        /// </summary>
+        public static string MatchNameDefaultText {
+            get {
+                return ResourceManager.GetString("MatchNameDefaultText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} vs {1}.
+        /// </summary>
+        public static string MatchNameFormat {
+            get {
+                return ResourceManager.GetString("MatchNameFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No match was selected!.
+        /// </summary>
+        public static string MatchSelectedErrorText {
+            get {
+                return ResourceManager.GetString("MatchSelectedErrorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Match Selected Error.
+        /// </summary>
+        public static string MatchSelectedErrorTitle {
+            get {
+                return ResourceManager.GetString("MatchSelectedErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match Warning Message.
+        /// </summary>
+        public static string MatchWarningTitle {
+            get {
+                return ResourceManager.GetString("MatchWarningTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} has won the match!.
+        /// </summary>
+        public static string MatchWonMessage {
+            get {
+                return ResourceManager.GetString("MatchWonMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match Winner.
+        /// </summary>
+        public static string MatchWonTitle {
+            get {
+                return ResourceManager.GetString("MatchWonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was no turn to revert..
+        /// </summary>
+        public static string NoTurnToRevertMessage {
+            get {
+                return ResourceManager.GetString("NoTurnToRevertMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Revert Error.
+        /// </summary>
+        public static string NoTurnToRevertTitle {
+            get {
+                return ResourceManager.GetString("NoTurnToRevertTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not all players are filled in. Please select two players..
+        /// </summary>
+        public static string OnePlayerIsNull {
+            get {
+                return ResourceManager.GetString("OnePlayerIsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to obull.
+        /// </summary>
+        public static string OuterBullsEye {
+            get {
+                return ResourceManager.GetString("OuterBullsEye", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ./Saved/saved.json.
+        /// </summary>
+        public static string SaveFilePath {
+            get {
+                return ResourceManager.GetString("SaveFilePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ./Saved/.
+        /// </summary>
+        public static string SavePath {
+            get {
+                return ResourceManager.GetString("SavePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to t.
+        /// </summary>
+        public static string Triple {
+            get {
+                return ResourceManager.GetString("Triple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to - Won.
+        /// </summary>
+        public static string WonFormat {
+            get {
+                return ResourceManager.GetString("WonFormat", resourceCulture);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Dartin.Abstracts;
+using Dartin.Properties;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
@@ -107,27 +108,29 @@ namespace Dartin.Models
 
         [JsonConstructor]
         public MatchDefinition(Guid id) => Id = id;
+        
         private string GetBestOfDescription()
         {
             if (TotalSets > 1)
             {
-                return string.Format(CultureInfo.CurrentCulture, "Best of {0} sets", TotalSets);
+                return string.Format(CultureInfo.CurrentCulture, Resources.BestOfSetsFormat, TotalSets);
             }
             else
             {
-                return string.Format(CultureInfo.CurrentCulture, "Best of {0} legs", LegsPerSet);
+                return string.Format(CultureInfo.CurrentCulture, Resources.BestOfLegsFormat, LegsPerSet);
             }
         }
+        
         private string GetMatchName()
         {
             if (Players.Count > 0)
             {
                 return string.Format(CultureInfo.CurrentCulture,
-                    "{0} vs {1}", this.Players[0].Name, this.Players[1].Name);
+                    Resources.MatchNameFormat, this.Players[0].Name, this.Players[1].Name);
             }
             else
             {
-                return "No players have been added";
+                return Resources.MatchNameDefaultText;
             }
         }
         public double GetTurnAverage() => Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Where(turn => turn.Valid).Average(turn => turn.Score)));

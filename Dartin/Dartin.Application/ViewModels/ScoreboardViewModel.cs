@@ -1,17 +1,14 @@
 ﻿using Caliburn.Micro;
-using Dartin.Abstracts;
-using Dartin.Managers;
 using Dartin.Models;
 using Dartin.Extensions;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using Parser = Dartin.Managers.Parser;
-using System.Diagnostics;
 using System.Windows;
 using Dartin.Converters;
+using Dartin.Properties;
 
 namespace Dartin.ViewModels
 {
@@ -64,7 +61,6 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => TossThreeInput);
             }
         }
-        public string ViewName => nameof(ScoreboardViewModel);
         public static BrushColorConverter BrushColorConverter = new BrushColorConverter();
         private double _player1Average = 0;
         private double _player2Average = 0;
@@ -369,9 +365,6 @@ namespace Dartin.ViewModels
 
         public BindableCollection<Turn> GetPlayerTurnsCollection(Guid playerId) => new BindableCollection<Turn>(Match.Sets.Last().Legs.Last().Turns.Where(turn => turn.PlayerId == playerId));
 
-        /// <summary>
-        /// Revert turn to write new turn.
-        /// </summary>
         public void RevertTurn(bool togglePlayerTurnIndicator = true)
         {
             if (_currentLeg != null && _currentLeg.Turns.Any())
@@ -393,13 +386,10 @@ namespace Dartin.ViewModels
             else if (togglePlayerTurnIndicator)
             {
                 if (MessageBoxEnabled)
-                    MessageBox.Show("There was no turn to revert.");
+                    MessageBox.Show(Resources.NoTurnToRevertMessage, Resources.NoTurnToRevertTitle, MessageBoxButton.OK);
             }
         }
 
-        /// <summary>
-        /// Handle scores for both players.
-        /// </summary>
         public void HandlePlayerScore()
         {
             Guid activePlayerId = GetActivePlayerId();
@@ -410,9 +400,6 @@ namespace Dartin.ViewModels
                 Player2Turns = GetPlayerTurnsCollection(Player2.Id);
         }
 
-        /// <summary>
-        /// Check for the last turn of the leg.
-        /// </summary>
         public void HandleLastTurn()
         {
             bool toggleTurnIndicator = true;
@@ -438,7 +425,7 @@ namespace Dartin.ViewModels
                         InputIsDisabled = true;
 
                         if (MessageBoxEnabled)
-                            MessageBox.Show($"{activePlayer.Name} has won the match!");
+                            MessageBox.Show(string.Format(Resources.MatchWonMessage, activePlayer.Name), Resources.MatchWonTitle, MessageBoxButton.OK);
                     }
                 }
 
@@ -465,9 +452,6 @@ namespace Dartin.ViewModels
                 PlayerLegStartIndicator = !PlayerLegStartIndicator; 
         }
 
-        /// <summary>
-        ///  Submit score.
-        /// </summary>
         public void Submit()
         {
             if (Match.WinnerId != Guid.Empty)
@@ -491,7 +475,7 @@ namespace Dartin.ViewModels
                 RevertTurn(togglePlayerTurnIndicator: false);
 
                 if (MessageBoxEnabled)
-                    MessageBox.Show("Invalid turn!");
+                    MessageBox.Show(Resources.InvalidTurnMessage, Resources.InvalidTurnTitle, MessageBoxButton.OK);
             }
             else if (currentTurn.Tosses.Any() && (currentTurn.Tosses.Count(toss => toss != null) == 3 || currentTurn.WinningTurn))
             {
@@ -510,9 +494,6 @@ namespace Dartin.ViewModels
             FirstTextBoxIsFocused = true;
         }
 
-        /// <summary>
-        /// Clear all toss inputs to empty fields.
-        /// </summary>
         public void ClearTossInputs()
         {
             TossOneInput = string.Empty;
@@ -520,10 +501,6 @@ namespace Dartin.ViewModels
             TossThreeInput = string.Empty;
         }
 
-        /// <summary>
-        /// Submit scores with enter key.
-        /// </summary>
-        /// <param name="e">KeyEventArgs</param>
         public void Submit(KeyEventArgs e)
         {
             if (e.Key == Key.Enter)

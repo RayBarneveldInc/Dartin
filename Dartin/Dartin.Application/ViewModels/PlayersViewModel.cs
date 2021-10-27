@@ -5,21 +5,26 @@ using System.Linq;
 using System.Windows;
 using Dartin.Managers;
 using Action = System.Action;
+using System.ComponentModel;
+using Dartin.Properties;
 
 namespace Dartin.ViewModels
 {
     public class PlayersViewModel : Screen, IViewModel
     {
-        public string ViewName => throw new NotImplementedException();
-
         private string _searchText;
         private BindableCollection<Player> _players;
         private int _selectedIndex;
         private Visibility _crudModalVisibility;
+        private Visibility _deleteModalVisibility;
+
         private string _lastName;
         private string _firstName;
         private string _modalButtonText;
         private string _title;
+        
+        public Action PlayerAction { get; set; }
+        public Action DeleteAction { get; set; }
 
         // CrudModel
         public string Title
@@ -32,7 +37,7 @@ namespace Dartin.ViewModels
             }
         }
 
-        public Action PlayerAction { get; set; }
+        
 
         public string FirstName
         {
@@ -73,6 +78,16 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => CrudModalVisibility);
             }
         }
+        
+        public Visibility DeleteModalVisibility
+        {
+            get => _deleteModalVisibility;
+            set
+            {
+                _deleteModalVisibility = value;
+                NotifyOfPropertyChange(() => DeleteModalVisibility);
+            }
+        }
 
 
         public PlayersViewModel()
@@ -80,6 +95,8 @@ namespace Dartin.ViewModels
             Players = new BindableCollection<Player>();
 
             CrudModalVisibility = Visibility.Hidden;
+            DeleteModalVisibility = Visibility.Hidden;
+
 
             InitializePlayers();
         }
@@ -153,8 +170,8 @@ namespace Dartin.ViewModels
             
             var selectedPlayer = Players[SelectedIndex];
 
-            Title = "Edit Player";
-            ModalButtonText = "Edit";
+            Title = Resources.EditPlayerTitle;
+            ModalButtonText = Resources.EditPlayerButton;
 
             FirstName = selectedPlayer.FirstName;
             LastName = selectedPlayer.LastName;
@@ -172,8 +189,8 @@ namespace Dartin.ViewModels
 
         public void Add()
         {
-            Title = "Add Player";
-            ModalButtonText = "Add";
+            Title = Resources.EditPlayerTitle;
+            ModalButtonText = Resources.EditPlayerButton;
 
             FirstName = string.Empty;
             LastName = string.Empty;
@@ -194,9 +211,56 @@ namespace Dartin.ViewModels
 
             InitializePlayers();
         }
-
+        
+        
         public void ToggleModal() => CrudModalVisibility = ~CrudModalVisibility;
 
+
+        public void ConfirmDelete()
+        {
+            DeleteAction.Invoke();
+
+            DeleteModalVisibility = ~DeleteModalVisibility;
+        }
+
+        public void CancelDelete()
+        {
+            DeleteModalVisibility = ~DeleteModalVisibility;
+        }
+        
+        public void Delete()
+        {
+            if (SelectedIndex < 0 || SelectedIndex >= Players.Count)
+            {
+                return;
+            }
+
+            var player = Players[SelectedIndex];
+
+            DeleteAction = () =>
+            {
+               
+                State.Instance.Players.Remove(player);
+
+                var newMatchList = new BindingList<MatchDefinition>();
+
+                foreach (var match in State.Instance.Matches)
+                {
+                    if (!match.Players.Contains(player))
+                    {
+                        newMatchList.Add(match);
+                    }
+                }
+
+                State.Instance.Matches = newMatchList;
+                
+                InitializePlayers();
+
+            };
+
+            DeleteModalVisibility = ~DeleteModalVisibility;
+            
+        }
 
         public void History()
         {
