@@ -115,8 +115,8 @@
                 </Grid.RowDefinitions>
                 <Image Grid.Row="0" Grid.Column="0" Source="{Binding Player2.Nationality, Converter={conv:CountryIdToFlagImageConverter}}" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None"/>
                 <Label Grid.Row="0" Grid.Column="1" Content="{Binding Player2.Name}" FontSize="16" FontWeight="Bold"/>
-                <Image Grid.Row="0" Grid.Column="2" Visibility="{Binding PlayerTurnIndicator, Converter={conv:BoolToVisibilityConverter}}" Source="/Resources/indicator.png" Height="10" HorizontalAlignment="Right" />
-                <Image Grid.Row="0" Grid.Column="3" Visibility="{Binding PlayerLegStartIndicator, Converter={conv:BoolToVisibilityConverter}}" Source="/Resources/turnindicator-left.png" Height="10" HorizontalAlignment="Right" />
+                <Image Grid.Row="0" Grid.Column="2" Visibility="{Binding PlayerTurnIndicator, Converter={conv:InverseBoolToVisibilityConverter}}" Source="/Resources/indicator.png" Height="10" HorizontalAlignment="Right" />
+                <Image Grid.Row="0" Grid.Column="3" Visibility="{Binding PlayerLegStartIndicator, Converter={conv:InverseBoolToVisibilityConverter}}" Source="/Resources/turnindicator-left.png" Height="10" HorizontalAlignment="Right" />
 
                 <!--PlayerScore-->
                 <Grid Grid.Row="1" Grid.ColumnSpan="4">
