@@ -1,0 +1,48 @@
+﻿using Dartin.Models;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Data;
+using System.Windows.Markup;
+using System.Windows.Media;
+
+
+namespace Dartin.Converters
+{
+    public class WonOrLostConverter : MarkupExtension, IMultiValueConverter
+    {
+        private static WonOrLostConverter _instance; 
+        public override object ProvideValue(IServiceProvider serviceProvider) 
+        { 
+            return _instance ??= new WonOrLostConverter();
+        }
+
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            Guid winnerID = (Guid)values[0];
+            Guid playerID;
+            string text = $"{values[2].ToString()}";
+
+            if ((int)values[1] == 1) 
+                playerID = (Guid)App.Current.Properties["playeroneID"]; 
+            else 
+                playerID = (Guid)App.Current.Properties["playertwoID"];
+
+            //if (values.Length >= 4 && playerID == (Guid)values[3]) 
+            //    text += " - Started";
+
+            if (playerID == winnerID) 
+                text += " - Won";
+
+            return text;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

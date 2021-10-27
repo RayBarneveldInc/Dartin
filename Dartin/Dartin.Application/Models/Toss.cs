@@ -9,7 +9,6 @@ namespace Dartin.Models
     {
         private int _score;
         private int _multiplier;
-
         public int Score
         {
             get => _score;

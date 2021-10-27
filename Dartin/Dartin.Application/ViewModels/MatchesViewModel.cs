@@ -160,7 +160,7 @@ namespace Dartin.ViewModels
             {
                 MatchDefinition match = CurrentCollection[SelectedIndex];
                 // Hier moet die screen van Tjeerd en Jacco
-                //ScreenManager.GetInstance().SwitchViewModel(new Matches(new MatchDefinition()));
+                ScreenManager.GetInstance().SwitchViewModel(new MatchReportViewModel(match));
             }
             catch
             {
