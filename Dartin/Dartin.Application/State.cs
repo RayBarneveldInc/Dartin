@@ -1,15 +1,11 @@
 ﻿using Dartin.Abstracts;
 using Dartin.Models;
+using Dartin.Properties;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dartin
 {
@@ -63,8 +59,8 @@ namespace Dartin
 
         private State()
         {
-            if (!Directory.Exists(Constants.SavePath))
-                Directory.CreateDirectory(Constants.SavePath);
+            if (!Directory.Exists(Resources.SavePath))
+                Directory.CreateDirectory(Resources.SavePath);
 
             Matches = new BindingList<MatchDefinition>();
             Players = new BindingList<Player>();
@@ -73,8 +69,8 @@ namespace Dartin
             Players.ListChanged += SaveDefault;
         }
 
-        private static State CreateStateOrLoadSaved() => File.Exists(Constants.SaveFilePath) ? JsonConvert.DeserializeObject<State>(File.ReadAllText(Constants.SaveFilePath)) : new State();
+        private static State CreateStateOrLoadSaved() => File.Exists(Resources.SaveFilePath) ? JsonConvert.DeserializeObject<State>(File.ReadAllText(Resources.SaveFilePath)) : new State();
 
-        private void SaveDefault(object sender, EventArgs e) => Save(Constants.SaveFilePath);
+        private void SaveDefault(object sender, EventArgs e) => Save(Resources.SaveFilePath);
     }
 }

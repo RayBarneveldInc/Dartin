@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using Dartin.Managers;
 using Dartin.Models;
+using Dartin.Properties;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -102,10 +103,10 @@ namespace Dartin.ViewModels
                     ScreenManager.GetInstance().SwitchViewModel(new ScoreboardViewModel(OriginalMatch));
                     break;
                 case ErrorDialogEnum.SelectedPlayersAreEqual:
-                    MessageBox.Show("Players can't play against themselves", "Match Warning Message", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(Resources.DuplicatePlayersSelected, Resources.MatchWarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                     break;
                 case ErrorDialogEnum.NotAllPlayersAreSelected:
-                    MessageBox.Show("Not all players are filled in. Please select two players.", "Match Warning Message", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(Resources.OnePlayerIsNull, Resources.MatchWarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                     break;
             }
         }
@@ -150,7 +151,7 @@ namespace Dartin.ViewModels
 
         public void DeleteMatch()
         {
-            if (MessageBox.Show("Are you sure you want to delete this match?", "Delete Match Message", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            if (MessageBox.Show(Resources.DeleteMatchWarningMessage, Resources.MatchWarningTitle, MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 State.Instance.Matches.Remove(OriginalMatch);
                 ScreenManager.GetInstance().SwitchViewModel(new MatchesViewModel(State.Instance.Matches));
@@ -168,10 +169,10 @@ namespace Dartin.ViewModels
                     ScreenManager.GetInstance().SwitchViewModel(new MatchesViewModel(State.Instance.Matches));
                     break;
                 case ErrorDialogEnum.SelectedPlayersAreEqual:
-                    MessageBox.Show("Players can't play against themselves", "Match Warning Message", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(Resources.DuplicatePlayersSelected, Resources.MatchWarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                     break;
                 case ErrorDialogEnum.NotAllPlayersAreSelected:
-                    MessageBox.Show("Not all players are filled in. Please select two players.", "Match Warning Message", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(Resources.OnePlayerIsNull, Resources.MatchWarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                     break;
             }
         }

@@ -6,6 +6,7 @@ using System.Windows;
 using Dartin.Managers;
 using Action = System.Action;
 using System.ComponentModel;
+using Dartin.Properties;
 
 namespace Dartin.ViewModels
 {
@@ -171,8 +172,8 @@ namespace Dartin.ViewModels
             
             var selectedPlayer = Players[SelectedIndex];
 
-            Title = "Edit Player";
-            ModalButtonText = "Edit";
+            Title = Resources.EditPlayerTitle;
+            ModalButtonText = Resources.EditPlayerButton;
 
             FirstName = selectedPlayer.FirstName;
             LastName = selectedPlayer.LastName;
@@ -190,8 +191,8 @@ namespace Dartin.ViewModels
 
         public void Add()
         {
-            Title = "Add Player";
-            ModalButtonText = "Add";
+            Title = Resources.EditPlayerTitle;
+            ModalButtonText = Resources.EditPlayerButton;
 
             FirstName = string.Empty;
             LastName = string.Empty;

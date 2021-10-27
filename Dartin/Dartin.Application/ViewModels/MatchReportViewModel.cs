@@ -49,9 +49,7 @@ namespace Dartin.ViewModels
             return deepcopy;
         }
 
-        public MatchReportViewModel(
-            MatchDefinition match
-            )
+        public MatchReportViewModel(MatchDefinition match)
         {
             _currentMatch = match;
             App.Current.Properties["playeroneID"] = PlayerOne.Id;

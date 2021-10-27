@@ -1,10 +1,7 @@
 ﻿using Dartin.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Dartin.Properties;
+using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Dartin.Managers
 {
@@ -12,11 +9,13 @@ namespace Dartin.Managers
     {
         public static Toss ParseThrow(string toss)
         {
-            if (toss.ToLower() == "bull")
+            toss = toss.ToLower(CultureInfo.CurrentCulture);
+
+            if (toss == Resources.BullsEye)
             {
                 return new Toss(50, 1);
             }
-            else if (toss.ToLower() == "obull")
+            else if (toss == Resources.OuterBullsEye)
             {
                 return new Toss(25, 1);
             }
@@ -39,12 +38,12 @@ namespace Dartin.Managers
                     return null;
                 }
 
-                if (multiplier == "d")
+                if (multiplier == Resources.Double)
                 {
                     return new Toss(points, 2);
                 }
 
-                else if (multiplier == "t")
+                else if (multiplier == Resources.Triple)
                 {
                     return new Toss(points, 3);
                 }
