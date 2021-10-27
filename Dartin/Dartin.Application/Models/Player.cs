@@ -1,8 +1,7 @@
 ﻿using Dartin.Abstracts;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Globalization;
 
 namespace Dartin.Models
 {
@@ -10,6 +9,7 @@ namespace Dartin.Models
     {
         private string _firstName;
         private string _lastName;
+        private string _nationality;
         public Guid Id { get; }
 
         public override bool Equals(object obj)
@@ -23,7 +23,15 @@ namespace Dartin.Models
         }
 
         public override int GetHashCode() => (Id).GetHashCode();
-
+        public string Nationality
+        {
+            get => _nationality;
+            set
+            {
+                _nationality = value;
+                NotifyPropertyChanged();
+            }
+        }
         public string FirstName
         {
             get => _firstName;
@@ -51,19 +59,21 @@ namespace Dartin.Models
             Id = Guid.NewGuid();
         }
 
-        public Player(string firstName, string lastName)
+        public Player(string firstName, string lastName, string nationality)
         {
             Id = Guid.NewGuid();
             FirstName = firstName;
-            LastName = lastName; 
+            LastName = lastName;
+            Nationality = nationality;
         }
 
         [JsonConstructor]
-        public Player(Guid id, string firstName, string lastName)
+        public Player(Guid id, string firstName, string lastName, string nationality)
         {
             Id = id;
             FirstName = firstName;
             LastName = lastName;
+            Nationality = nationality;
         }
     }
 }
