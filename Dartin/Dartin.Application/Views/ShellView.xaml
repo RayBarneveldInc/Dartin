@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dartin.Views"
 		xmlns:resources="clr-namespace:Dartin.Properties"
+        xmlns:conv="clr-namespace:Dartin.Converters"
 		mc:Ignorable="d"
         Title="Dartin" Height="450" Width="800">
     <Grid>
@@ -13,11 +14,13 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="HelpClick" Grid.Row="0" Grid.Column="1" Content="Help"/>
-        <ContentControl Grid.ColumnSpan="2" Grid.Row="1"  x:Name="ActiveItem" />
+        <Button x:Name="BackClick" Grid.Row="0" Grid.Column="0" Content="Back" Visibility="{Binding IsBackVisible, Converter={conv:BoolToVisibilityConverter}}"/>
+        <Button x:Name="HelpClick" Grid.Row="0" Grid.Column="2" Content="Help"/>
+        <ContentControl Grid.ColumnSpan="3" Grid.Row="1"  x:Name="ActiveItem" />
         <Grid Visibility="{Binding IsHelpVisible, Mode=OneWay}" Grid.Row="1" Grid.ColumnSpan="2" Background="Transparent">
 			<TextBlock Text="{x:Static resources:Resources.HelpText}" Foreground="White" Padding="40" Background="Gray"></TextBlock>
         </Grid>
