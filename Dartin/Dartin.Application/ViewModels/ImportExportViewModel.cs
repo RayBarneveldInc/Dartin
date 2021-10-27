@@ -8,8 +8,6 @@ namespace Dartin.ViewModels
 {
     class ImportExportViewModel : Screen, IViewModel
     {
-        public string ViewName => throw new System.NotImplementedException();
-
         public static void Import()
         {
             // Create OpenFileDialog.

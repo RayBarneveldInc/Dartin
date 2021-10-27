@@ -12,8 +12,6 @@ namespace Dartin.ViewModels
 {
     public class PlayersViewModel : Screen, IViewModel
     {
-        public string ViewName => throw new NotImplementedException();
-
         private string _searchText;
         private BindableCollection<Player> _players;
         private int _selectedIndex;

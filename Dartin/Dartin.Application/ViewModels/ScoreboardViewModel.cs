@@ -61,7 +61,6 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => TossThreeInput);
             }
         }
-        public string ViewName => nameof(ScoreboardViewModel);
         public static BrushColorConverter BrushColorConverter = new BrushColorConverter();
         private double _player1Average = 0;
         private double _player2Average = 0;

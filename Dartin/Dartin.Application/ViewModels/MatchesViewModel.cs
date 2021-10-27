@@ -130,13 +130,15 @@ namespace Dartin.ViewModels
             }
         }
 
-        public string ViewName { get; }
-
         #region Buttons
         public void OnExit()
         {
-            ScreenManager.GetInstance().RevertToPreviousViewModel();
+            if (ScreenManager.GetInstance().Previous.GetType() == typeof(PlayersViewModel))
+                ScreenManager.GetInstance().RevertToPreviousViewModel();
+            else
+                ScreenManager.GetInstance().SwitchViewModel(new MainMenuViewModel());
         }
+
         public void Edit()
         {
             try

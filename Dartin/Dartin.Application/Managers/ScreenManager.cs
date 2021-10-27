@@ -10,7 +10,7 @@ namespace Dartin.Managers
     public class ScreenManager
     {
         private static ScreenManager _instance;
-        private IViewModel _previous;
+        public IViewModel Previous;
         private ShellViewModel _shellViewModel;
 
         private ScreenManager()
@@ -30,17 +30,17 @@ namespace Dartin.Managers
 
         public void RevertToPreviousViewModel()
         {
-            if (_previous == null)
+            if (Previous == null)
             {
                 return;
             }
             
-            _shellViewModel.ActivateItemAsync(_previous);
+            _shellViewModel.ActivateItemAsync(Previous);
         }
 
         public void SwitchViewModel(IViewModel viewModel)
         {
-            _previous = _shellViewModel.ActiveItem;
+            Previous = _shellViewModel.ActiveItem;
             
             _shellViewModel.ActivateItemAsync(viewModel);
         }

@@ -158,8 +158,6 @@ namespace Dartin.ViewModels
             }
         }
 
-        public string ViewName { get; }
-
         public void OnExit()
         {
             switch (checkMatchDefinition())

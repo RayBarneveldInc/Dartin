@@ -7,8 +7,6 @@ namespace Dartin.ViewModels
 {
     class MainMenuViewModel : Screen, IViewModel
     {
-        public string ViewName => throw new NotImplementedException();
-
         public void Matches()
         {
             ScreenManager.GetInstance().SwitchViewModel(new MatchesViewModel(State.Instance.Matches));
