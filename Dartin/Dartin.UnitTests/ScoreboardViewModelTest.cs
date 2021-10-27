@@ -30,11 +30,20 @@ namespace UnitTests
             vm.Submit();
         }
 
+        private void SubmitLegWinner(ScoreboardViewModel vm)
+        {
+            SubmitTossInputs(vm, "t20", "t20", "t20");
+            SubmitTossInputs(vm, "t20", "t20", "t20");
+            SubmitTossInputs(vm, "t20", "t20", "t20");
+            SubmitTossInputs(vm, "t20", "t20", "t20");
+            SubmitTossInputs(vm, "t20", "t15", "d18");
+        }
+
         [Fact]
         public void TestSetLeg()
         {
             ClearState();
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             vm.SetLeg();
 
             Assert.Single(vm.Match.Sets.Last().Legs);
@@ -45,7 +54,7 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             vm.SetSet();
 
             Assert.Equal(2, vm.Match.Sets.Count);
@@ -56,9 +65,9 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             Player player = vm.Match.Players.First();
-            int resultOne = vm.GetLegScore(player);
+            int resultOne = vm.Match.GetAmountOfLegsWonOnCurrentSet(player);
 
             Leg legOne = new Leg(new BindingList<Turn>());
             Leg legTwo = new Leg(new BindingList<Turn>());
@@ -72,20 +81,21 @@ namespace UnitTests
             vm.Match.Sets.Last().Legs.Add(legTwo);
             vm.Match.Sets.Last().Legs.Add(legThree);
 
-            int resultTwo = vm.GetLegScore(player);
+            int resultTwo = vm.Match.GetAmountOfLegsWonOnCurrentSet(player);
 
             Assert.Equal(0, resultOne);
             Assert.Equal(3, resultTwo);
         }
         
         [Fact]
+
         public void TestGetSetScore()
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             Player player = vm.Match.Players.First();
-            int resultOne = vm.GetSetScore(player);
+            int resultOne = vm.Match.GetAmountOfSetsWon(player);
 
             Set setOne = new Set(new BindingList<Leg>());
             Set setTwo = new Set(new BindingList<Leg>());
@@ -99,7 +109,7 @@ namespace UnitTests
             vm.Match.Sets.Add(setTwo);
             vm.Match.Sets.Add(setThree);
 
-            int resultTwo = vm.GetSetScore(player);
+            int resultTwo = vm.Match.GetAmountOfSetsWon(player);
 
             Assert.Equal(0, resultOne);
             Assert.Equal(3, resultTwo);
@@ -108,11 +118,12 @@ namespace UnitTests
         [Fact]
         public void TestStartPlayerTurn()
         {
+
             ClearState();
 
             // This test should also test for turn after set or leg is won.
 
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             vm.SetLeg();
 
             Player playerOne = vm.Player1;
@@ -138,7 +149,7 @@ namespace UnitTests
         public void TestComparePlayerScoreWithScoreToWinLeg()
         {
             ClearState();
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             vm.Match.ScoreToWinLeg = 501;
             bool result = vm.ComparePlayerScoreWithScoreToWinLeg(180, new Toss(20, 3));
 
@@ -155,7 +166,7 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             vm.Match.ScoreToWinLeg = 501;
 
             SubmitTossInputs(vm, "t20", "t20", "t20");
@@ -176,30 +187,14 @@ namespace UnitTests
             Assert.Equal(303, remainders[1]);
         }
 
-        private static MatchDefinition CreateMatchDefinitionWithPlayers()
-        {
-            State.Instance.Players.Add(new Player("Henk", "de Vries"));
-            State.Instance.Players.Add(new Player("Jan", "Jansma"));
-            MatchDefinition matchDefinition = new MatchDefinition();
-            matchDefinition.Players = new BindingList<Player>() { State.Instance.Players.Last(), State.Instance.Players.ElementAt(State.Instance.Players.Count - 2) };
-            matchDefinition.ScoreToWinLeg = 501;
-            matchDefinition.SetsToWin = 3;
-            matchDefinition.LegsToWinSet = 3;
-            return matchDefinition;
-        }
-
         [Fact] 
         public void TestSubmit()
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
 
-            SubmitTossInputs(vm, "t20", "t20", "t20");
-            SubmitTossInputs(vm, "t20", "t20", "t20");
-            SubmitTossInputs(vm, "t20", "t20", "t20");
-            SubmitTossInputs(vm, "t20", "t20", "t20");
-            SubmitTossInputs(vm, "t20", "t15", "d18");
+            SubmitLegWinner(vm);
 
             Assert.Single(vm.Match.Sets.Last().Legs.Where(leg => leg.WinnerId == vm.Player1.Id));
         }
@@ -209,16 +204,28 @@ namespace UnitTests
         {
             ClearState();
 
-            var vm = new ScoreboardViewModel(CreateMatchDefinitionWithPlayers());
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
 
-            SubmitTossInputs(vm, "t20", "t20", "t20");
-            SubmitTossInputs(vm, "t20", "t20", "t20");
-            SubmitTossInputs(vm, "t20", "t20", "t20");
-            SubmitTossInputs(vm, "t20", "t20", "t20");
-            SubmitTossInputs(vm, "t20", "t15", "d18");
+            SubmitLegWinner(vm);
 
             Assert.Equal(2, vm.Player1Counter180);
             Assert.Equal(2, vm.Player2Counter180);
+        }
+
+        [Fact]
+        public void TestMatchWinner()
+        {
+            ClearState();
+
+            var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
+            vm.MessageBoxEnabled = false;
+
+            for (int i = 0; i < 25; i++)
+            {
+                SubmitLegWinner(vm);
+            }
+
+            Assert.Equal(vm.Player1.Id, vm.Match.WinnerId);
         }
     }
 }

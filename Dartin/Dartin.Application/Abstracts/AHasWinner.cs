@@ -20,6 +20,5 @@ namespace Dartin.Abstracts
                 NotifyPropertyChanged();
             }
         }
-        //public Player Winner => _winnerId.ToPlayer();
     }
 }

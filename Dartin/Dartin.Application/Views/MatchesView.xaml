@@ -33,9 +33,9 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" SharedSizeGroup="g_1"/>
-                            <ColumnDefinition Width="Auto" SharedSizeGroup="g_2"/>
-                            <ColumnDefinition Width="Auto" SharedSizeGroup="g_3"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Label Content="{Binding Name}" Grid.Column="0"/>
                         <Label Content="{Binding BestOfDescription}" Grid.Column="1"/>

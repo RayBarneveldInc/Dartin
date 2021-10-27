@@ -3,10 +3,11 @@ using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 
 namespace Dartin.Models
 {
-    public class MatchDefinition : APropertyChanged
+    public class MatchDefinition : AHasWinner
     {
         public string Name => GetMatchName();
         public string BestOfDescription => GetBestOfDescription();
@@ -106,8 +107,6 @@ namespace Dartin.Models
 
         [JsonConstructor]
         public MatchDefinition(Guid id) => Id = id;
-
-
         private string GetBestOfDescription()
         {
             if (SetsToWin > 1)
@@ -130,6 +129,29 @@ namespace Dartin.Models
             {
                 return "No players have been added";
             }
+        }
+        public double GetTurnAverage() => Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Where(turn => turn.Valid).Average(turn => turn.Score)));
+        public double GetAverageForPlayer(Player player)
+        {
+            if (Players.Contains(player) && Sets.Any())
+            {
+                return Sets.Average(set => set.Legs.Average(leg => leg.Turns.Where(turn => turn.PlayerId == player.Id && turn.Valid).Average(turn => turn.Score)));
+            }
+            return -1;
+        }
+        public int GetAmountOfLegsWonOnCurrentSet(Player player) => Sets.Last().Legs.Count(leg => leg.WinnerId == player.Id);
+        public int GetAmountOfSetsWon(Player player) => Sets.Count(set => set.WinnerId.Equals(player.Id));
+        public bool CheckWinner(Player player)
+        {
+            //Math.Ceiling((decimal)Match.SetsAmount / 2) Best of?
+
+            if (SetsToWin == GetAmountOfSetsWon(player))
+            {
+                WinnerId = player.Id;
+                return true;
+            }
+
+            return false;
         }
     }
 }

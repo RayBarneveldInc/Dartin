@@ -26,97 +26,49 @@ namespace Dartin.ViewModels
         private string _tossOneInput;
         private string _tossTwoInput;
         private string _tossThreeInput;
-        private string _legText;
-        private string _setText;
-        private Visibility _playerOneTurnIndicatorIsVisible = Visibility.Visible;
-        private Visibility _playerTwoTurnIndicatorIsVisible = Visibility.Hidden;
-        private Visibility _playerOneStartedLegIndicatorIsVisible = Visibility.Visible;
-        private Visibility _playerTwoStartedLegIndicatorIsVisible = Visibility.Hidden;
         private BindableCollection<Turn> _player1Turns;
         private BindableCollection<Turn> _player2Turns;
         private BindableCollection<int> _player1Remainders;
         private BindableCollection<int> _player2Remainders;
         private long _player1Counter180;
         private long _player2Counter180;
+        private bool _playerLegStartIndicator = true;
+        private bool _playerTurnIndicator = true;
+        private bool _inputIsDisabled = false;
+        private bool _firstTextBoxIsFocused = false;
 
         public string TossOneInput
         {
-            get
-            {
-                return _tossOneInput;
-            }
+            get => _tossOneInput;
             set
             {
                 _tossOneInput = value;
                 NotifyOfPropertyChange(() => TossOneInput);
             }
         }
-
         public string TossTwoInput
         {
-            get
-            {
-                return _tossTwoInput;
-            }
+            get => _tossTwoInput;
             set
             {
                 _tossTwoInput = value;
                 NotifyOfPropertyChange(() => TossTwoInput);
             }
         }
-
         public string TossThreeInput
         {
-            get
-            {
-                return _tossThreeInput;
-            }
+            get => _tossThreeInput;
             set
             {
                 _tossThreeInput = value;
                 NotifyOfPropertyChange(() => TossThreeInput);
             }
         }
-
-        public Visibility PlayerOneTurnIndicatorIsVisible
-        {
-            get => _playerOneTurnIndicatorIsVisible;
-            set
-            {
-                _playerOneTurnIndicatorIsVisible = value;
-                NotifyOfPropertyChange(() => PlayerOneTurnIndicatorIsVisible);
-            }
-        }
-
-        public Visibility PlayerTwoTurnIndicatorIsVisible
-        {
-            get => _playerTwoTurnIndicatorIsVisible;
-            set
-            {
-                _playerTwoTurnIndicatorIsVisible = value;
-                NotifyOfPropertyChange(() => PlayerTwoTurnIndicatorIsVisible);
-            }
-        }
-        public Visibility PlayerOneStartedLegIndicatorIsVisible
-        {
-            get => _playerOneStartedLegIndicatorIsVisible;
-            set
-            {
-                _playerOneStartedLegIndicatorIsVisible = value;
-                NotifyOfPropertyChange(() => PlayerOneStartedLegIndicatorIsVisible);
-            }
-        }
-        public Visibility PlayerTwoStartedLegIndicatorIsVisible
-        {
-            get => _playerTwoStartedLegIndicatorIsVisible;
-            set
-            {
-                _playerTwoStartedLegIndicatorIsVisible = value;
-                NotifyOfPropertyChange(() => PlayerTwoStartedLegIndicatorIsVisible);
-            }
-        }
-
         public string ViewName => nameof(ScoreboardViewModel);
+        public static BrushColorConverter BrushColorConverter = new BrushColorConverter();
+        private double _player1Average = 0;
+        private double _player2Average = 0;
+
         public Player Player1 => Match.Players.First();
         public Player Player2 => Match.Players[1];
         public BindableCollection<Turn> Player1Turns
@@ -149,10 +101,7 @@ namespace Dartin.ViewModels
 
         public int Player2LegScore
         {
-            get
-            {
-                return _player2LegScore;
-            }
+            get => _player2LegScore;
             set
             {
                 _player2LegScore = value;
@@ -169,13 +118,9 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => Player1SetScore);
             }
         }
-
         public int Player2SetScore
         {
-            get
-            {
-                return _player2SetScore;
-            }
+            get => _player2SetScore;
             set
             {
                 _player2SetScore = value;
@@ -202,32 +147,6 @@ namespace Dartin.ViewModels
         }
         public string BestOf => $"Best of {Match.SetsToWin} sets ({Match.LegsToWinSet} legs per set)";
         public MatchDefinition Match { get; }
-        public string LegText
-        {
-            get
-            {
-                return _legText;
-            }
-            set
-            {
-                _legText = value;
-                NotifyOfPropertyChange(() => LegText);
-            }
-        }
-
-        public string SetText
-        {
-            get
-            {
-                return _setText;
-            }
-            set
-            {
-                _setText = value;
-                NotifyOfPropertyChange(() => SetText);
-            }
-        }
-
         public long Player1Counter180
         {
             get => _player1Counter180;
@@ -247,28 +166,81 @@ namespace Dartin.ViewModels
             }
         }
 
+        public bool PlayerTurnIndicator
+        {
+            get => _playerTurnIndicator;
+            set
+            {
+                _playerTurnIndicator = value;
+                NotifyOfPropertyChange(() => PlayerTurnIndicator);
+            }
+        }
+        public bool PlayerLegStartIndicator
+        {
+            get => _playerLegStartIndicator;
+            set
+            {
+                _playerLegStartIndicator = value;
+                NotifyOfPropertyChange(() => PlayerLegStartIndicator);
+            }
+        }
+        public double Player1Average
+        {
+            get => Math.Round(_player1Average, 2);
+            set
+            {
+                _player1Average = value;
+                NotifyOfPropertyChange(() => Player1Average);
+            }
+        }
+        public double Player2Average
+        {
+            get => Math.Round(_player2Average, 2);
+            set
+            {
+                _player2Average = value;
+                NotifyOfPropertyChange(() => Player2Average);
+            }
+        }
+
+        public bool InputIsDisabled
+        {
+            get => _inputIsDisabled;
+            set
+            {
+                _inputIsDisabled = value;
+                NotifyOfPropertyChange(() => InputIsDisabled);
+            }
+        }
+
+        public bool FirstTextBoxIsFocused
+        {
+            get => _firstTextBoxIsFocused;
+            set
+            {
+                _firstTextBoxIsFocused = value;
+                NotifyOfPropertyChange(() => FirstTextBoxIsFocused);
+                _firstTextBoxIsFocused = false;
+                NotifyOfPropertyChange(() => FirstTextBoxIsFocused);
+            }
+        }
+        public bool MessageBoxEnabled { get; set; } = true;
+
         public ScoreboardViewModel(MatchDefinition match)
         {
             Match = match;
             SetSet();
-            TogglePlayerTurnIndicator();
-            SetSetText();
-            SetLegText();
             Player1Counter180 = Get180CounterForPlayer(Player1);
             Player2Counter180 = Get180CounterForPlayer(Player2);
         }
 
         private long Get180CounterForPlayer(Player player) => Match.Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Count(turn => turn.Score == 180 && turn.PlayerId == player.Id && turn.Valid)));
 
-        public void OnExit()
-        {
-            throw new NotImplementedException();
-        }
+        public void OnExit() => throw new NotImplementedException();
 
         public void SetLeg()
         {
             _currentLeg = new Leg(new BindingList<Turn>());
-
             Match.Sets.Last().Legs.Add(_currentLeg);
         }
 
@@ -280,66 +252,43 @@ namespace Dartin.ViewModels
 
         public void SetScores()
         {
-            Player1LegScore = GetLegScore(Player1);
-            Player1SetScore = GetSetScore(Player1);
-            Player2LegScore = GetLegScore(Player2);
-            Player2SetScore = GetSetScore(Player2);
-        }
-
-        public int GetLegScore(Player player)
-        {
-            return Match.Sets.Any() && Match.Sets.Last().Legs.Any() ? Match.Sets.Last().Legs.Count(leg => leg.WinnerId == player.Id) : 0;
-        }
-
-        public int GetSetScore(Player player)
-        {
-            return Match.Sets.Any() ? Match.Sets.Count(set => set.WinnerId == player.Id) : 0;
-        }
-
-        public void SetLegText()
-        {
-            int legCount;
-
-            if (Match.Sets.Any() && Match.Sets.Last().Legs.Any())
-            {
-                legCount = Match.Sets.Last().Legs.Count;
-            }
-            else
-            {
-                legCount = 1;
-            }
-
-            LegText = $"Leg {legCount}";
-        }
-
-        public void SetSetText()
-        {
-            int setCount;
-
-            if (Match.Sets.Any())
-            {
-                setCount = Match.Sets.Count;
-            }
-            else
-            {
-                setCount = 1;
-            }
-
-            SetText = $"Set {setCount}";
+            Player1LegScore = Match.GetAmountOfLegsWonOnCurrentSet(Player1);
+            Player1SetScore = Match.GetAmountOfSetsWon(Player1);
+            Player2LegScore = Match.GetAmountOfLegsWonOnCurrentSet(Player2);
+            Player2SetScore = Match.GetAmountOfSetsWon(Player2);
         }
 
         public Turn StartPlayerTurn()
         {
             var legs = Match.Sets.Last().Legs;
+
             if (!_currentLeg.Turns.Any() || !_currentLeg.Turns.Last().Valid || _currentLeg.Turns.Last().WinningTurn || _currentLeg.Turns.Last().Tosses.Count == 3)
             {
                 if (!_currentLeg.Turns.Any() && legs.Count >= 2 && legs[legs.Count - 2].StartingPlayerId != Guid.Empty)
                 {
-                    var lastStartingPlayer = legs[legs.Count - 2].StartingPlayerId;
-                    if (lastStartingPlayer == Player1.Id)
+                    Guid previousLegStartingPlayerId = legs[legs.Count - 2].StartingPlayerId;
+                    
+                    if (previousLegStartingPlayerId == Player1.Id)
+                    {
                         _currentLeg.Turns.Add(new Turn(Player2, new BindingList<Toss>()));
+                    }
                     else
+                    {
                         _currentLeg.Turns.Add(new Turn(Player1, new BindingList<Toss>()));
+                    }
+                }
+                else if (!_currentLeg.Turns.Any() && legs.Count == 1 && Match.Sets.Count >= 2)
+                {
+                    var previousSet = Match.Sets[Match.Sets.Count - 2];
+                    var previousLeg = previousSet.Legs.Last();
+                    if (previousLeg.StartingPlayerId == Player1.Id)
+                    {
+                        _currentLeg.Turns.Add(new Turn(Player2, new BindingList<Toss>()));
+                    }
+                    else
+                    {
+                        _currentLeg.Turns.Add(new Turn(Player1, new BindingList<Toss>()));
+                    }
                 }
                 else if (!_currentLeg.Turns.Any() && legs.Last().StartingPlayerId == Guid.Empty)
                 {
@@ -353,37 +302,9 @@ namespace Dartin.ViewModels
                 {
                     _currentLeg.Turns.Add(new Turn(Player2, new BindingList<Toss>()));
                 }
-                TogglePlayerTurnIndicator();
             }
 
             return GetCurrentTurn();
-        }
-
-        public void TogglePlayerTurnIndicator()
-        {
-            if (PlayerOneTurnIndicatorIsVisible == Visibility.Visible)
-            {
-                PlayerOneTurnIndicatorIsVisible = Visibility.Hidden;
-                PlayerTwoTurnIndicatorIsVisible = Visibility.Visible;
-            }
-            else
-            {
-                PlayerOneTurnIndicatorIsVisible = Visibility.Visible;
-                PlayerTwoTurnIndicatorIsVisible = Visibility.Hidden;
-            }
-        }
-        public void ToggleLegStartedIndicator()
-        {
-            if (PlayerOneStartedLegIndicatorIsVisible == Visibility.Visible)
-            {
-                PlayerOneStartedLegIndicatorIsVisible = Visibility.Hidden;
-                PlayerTwoStartedLegIndicatorIsVisible = Visibility.Visible;
-            }
-            else
-            {
-                PlayerOneStartedLegIndicatorIsVisible = Visibility.Visible;
-                PlayerTwoStartedLegIndicatorIsVisible = Visibility.Hidden;
-            }
         }
 
         public void ProcessTossInputTurn(string tossInput)
@@ -404,7 +325,6 @@ namespace Dartin.ViewModels
                     currentTurn.Tosses.Add(toss);
                     currentTurn.WinningTurn = true;
                     _currentLeg.WinnerId = activePlayerId;
-                    ToggleLegStartedIndicator();
                 }
                 else if (
                     (ComparePlayerScoreWithScoreToWinLeg(currentPlayerScore, toss) && toss.Multiplier != 2) ||
@@ -423,20 +343,11 @@ namespace Dartin.ViewModels
             }
         }
 
-        public bool ComparePlayerScoreWithScoreToWinLeg(int currentPlayerScore, Toss toss)
-        {
-            return (currentPlayerScore + toss.TotalScore) == Match.ScoreToWinLeg;
-        }
+        public bool ComparePlayerScoreWithScoreToWinLeg(int currentPlayerScore, Toss toss) => (currentPlayerScore + toss.TotalScore) == Match.ScoreToWinLeg;
 
-        public Turn GetCurrentTurn()
-        {
-            return _currentLeg.Turns.Last();
-        }
+        public Turn GetCurrentTurn() => _currentLeg.Turns.Last();
 
-        public Guid GetActivePlayerId()
-        {
-            return GetCurrentTurn().PlayerId;
-        }
+        public Guid GetActivePlayerId() => GetCurrentTurn().PlayerId;
 
         public void ClearScoreListViews()
         {
@@ -456,31 +367,33 @@ namespace Dartin.ViewModels
             return Match.ScoreToWinLeg - _currentLeg.Turns.Where(turn => turn.PlayerId == _currentLeg.Turns.Last().PlayerId && turn.Valid).Sum(turn => turn.Score);
         }
 
-        public BindableCollection<Turn> GetPlayerTurnsCollection(Guid playerId)
-        {
-            return new BindableCollection<Turn>(Match.Sets.Last().Legs.Last().Turns.Where(turn => turn.PlayerId == playerId));
-        }
+        public BindableCollection<Turn> GetPlayerTurnsCollection(Guid playerId) => new BindableCollection<Turn>(Match.Sets.Last().Legs.Last().Turns.Where(turn => turn.PlayerId == playerId));
 
         /// <summary>
         /// Revert turn to write new turn.
         /// </summary>
-        public void RevertTurn()
+        public void RevertTurn(bool togglePlayerTurnIndicator = true)
         {
-            if (_currentLeg.Turns.Any())
+            if (_currentLeg != null && _currentLeg.Turns.Any())
             {
                 var playerId = GetActivePlayerId();
-                _currentLeg.Turns.RemoveLast();
-                if (playerId == Player1.Id)
+                _currentLeg.Turns.TryRemoveLast();
+                if (playerId == Player1.Id && togglePlayerTurnIndicator)
                 {
-                    Player1Remainders.RemoveLast();
-                    Player1Turns.RemoveLast();
+                    Player1Remainders.TryRemoveLast();
+                    Player1Turns.TryRemoveLast();
                 }
-                else
+                else if (togglePlayerTurnIndicator)
                 {
-                    Player2Remainders.RemoveLast();
-                    Player2Turns.RemoveLast();
+                    Player2Remainders.TryRemoveLast();
+                    Player2Turns.TryRemoveLast();
+                    PlayerTurnIndicator = !PlayerTurnIndicator;
                 }
-                TogglePlayerTurnIndicator();
+            }
+            else if (togglePlayerTurnIndicator)
+            {
+                if (MessageBoxEnabled)
+                    MessageBox.Show("There was no turn to revert.");
             }
         }
 
@@ -492,13 +405,9 @@ namespace Dartin.ViewModels
             Guid activePlayerId = GetActivePlayerId();
 
             if (activePlayerId == Player1.Id)
-            {
                 Player1Turns = GetPlayerTurnsCollection(Player1.Id);
-            }
             else
-            {
                 Player2Turns = GetPlayerTurnsCollection(Player2.Id);
-            }
         }
 
         /// <summary>
@@ -506,27 +415,39 @@ namespace Dartin.ViewModels
         /// </summary>
         public void HandleLastTurn()
         {
+            bool toggleTurnIndicator = true;
+            bool toggleLegStartedIndicator = false;
             Turn currentTurn = GetCurrentTurn();
             Guid activePlayerId = GetActivePlayerId();
 
             if (currentTurn.WinningTurn)
             {
+                toggleLegStartedIndicator = true;
                 ClearScoreListViews();
+
+                if (currentTurn.PlayerId != _currentLeg.StartingPlayerId)
+                    toggleTurnIndicator = false;
 
                 if (_currentSet.WinnerId == activePlayerId)
                 {
                     SetSet();
-                }
-                else
-                {
-                    SetLeg();
+                    var activePlayer = activePlayerId.ToPlayer();
+
+                    if (Match.CheckWinner(activePlayer))
+                    {
+                        InputIsDisabled = true;
+
+                        if (MessageBoxEnabled)
+                            MessageBox.Show($"{activePlayer.Name} has won the match!");
+                    }
                 }
 
-                SetSetText();
-                SetLegText();
+                SetLeg();
                 SetScores();
             }
 
+            if (!currentTurn.WinningTurn && currentTurn.Tosses.Count != 3)
+                toggleTurnIndicator = false;
 
             if (activePlayerId == Player1.Id)
             {
@@ -536,6 +457,12 @@ namespace Dartin.ViewModels
             {
                 Player2Remainders = new BindableCollection<int>(_currentLeg.GetRemaindersForPlayer(Player2, Match.ScoreToWinLeg));
             }
+
+            if (toggleTurnIndicator)
+                PlayerTurnIndicator = !PlayerTurnIndicator;
+
+            if (toggleLegStartedIndicator)
+                PlayerLegStartIndicator = !PlayerLegStartIndicator; 
         }
 
         /// <summary>
@@ -543,6 +470,9 @@ namespace Dartin.ViewModels
         /// </summary>
         public void Submit()
         {
+            if (Match.WinnerId != Guid.Empty)
+                return;
+
             if (_currentLeg == null)
             {
                 SetLeg();
@@ -556,14 +486,28 @@ namespace Dartin.ViewModels
             ProcessTossInputTurn(TossTwoInput);
             ProcessTossInputTurn(TossThreeInput);
 
+            if ((currentTurn.Tosses.Count != 3 && !currentTurn.WinningTurn) || (currentTurn.Tosses.Any(toss => toss == null) && !currentTurn.WinningTurn))
+            {
+                RevertTurn(togglePlayerTurnIndicator: false);
 
-            if (currentTurn.Tosses.Any())
+                if (MessageBoxEnabled)
+                    MessageBox.Show("Invalid turn!");
+            }
+            else if (currentTurn.Tosses.Any() && (currentTurn.Tosses.Count(toss => toss != null) == 3 || currentTurn.WinningTurn))
             {
                 HandlePlayerScore();
+
+                if (GetActivePlayerId() == Player1.Id)
+                    Player1Average = Match.GetAverageForPlayer(Player1);
+                else
+                    Player2Average = Match.GetAverageForPlayer(Player2);
+
                 HandleLastTurn();
                 Player1Counter180 = Get180CounterForPlayer(Player1);
                 Player2Counter180 = Get180CounterForPlayer(Player2);
             }
+            ClearTossInputs();
+            FirstTextBoxIsFocused = true;
         }
 
         /// <summary>
@@ -583,9 +527,7 @@ namespace Dartin.ViewModels
         public void Submit(KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
-            {
                 Submit();
-            }
         }
     }
 }
