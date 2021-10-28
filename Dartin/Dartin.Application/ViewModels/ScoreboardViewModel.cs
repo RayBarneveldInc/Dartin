@@ -458,10 +458,10 @@ namespace Dartin.ViewModels
         {
             Turn currentTurn = Match.CurrentTurn;
             Guid currentPlayer = Match.CurrentTurn.PlayerId;
+            bool clearScoreListViews = true;
 
             if (currentTurn.WinningTurn)
             {
-                ClearScoreListViews();
 
                 if (Match.CurrentSet.WinnerId == currentPlayer)
                 {
@@ -471,11 +471,15 @@ namespace Dartin.ViewModels
                     {
                         var activePlayer = currentPlayer.ToPlayer();
                         InputIsDisabled = true;
+                        clearScoreListViews = false;
 
                         if (MessageBoxEnabled)
                             MessageBox.Show(string.Format(Resources.MatchWonMessage, activePlayer.Name), Resources.MatchWonTitle, MessageBoxButton.OK);
                     }
                 }
+                
+                if (clearScoreListViews)
+                    ClearScoreListViews();
 
                 AddLeg();
 
@@ -495,7 +499,10 @@ namespace Dartin.ViewModels
         public void Submit()
         {
             if (Match.WinnerId != Guid.Empty)
+            {
+                InputIsDisabled = true;
                 return;
+            }
 
             if (Match.CurrentLeg == null || Match.CurrentLeg.WinnerId != Guid.Empty)
             {
