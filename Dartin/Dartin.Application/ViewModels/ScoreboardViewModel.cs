@@ -27,8 +27,8 @@ namespace Dartin.ViewModels
         private BindableCollection<int> _player2Remainders;
         private long _player1Counter180;
         private long _player2Counter180;
-        private bool _playerLegStartIndicator = true;
-        private bool _playerTurnIndicator = true;
+        private bool _player1StartingThisLeg = true;
+        private bool _player1StartingThisTurn = true;
         private bool _inputIsDisabled = false;
         private bool _firstTextBoxIsFocused = false;
 
@@ -160,22 +160,22 @@ namespace Dartin.ViewModels
             }
         }
 
-        public bool PlayerTurnIndicator
+        public bool Player1StartingThisTurn
         {
-            get => _playerTurnIndicator;
+            get => _player1StartingThisTurn;
             set
             {
-                _playerTurnIndicator = value;
-                NotifyOfPropertyChange(() => PlayerTurnIndicator);
+                _player1StartingThisTurn = value;
+                NotifyOfPropertyChange(() => Player1StartingThisTurn);
             }
         }
-        public bool PlayerLegStartIndicator
+        public bool Player1StartingThisLeg
         {
-            get => _playerLegStartIndicator;
+            get => _player1StartingThisLeg;
             set
             {
-                _playerLegStartIndicator = value;
-                NotifyOfPropertyChange(() => PlayerLegStartIndicator);
+                _player1StartingThisLeg = value;
+                NotifyOfPropertyChange(() => Player1StartingThisLeg);
             }
         }
         public double Player1Average
@@ -227,31 +227,30 @@ namespace Dartin.ViewModels
             Match.Sets.ListChanged += WriteToState;
 
             if (!Match.Sets.Any())
-            {
                 AddSet();
+
+            if (!Match.CurrentSet.Legs.Any())
                 AddLeg();
-            }
-            else if (Match.CurrentLeg != null)
-            {
-                Player1Turns = GetPlayerTurnsCollection(Player1.Id);
-                Player2Turns = GetPlayerTurnsCollection(Player2.Id);
-                Player1Remainders = new BindableCollection<int>(Match.CurrentLeg.GetRemaindersForPlayer(Player1, Match.ScoreToWinLeg));
-                Player2Remainders = new BindableCollection<int>(Match.CurrentLeg.GetRemaindersForPlayer(Player2, Match.ScoreToWinLeg));
-                if (Match.CurrentLeg.Turns.Any())
-                {
-                    PlayerTurnIndicator = Match.CurrentLeg.Turns.Last().PlayerId == Player2.Id;
-                }
-                else
-                {
-                    PlayerTurnIndicator = Match.CurrentLeg.StartingPlayerId == Player2.Id;
-                }
-                PlayerLegStartIndicator = Match.CurrentLeg.StartingPlayerId == Player1.Id;
-                Player1Average = Match.GetAverageForPlayer(Player1.Id);
-                Player2Average = Match.GetAverageForPlayer(Player2.Id);
-            }
+
+            Player1Turns = GetPlayerTurnsCollection(Player1.Id);
+            Player2Turns = GetPlayerTurnsCollection(Player2.Id);
+            Player1Remainders = new BindableCollection<int>(Match.CurrentLeg.GetRemaindersForPlayer(Player1, Match.ScoreToWinLeg));
+            Player2Remainders = new BindableCollection<int>(Match.CurrentLeg.GetRemaindersForPlayer(Player2, Match.ScoreToWinLeg));
+            SetScores();
+            Player1Average = Match.GetAverageForPlayer(Player1.Id);
+            Player2Average = Match.GetAverageForPlayer(Player2.Id);
 
             Player1Counter180 = Get180CounterForPlayer(Player1);
             Player2Counter180 = Get180CounterForPlayer(Player2);
+
+            if (Player1StartingThisLeg && Player1Turns.Count > Player2Turns.Count)
+                Player1StartingThisTurn = false;
+            else if (Player1StartingThisLeg && Player1Turns.Count == Player2Turns.Count)
+                Player1StartingThisTurn = true;
+            else if (!Player1StartingThisLeg && Player2Turns.Count > Player1Turns.Count)
+                Player1StartingThisTurn = true;
+            else
+                Player1StartingThisTurn = false;
         }
 
         private void WriteToState(object sender, EventArgs e)
@@ -267,7 +266,15 @@ namespace Dartin.ViewModels
         public void AddLeg()
         {
             if (Match.CurrentLeg != null)
+            {
                 Match.CurrentLeg.Turns.ListChanged -= WriteToState;
+                Player1StartingThisLeg = Match.CurrentLeg.StartingPlayerId != Player1.Id;
+            }
+            else if (Match.CurrentSet != null && Match.Sets.Count >= 2)
+            {
+                var previousStartingPlayerId = Match.Sets[Match.Sets.Count - 2].Legs.Last().StartingPlayerId;
+                Player1StartingThisLeg = previousStartingPlayerId != Player1.Id;
+            }
 
             Match.CurrentSet.Legs.Add(new Leg(new BindingList<Turn>()));
             Match.CurrentLeg.Turns.ListChanged += WriteToState;
@@ -288,9 +295,9 @@ namespace Dartin.ViewModels
             var legs = Match.CurrentSet.Legs;
 
             if (Match.CurrentLeg.Turns.Any())
-                Match.CurrentLeg.Turns.Last().Tosses.ListChanged -= WriteToState;
+                Match.CurrentTurn.Tosses.ListChanged -= WriteToState;
 
-            if (!Match.CurrentLeg.Turns.Any() || !Match.CurrentLeg.Turns.Last().Valid || Match.CurrentLeg.Turns.Last().WinningTurn || Match.CurrentLeg.Turns.Last().Tosses.Count == 3)
+            if (!Match.CurrentLeg.Turns.Any() || !Match.CurrentTurn.Valid || Match.CurrentTurn.WinningTurn || Match.CurrentTurn.Tosses.Count == 3)
             {
                 if (!Match.CurrentLeg.Turns.Any() && legs.Count >= 2 && legs[legs.Count - 2].StartingPlayerId != Guid.Empty)
                 {
@@ -322,7 +329,7 @@ namespace Dartin.ViewModels
                 {
                     Match.CurrentLeg.Turns.Add(new Turn(Player1, new BindingList<Toss>()));
                 }
-                else if (Match.CurrentLeg.Turns.Last().PlayerId == Player2.Id)
+                else if (Match.CurrentTurn.PlayerId == Player2.Id)
                 {
                     Match.CurrentLeg.Turns.Add(new Turn(Player1, new BindingList<Toss>()));
                 }
@@ -331,9 +338,9 @@ namespace Dartin.ViewModels
                     Match.CurrentLeg.Turns.Add(new Turn(Player2, new BindingList<Toss>()));
                 }
             }
-            Match.CurrentLeg.Turns.Last().Tosses.ListChanged += WriteToState;
+            Match.CurrentTurn.Tosses.ListChanged += WriteToState;
 
-            return GetCurrentTurn();
+            return Match.CurrentTurn;
         }
 
         public void ProcessTossInputTurn(string tossInput)
@@ -341,28 +348,28 @@ namespace Dartin.ViewModels
             if (!string.IsNullOrEmpty(tossInput) && Parser.ParseThrow(tossInput) != null)
             {
                 Toss toss = Parser.ParseThrow(tossInput);
-                Guid activePlayerId = GetActivePlayerId();
+                Guid activePlayerId = Match.CurrentTurn.PlayerId;
                 int currentPlayerScore = GetCurrentPlayerScore();
 
                 if (currentPlayerScore + toss.TotalScore < Match.ScoreToWinLeg)
                 {
-                    GetCurrentTurn().Tosses.Add(toss);
+                    Match.CurrentTurn.Tosses.Add(toss);
                 }
                 else if (ComparePlayerScoreWithScoreToWinLeg(currentPlayerScore, toss) && toss.Multiplier == 2)
                 {
-                    GetCurrentTurn().Tosses.Add(toss);
-                    GetCurrentTurn().WinningTurn = true;
+                    Match.CurrentTurn.Tosses.Add(toss);
+                    Match.CurrentTurn.WinningTurn = true;
                     Match.CurrentLeg.WinnerId = activePlayerId;
                 }
                 else if (
                     (ComparePlayerScoreWithScoreToWinLeg(currentPlayerScore, toss) && toss.Multiplier != 2) ||
                     (currentPlayerScore + toss.TotalScore) > Match.ScoreToWinLeg)
                 {
-                    GetCurrentTurn().Tosses.Add(toss);
-                    GetCurrentTurn().Valid = false;
+                    Match.CurrentTurn.Tosses.Add(toss);
+                    Match.CurrentTurn.Valid = false;
                 }
 
-                var wonLegs = Match.Sets.Last().Legs.Count(leg => leg.WinnerId == activePlayerId);
+                var wonLegs = Match.CurrentSet.Legs.Count(leg => leg.WinnerId == activePlayerId);
 
                 if (Match.LegsToWinSet == wonLegs)
                 {
@@ -373,10 +380,6 @@ namespace Dartin.ViewModels
 
         public bool ComparePlayerScoreWithScoreToWinLeg(int currentPlayerScore, Toss toss) => (currentPlayerScore + toss.TotalScore) == Match.ScoreToWinLeg;
 
-        public Turn GetCurrentTurn() => Match.CurrentLeg.Turns.Last();
-
-        public Guid GetActivePlayerId() => GetCurrentTurn().PlayerId;
-
         public void ClearScoreListViews()
         {
             Player1Turns.Clear();
@@ -385,9 +388,9 @@ namespace Dartin.ViewModels
             Player2Remainders.Clear();
         }
 
-        public int GetCurrentPlayerScore() => Match.CurrentLeg.Turns.Where(turn => turn.PlayerId == GetActivePlayerId() && turn.Valid).Sum(turn => turn.Score);
+        public int GetCurrentPlayerScore() => Match.CurrentLeg.Turns.Where(turn => turn.PlayerId == Match.CurrentTurn.PlayerId && turn.Valid).Sum(turn => turn.Score);
 
-        public int CalculatePlayerScoreLeft() => Match.ScoreToWinLeg - Match.CurrentLeg.Turns.Where(turn => turn.PlayerId == Match.CurrentLeg.Turns.Last().PlayerId && turn.Valid).Sum(turn => turn.Score);
+        public int CalculatePlayerScoreLeft() => Match.ScoreToWinLeg - Match.CurrentLeg.Turns.Where(turn => turn.PlayerId == Match.CurrentTurn.PlayerId && turn.Valid).Sum(turn => turn.Score);
 
         public BindableCollection<Turn> GetPlayerTurnsCollection(Guid playerId) => new BindableCollection<Turn>(Match.CurrentLeg.Turns.Where(turn => turn.PlayerId == playerId));
 
@@ -396,19 +399,19 @@ namespace Dartin.ViewModels
             dontTogglePlayerTurnIndicator = !dontTogglePlayerTurnIndicator;
             if (Match.CurrentLeg != null && Match.CurrentLeg.Turns.Any())
             {
-                var playerId = GetActivePlayerId();
+                var playerId = Match.CurrentTurn.PlayerId;
                 Match.CurrentLeg.Turns.TryRemoveLast();
                 if (playerId == Player1.Id && dontTogglePlayerTurnIndicator)
                 {
                     Player1Remainders.TryRemoveLast();
                     Player1Turns.TryRemoveLast();
-                    PlayerTurnIndicator = !PlayerTurnIndicator;
+                    Player1StartingThisTurn = !Player1StartingThisTurn;
                 }
                 else if (dontTogglePlayerTurnIndicator)
                 {
                     Player2Remainders.TryRemoveLast();
                     Player2Turns.TryRemoveLast();
-                    PlayerTurnIndicator = !PlayerTurnIndicator;
+                    Player1StartingThisTurn = !Player1StartingThisTurn;
                 }
 
                 if (!Match.CurrentLeg.Turns.Any())
@@ -419,11 +422,15 @@ namespace Dartin.ViewModels
                 if (MessageBoxEnabled)
                     MessageBox.Show(Resources.NoTurnToRevertMessage, Resources.NoTurnToRevertTitle, MessageBoxButton.OK);
             }
+            Player1Counter180 = Get180CounterForPlayer(Player1);
+            Player2Counter180 = Get180CounterForPlayer(Player2);
+            Player1Average = Match.GetAverageForPlayer(Player1.Id);
+            Player2Average = Match.GetAverageForPlayer(Player2.Id);
         }
 
         public void HandlePlayerScore()
         {
-            Guid activePlayerId = GetActivePlayerId();
+            Guid activePlayerId = Match.CurrentTurn.PlayerId;
 
             if (activePlayerId == Player1.Id)
                 Player1Turns = GetPlayerTurnsCollection(Player1.Id);
@@ -433,18 +440,12 @@ namespace Dartin.ViewModels
 
         public void HandleLastTurn()
         {
-            bool toggleTurnIndicator = true;
-            bool toggleLegStartedIndicator = false;
-            Turn currentTurn = GetCurrentTurn();
-            Guid activePlayerId = GetActivePlayerId();
+            Turn currentTurn = Match.CurrentTurn;
+            Guid activePlayerId = Match.CurrentTurn.PlayerId;
 
             if (currentTurn.WinningTurn)
             {
-                toggleLegStartedIndicator = true;
                 ClearScoreListViews();
-
-                if (currentTurn.PlayerId != Match.CurrentLeg.StartingPlayerId)
-                    toggleTurnIndicator = false;
 
                 if (Match.CurrentSet.WinnerId == activePlayerId)
                 {
@@ -464,9 +465,6 @@ namespace Dartin.ViewModels
                 SetScores();
             }
 
-            if (!currentTurn.WinningTurn && currentTurn.Tosses.Count != 3)
-                toggleTurnIndicator = false;
-
             if (activePlayerId == Player1.Id)
             {
                 Player1Remainders = new BindableCollection<int>(Match.CurrentLeg.GetRemaindersForPlayer(Player1, Match.ScoreToWinLeg));
@@ -475,12 +473,6 @@ namespace Dartin.ViewModels
             {
                 Player2Remainders = new BindableCollection<int>(Match.CurrentLeg.GetRemaindersForPlayer(Player2, Match.ScoreToWinLeg));
             }
-
-            if (toggleTurnIndicator)
-                PlayerTurnIndicator = !PlayerTurnIndicator;
-
-            if (toggleLegStartedIndicator)
-                PlayerLegStartIndicator = !PlayerLegStartIndicator; 
         }
 
         public void Submit()
@@ -495,7 +487,7 @@ namespace Dartin.ViewModels
 
             StartPlayerTurn();
 
-            Turn currentTurn = GetCurrentTurn();
+            Turn currentTurn = Match.CurrentTurn;
 
             ProcessTossInputTurn(TossOneInput);
             ProcessTossInputTurn(TossTwoInput);
@@ -512,14 +504,19 @@ namespace Dartin.ViewModels
             {
                 HandlePlayerScore();
 
-                if (GetActivePlayerId() == Player1.Id)
+                if (Match.CurrentTurn.PlayerId == Player1.Id)
+                {
                     Player1Average = Match.GetAverageForPlayer(Player1.Id);
+                    Player1Counter180 = Get180CounterForPlayer(Player1);
+                }
                 else
+                {
                     Player2Average = Match.GetAverageForPlayer(Player2.Id);
+                    Player2Counter180 = Get180CounterForPlayer(Player2);
+                }
 
                 HandleLastTurn();
-                Player1Counter180 = Get180CounterForPlayer(Player1);
-                Player2Counter180 = Get180CounterForPlayer(Player2);
+                Player1StartingThisTurn = Match.CurrentTurn.PlayerId != Player1.Id;
             }
             ClearTossInputs();
             FirstTextBoxIsFocused = true;

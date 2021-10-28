@@ -46,7 +46,7 @@ namespace UnitTests
             var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
             vm.AddLeg();
 
-            Assert.Single(vm.Match.Sets.Last().Legs);
+            Assert.Single(vm.Match.CurrentSet.Legs);
         }
 
         [Fact]
@@ -77,9 +77,9 @@ namespace UnitTests
             legTwo.WinnerId = playerId;
             legThree.WinnerId = playerId;
 
-            vm.Match.Sets.Last().Legs.Add(legOne);
-            vm.Match.Sets.Last().Legs.Add(legTwo);
-            vm.Match.Sets.Last().Legs.Add(legThree);
+            vm.Match.CurrentSet.Legs.Add(legOne);
+            vm.Match.CurrentSet.Legs.Add(legTwo);
+            vm.Match.CurrentSet.Legs.Add(legThree);
 
             int resultTwo = vm.Match.GetAmountOfLegsWonOnCurrentSet(playerId);
 
@@ -130,7 +130,7 @@ namespace UnitTests
             Player playerTwo = vm.Player2;
 
             Turn turn = vm.StartPlayerTurn();
-            var turns = vm.Match.Sets.Last().Legs.Last().Turns;
+            var turns = vm.Match.CurrentLeg.Turns;
 
             Assert.Single(turns);
             Assert.True(turn.PlayerId == playerOne.Id);
@@ -139,7 +139,7 @@ namespace UnitTests
             turn.Tosses.Add(new Toss(10, 2));
             turn.Tosses.Add(new Toss(10, 2));
             turn = vm.StartPlayerTurn();
-            turns = vm.Match.Sets.Last().Legs.Last().Turns;
+            turns = vm.Match.CurrentLeg.Turns;
 
             Assert.Equal(2, turns.Count);
             Assert.True(turn.PlayerId == playerTwo.Id);
@@ -174,7 +174,7 @@ namespace UnitTests
             SubmitTossInputs(vm, "t5", "d18", "d5");
             SubmitTossInputs(vm, "d19", "t15", "10");
 
-            Leg leg = vm.Match.Sets.Last().Legs.Last();
+            Leg leg = vm.Match.CurrentLeg;
 
             List<int> remainders = leg.GetRemaindersForPlayer(vm.Player1, vm.Match.ScoreToWinLeg);
 
@@ -196,7 +196,7 @@ namespace UnitTests
 
             SubmitLegWinner(vm);
 
-            Assert.Single(vm.Match.Sets.Last().Legs.Where(leg => leg.WinnerId == vm.Player1.Id));
+            Assert.Single(vm.Match.CurrentSet.Legs.Where(leg => leg.WinnerId == vm.Player1.Id));
         }
 
         [Fact]

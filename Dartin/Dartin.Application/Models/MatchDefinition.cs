@@ -125,20 +125,38 @@ namespace Dartin.Models
                 return Resources.MatchNameDefaultText;
             }
         }
+
         public double GetTurnAverage() => Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Where(turn => turn.Valid).Average(turn => turn.Score)));
         public double GetAverageForPlayer(Guid playerId)
         {
-            try
+            int total = 0;
+            int counter = 0;
+
+            for (int i = 0; i < Sets.Count; i++)
             {
-                return Sets.Average(set => set.Legs.Average(leg => leg.Turns.Where(turn => turn.PlayerId == playerId && turn.Valid).Average(turn => turn.Score)));
+                var set = Sets[i];
+                for (int j = 0; j < set.Legs.Count; j++)
+                {
+                    var leg = set.Legs[j];
+                    for (int k = 0; k < leg.Turns.Count; k++)
+                    {
+                        var turn = leg.Turns[k];
+                        if (turn.Valid && turn.PlayerId == playerId)
+                        {
+                            total += turn.Score;
+                            counter++;
+                        }
+                    }
+                }
             }
-            catch
-            {
+
+            if (counter == 0)
                 return 0;
-            }
+
+            return total / counter;
         }
         public int GetAmountOfLegsWonOnCurrentSet(Guid playerId) => Sets.Last().Legs.Count(leg => leg.WinnerId == playerId);
-        public int GetAmountOfSetsWon(Guid playerId) => Sets.Count(set => set.WinnerId.Equals(playerId));
+        public int GetAmountOfSetsWon(Guid playerId) => Sets.Count(set => set.WinnerId == playerId);
         public bool CheckWinner(Guid playerId)
         {
             //Math.Ceiling((decimal)Match.SetsAmount / 2) Best of?
@@ -157,5 +175,11 @@ namespace Dartin.Models
 
         [JsonIgnore]
         public Leg CurrentLeg => CurrentSet != null && CurrentSet.Legs.Any() ? CurrentSet.Legs.Last() : null;
+
+        [JsonIgnore]
+        public Turn CurrentTurn => CurrentLeg != null && CurrentLeg.Turns.Any() ? CurrentLeg.Turns.Last() : null;
+
+        [JsonIgnore]
+        public Guid CurrentPlayer => CurrentTurn != null && CurrentTurn.PlayerId != Guid.Empty ? CurrentTurn.PlayerId : Guid.Empty;
     }
 }

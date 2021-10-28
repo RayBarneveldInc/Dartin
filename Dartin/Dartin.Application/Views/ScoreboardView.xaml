@@ -42,8 +42,8 @@
                 <!--PlayerInfo-->
                 <Image Grid.Row="0" Grid.Column="0" Source="{Binding Player1.Nationality, Converter={conv:CountryIdToFlagImageConverter}}" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" HorizontalAlignment="Left"/>
                 <Label Grid.Row="0" Grid.Column="1" Content="{Binding Player1.Name}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left"/>
-                <Image Grid.Row="0" Grid.Column="2" Visibility="{Binding PlayerTurnIndicator, Converter={conv:BoolToVisibilityConverter}}" Source="/Resources/indicator.png" Height="10" HorizontalAlignment="Right"/>
-                <Image Grid.Row="0" Grid.Column="3" Visibility="{Binding PlayerLegStartIndicator, Converter={conv:BoolToVisibilityConverter}}" Source="/Resources/turnindicator-left.png" Height="10" HorizontalAlignment="Right" />
+                <Image Grid.Row="0" Grid.Column="2" Visibility="{Binding Player1StartingThisTurn, Converter={conv:BoolToVisibilityConverter}}" Source="/Resources/indicator.png" Height="10" HorizontalAlignment="Right"/>
+                <Image Grid.Row="0" Grid.Column="3" Visibility="{Binding Player1StartingThisLeg, Converter={conv:BoolToVisibilityConverter}}" Source="/Resources/turnindicator-left.png" Height="10" HorizontalAlignment="Right" />
                 <!--PlayerScore-->
                 <Grid Grid.Row="1" Grid.ColumnSpan="4">
                     <Grid.ColumnDefinitions>
@@ -111,8 +111,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Image Grid.Row="0" Grid.Column="0" Visibility="{Binding PlayerLegStartIndicator, Converter={conv:InverseBoolToVisibilityConverter}}" Source="/Resources/turnindicator-right.png" Height="10" HorizontalAlignment="Left" />
-                <Image Grid.Row="0" Grid.Column="1" Visibility="{Binding PlayerTurnIndicator, Converter={conv:InverseBoolToVisibilityConverter}}" Source="/Resources/indicator.png" Height="10" HorizontalAlignment="Left" />
+                <Image Grid.Row="0" Grid.Column="0" Visibility="{Binding Player1StartingThisLeg, Converter={conv:InverseBoolToVisibilityConverter}}" Source="/Resources/turnindicator-right.png" Height="10" HorizontalAlignment="Left" />
+                <Image Grid.Row="0" Grid.Column="1" Visibility="{Binding Player1StartingThisTurn, Converter={conv:InverseBoolToVisibilityConverter}}" Source="/Resources/indicator.png" Height="10" HorizontalAlignment="Left" />
                 <Image Grid.Row="0" Grid.Column="2" Source="{Binding Player2.Nationality, Converter={conv:CountryIdToFlagImageConverter}}" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None"/>
                 <Label Grid.Row="0" Grid.Column="3" Content="{Binding Player2.Name}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Right"/>
 
