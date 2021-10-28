@@ -1,4 +1,5 @@
 ﻿using Dartin.Abstracts;
+using Dartin.Extensions;
 using Dartin.Properties;
 using Newtonsoft.Json;
 using System;
@@ -10,7 +11,6 @@ namespace Dartin.Models
 {
     public class MatchDefinition : AHasWinner
     {
-        public string Name => GetMatchName();
         public string BestOfDescription => GetBestOfDescription();
         private DateTime _date;
         public Guid Id { get; }
@@ -18,7 +18,6 @@ namespace Dartin.Models
         public override bool Equals(object obj) => obj != null && Equals(obj as MatchDefinition);
         public bool Equals(MatchDefinition obj) => obj != null && obj.Id == Id;
         public override int GetHashCode() => (Id).GetHashCode();
-
         public DateTime Date
         {
             get
@@ -47,10 +46,7 @@ namespace Dartin.Models
         private int _legsToWinSet;
         public int LegsToWinSet
         {
-            get
-            {
-                return _legsToWinSet;
-            }
+            get => _legsToWinSet;
             set
             {
                 _legsToWinSet = value;
@@ -60,10 +56,7 @@ namespace Dartin.Models
         private int _scoreToWinLeg;
         public int ScoreToWinLeg
         {
-            get
-            {
-                return _scoreToWinLeg;
-            }
+            get => _scoreToWinLeg;
             set
             {
                 _scoreToWinLeg = value;
@@ -71,13 +64,10 @@ namespace Dartin.Models
             }
         }
 
-        private BindingList<Player> _players;
-        public BindingList<Player> Players
+        private BindingList<Guid> _players;
+        public BindingList<Guid> Players
         {
-            get
-            {
-                return _players;
-            }
+            get => _players;
             set
             {
                 _players = value;
@@ -87,10 +77,7 @@ namespace Dartin.Models
         private BindingList<Set> _sets;
         public BindingList<Set> Sets
         {
-            get
-            {
-                return _sets;
-            }
+            get => _sets;
             set
             {
                 _sets = value;
@@ -102,12 +89,16 @@ namespace Dartin.Models
         {
             Id = Guid.NewGuid();
             Date = DateTime.Now.Date;
-            Players = new BindingList<Player>();
+            Players = new BindingList<Guid>();
             Sets = new BindingList<Set>();
         }
 
         [JsonConstructor]
-        public MatchDefinition(Guid id) => Id = id;
+        public MatchDefinition(Guid id, BindingList<Guid> players)
+        {
+            Id = id;
+            Players = players;
+        }
         private string GetBestOfDescription()
         {
             if (SetsToWin > 1)
@@ -119,12 +110,13 @@ namespace Dartin.Models
                 return string.Format(CultureInfo.CurrentCulture, Resources.BestOfLegsFormat, LegsToWinSet);
             }
         }
-        private string GetMatchName()
+        public string GetMatchName()
         {
             if (Players.Count > 0)
             {
+                var player2 = Players[1].ToPlayer();
                 return string.Format(CultureInfo.CurrentCulture,
-                    Resources.MatchNameFormat, this.Players[0].Name, this.Players[1].Name);
+                    Resources.MatchNameFormat, Players[0].ToPlayer().Name, Players[1].ToPlayer().Name);
             }
             else
             {
@@ -132,27 +124,30 @@ namespace Dartin.Models
             }
         }
         public double GetTurnAverage() => Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Where(turn => turn.Valid).Average(turn => turn.Score)));
-        public double GetAverageForPlayer(Player player)
+        public double GetAverageForPlayer(Guid playerId)
         {
-            if (Players.Contains(player) && Sets.Any())
+            if (Players.Contains(playerId) && Sets.Any())
             {
-                return Sets.Average(set => set.Legs.Average(leg => leg.Turns.Where(turn => turn.PlayerId == player.Id && turn.Valid).Average(turn => turn.Score)));
+                return Sets.Average(set => set.Legs.Average(leg => leg.Turns.Where(turn => turn.PlayerId == playerId && turn.Valid).Average(turn => turn.Score)));
             }
             return -1;
         }
-        public int GetAmountOfLegsWonOnCurrentSet(Player player) => Sets.Last().Legs.Count(leg => leg.WinnerId == player.Id);
-        public int GetAmountOfSetsWon(Player player) => Sets.Count(set => set.WinnerId.Equals(player.Id));
-        public bool CheckWinner(Player player)
+        public int GetAmountOfLegsWonOnCurrentSet(Guid playerId) => Sets.Last().Legs.Count(leg => leg.WinnerId == playerId);
+        public int GetAmountOfSetsWon(Guid playerId) => Sets.Count(set => set.WinnerId.Equals(playerId));
+        public bool CheckWinner(Guid playerId)
         {
             //Math.Ceiling((decimal)Match.SetsAmount / 2) Best of?
 
-            if (SetsToWin == GetAmountOfSetsWon(player))
+            if (SetsToWin == GetAmountOfSetsWon(playerId))
             {
-                WinnerId = player.Id;
+                WinnerId = playerId;
                 return true;
             }
 
             return false;
         }
+
+        public Set CurrentSet => Sets.Any() ? Sets.Last() : null;
+        public Leg CurrentLeg => CurrentSet != null && CurrentSet.Legs.Any() ? CurrentSet.Legs.Last() : null;
     }
 }

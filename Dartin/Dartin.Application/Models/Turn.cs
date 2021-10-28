@@ -17,12 +17,12 @@ namespace Dartin.Models
         private BindingList<Toss> _tosses;
 
         public int Score => Tosses.Sum(toss => toss.TotalScore);
-
         public bool Valid {
             get => _valid;
             set
             {
-                _valid = value; NotifyPropertyChanged();
+                _valid = value;
+                NotifyPropertyChanged();
             }
         }
 

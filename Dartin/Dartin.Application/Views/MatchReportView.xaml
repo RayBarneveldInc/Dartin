@@ -73,7 +73,7 @@
                                             <TextBlock>
                                                 <TextBlock.Text>
                                                     <MultiBinding StringFormat="{} Set {0}" Converter="{conv:WonOrLostConverter}" >
-                                                        <Binding Path="Winner.Id" />
+                                                        <Binding Path="WinnerId" />
                                                         <Binding Source="{StaticResource playeroneint}"/>
                                                         <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
                                                     </MultiBinding>
@@ -86,7 +86,7 @@
                                                     <TextBlock>
                                                         <TextBlock.Text>
                                                             <MultiBinding StringFormat="{} Leg {0}" Converter="{conv:WonOrLostConverter}">
-                                                                <Binding Path="Winner.Id" />
+                                                                <Binding Path="WinnerId" />
                                                                 <Binding Source="{StaticResource playeroneint}"/>
                                                                 <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
                                                                 <Binding Path="StartingPlayerId"/>
@@ -153,7 +153,7 @@
                                             <TextBlock>
                                                 <TextBlock.Text>
                                                     <MultiBinding StringFormat="{} Set {0}" Converter="{conv:WonOrLostConverter}">
-                                                        <Binding Path="Winner.Id" />
+                                                        <Binding Path="WinnerId" />
                                                         <Binding Source="{StaticResource playertwoint}"/>
                                                         <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
                                                     </MultiBinding>
@@ -166,7 +166,7 @@
                                                     <TextBlock>
                                                         <TextBlock.Text>
                                                             <MultiBinding StringFormat="{} Leg {0}" Converter="{conv:WonOrLostConverter}">
-                                                                <Binding Path="Winner.Id" />
+                                                                <Binding Path="WinnerId" />
                                                                 <Binding Source="{StaticResource playertwoint}"/>
                                                                 <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
                                                                 <Binding Path="StartingPlayerId"/>

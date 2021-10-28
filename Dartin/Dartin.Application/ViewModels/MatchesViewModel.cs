@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Windows;
 using Dartin.Managers;
 using Dartin.Properties;
+using System.Collections.Generic;
 
 namespace Dartin.ViewModels
 {
@@ -122,7 +123,7 @@ namespace Dartin.ViewModels
                 CurrentCollection.Clear();
                 foreach (MatchDefinition match in OriginalCollection)
                 {
-                    if (match.Name.Contains(filter, StringComparison.OrdinalIgnoreCase))
+                    if (match.GetMatchName().Contains(filter, StringComparison.OrdinalIgnoreCase))
                     {
                         CurrentCollection.Add(match);
                     }

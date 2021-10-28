@@ -44,7 +44,7 @@ namespace UnitTests
         {
             ClearState();
             var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
-            vm.SetLeg();
+            vm.AddLeg();
 
             Assert.Single(vm.Match.Sets.Last().Legs);
         }
@@ -55,7 +55,7 @@ namespace UnitTests
             ClearState();
 
             var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
-            vm.SetSet();
+            vm.AddSet();
 
             Assert.Equal(2, vm.Match.Sets.Count);
         }
@@ -66,22 +66,22 @@ namespace UnitTests
             ClearState();
 
             var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
-            Player player = vm.Match.Players.First();
-            int resultOne = vm.Match.GetAmountOfLegsWonOnCurrentSet(player);
+            Guid playerId = vm.Match.Players.First();
+            int resultOne = vm.Match.GetAmountOfLegsWonOnCurrentSet(playerId);
 
             Leg legOne = new Leg(new BindingList<Turn>());
             Leg legTwo = new Leg(new BindingList<Turn>());
             Leg legThree = new Leg(new BindingList<Turn>());
 
-            legOne.WinnerId = player.Id;
-            legTwo.WinnerId = player.Id;
-            legThree.WinnerId = player.Id;
+            legOne.WinnerId = playerId;
+            legTwo.WinnerId = playerId;
+            legThree.WinnerId = playerId;
 
             vm.Match.Sets.Last().Legs.Add(legOne);
             vm.Match.Sets.Last().Legs.Add(legTwo);
             vm.Match.Sets.Last().Legs.Add(legThree);
 
-            int resultTwo = vm.Match.GetAmountOfLegsWonOnCurrentSet(player);
+            int resultTwo = vm.Match.GetAmountOfLegsWonOnCurrentSet(playerId);
 
             Assert.Equal(0, resultOne);
             Assert.Equal(3, resultTwo);
@@ -94,22 +94,22 @@ namespace UnitTests
             ClearState();
 
             var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
-            Player player = vm.Match.Players.First();
-            int resultOne = vm.Match.GetAmountOfSetsWon(player);
+            Guid playerId = vm.Match.Players.First();
+            int resultOne = vm.Match.GetAmountOfSetsWon(playerId);
 
             Set setOne = new Set(new BindingList<Leg>());
             Set setTwo = new Set(new BindingList<Leg>());
             Set setThree = new Set(new BindingList<Leg>());
 
-            setOne.WinnerId = player.Id;
-            setTwo.WinnerId = player.Id;
-            setThree.WinnerId = player.Id;
+            setOne.WinnerId = playerId;
+            setTwo.WinnerId = playerId;
+            setThree.WinnerId = playerId;
 
             vm.Match.Sets.Add(setOne);
             vm.Match.Sets.Add(setTwo);
             vm.Match.Sets.Add(setThree);
 
-            int resultTwo = vm.Match.GetAmountOfSetsWon(player);
+            int resultTwo = vm.Match.GetAmountOfSetsWon(playerId);
 
             Assert.Equal(0, resultOne);
             Assert.Equal(3, resultTwo);
@@ -124,7 +124,7 @@ namespace UnitTests
             // This test should also test for turn after set or leg is won.
 
             var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
-            vm.SetLeg();
+            vm.AddLeg();
 
             Player playerOne = vm.Player1;
             Player playerTwo = vm.Player2;

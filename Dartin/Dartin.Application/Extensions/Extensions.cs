@@ -13,10 +13,7 @@ namespace Dartin.Extensions
             return player != default(Player);
         }
 
-        public static Player ToPlayer(this Guid guid)
-        {
-            return State.Instance.Players.FirstOrDefault(player => player.Id == guid);
-        }
+        public static Player ToPlayer(this Guid guid) => State.Instance.Players.FirstOrDefault(player => player.Id == guid);
         public static bool TryRemoveLast<T>(this IList<T> list)
         {
             if (list != null && list.Any())
@@ -25,6 +22,17 @@ namespace Dartin.Extensions
                 return true;
             }
             return false;
+        }
+        public static int FindIndex<T>(this IEnumerable<T> items, Func<T, bool> predicate) {
+            if (items == null) throw new ArgumentNullException("items");
+            if (predicate == null) throw new ArgumentNullException("predicate");
+
+            int retVal = 0;
+            foreach (var item in items) {
+                if (predicate(item)) return retVal;
+                retVal++;
+            }
+            return -1;
         }
     }
 }

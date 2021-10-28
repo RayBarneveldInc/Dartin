@@ -31,8 +31,8 @@ namespace Dartin.Models
             SetsWon = 0;
             foreach (Set s in match.Sets)
             {
-                if (s.WinnerId == match.Players[0].Id) SetsWon++;
-                foreach (Leg l in s.Legs) if (l.Winner.Id == match.Players[0].Id) LegsWon++;
+                if (s.WinnerId == match.Players[0]) SetsWon++;
+                foreach (Leg l in s.Legs) if (l.WinnerId == match.Players[0]) LegsWon++;
             }
         }
         public void SetMatchAverages(MatchDefinition match)

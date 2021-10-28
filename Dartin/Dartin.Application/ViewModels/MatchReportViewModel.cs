@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Newtonsoft.Json;
 using System.Windows;
+using Dartin.Extensions;
 
 namespace Dartin.ViewModels
 {
@@ -17,8 +18,8 @@ namespace Dartin.ViewModels
     {
         private MatchDefinition _currentMatch;
         public MatchDefinition Match => _currentMatch;
-        public Player PlayerOne => Match.Players[0];
-        public Player PlayerTwo => Match.Players[1];
+        public Player PlayerOne => Match.Players[0].ToPlayer();
+        public Player PlayerTwo => Match.Players[1].ToPlayer();
         public MatchDefinition MatchInfo1 => SetsPerPlayer(0);
         public MatchDefinition MatchInfo2 => SetsPerPlayer(1);
         public MatchStatsPlayer player1Stats { get; set; }
@@ -33,15 +34,15 @@ namespace Dartin.ViewModels
         {
             var copyser = JsonConvert.SerializeObject(Match, Formatting.Indented);
             MatchDefinition deepcopy = JsonConvert.DeserializeObject<MatchDefinition>(copyser);
-            Player player = deepcopy.Players[i];
+            Guid playerId = deepcopy.Players[i];
             deepcopy.Players.Clear();
-            deepcopy.Players.Add(player);
+            deepcopy.Players.Add(playerId);
 
             foreach (Set set in deepcopy.Sets)
             {
                 foreach (Leg leg in set.Legs)
                 {
-                    leg.Turns = new BindingList<Turn>(leg.Turns.Where(t => t.PlayerId.Equals(player.Id)).Cast<Turn>().ToList());
+                    leg.Turns = new BindingList<Turn>(leg.Turns.Where(t => t.PlayerId.Equals(playerId)).ToList());
                 }
             }
             return deepcopy;

@@ -9,9 +9,6 @@ namespace Dartin.Models
 {
     public class Set : AHasWinner
     {
-        private Player _winner = null;
-        public int LegsToWinSet { get; set; }
-
         private BindingList<Leg> _legs;
 
         public BindingList<Leg> Legs
@@ -20,18 +17,10 @@ namespace Dartin.Models
             set
             {
                 _legs = value;
-            }
-        }
-
-        public Player Winner
-        {
-            get => _winner;
-            set
-            {
-                _winner = value;
                 NotifyPropertyChanged();
             }
         }
+
         public Set(BindingList<Leg> legs)
         {
             Legs = legs;

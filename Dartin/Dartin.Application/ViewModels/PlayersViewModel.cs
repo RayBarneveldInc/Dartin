@@ -259,7 +259,7 @@ namespace Dartin.ViewModels
 
                 foreach (var match in State.Instance.Matches)
                 {
-                    if (!match.Players.Contains(player))
+                    if (!match.Players.Contains(player.Id))
                     {
                         newMatchList.Add(match);
                     }
