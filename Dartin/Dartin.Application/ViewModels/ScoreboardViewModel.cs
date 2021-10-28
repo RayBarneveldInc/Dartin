@@ -229,6 +229,7 @@ namespace Dartin.ViewModels
             if (!Match.Sets.Any())
             {
                 AddSet();
+                AddLeg();
             }
             else if (Match.CurrentLeg != null)
             {
@@ -244,7 +245,9 @@ namespace Dartin.ViewModels
                 {
                     PlayerTurnIndicator = Match.CurrentLeg.StartingPlayerId == Player2.Id;
                 }
-                PlayerLegStartIndicator = Match.CurrentLeg.StartingPlayerId == Player2.Id;
+                PlayerLegStartIndicator = Match.CurrentLeg.StartingPlayerId == Player1.Id;
+                Player1Average = Match.GetAverageForPlayer(Player1.Id);
+                Player2Average = Match.GetAverageForPlayer(Player2.Id);
             }
 
             Player1Counter180 = Get180CounterForPlayer(Player1);
@@ -388,25 +391,30 @@ namespace Dartin.ViewModels
 
         public BindableCollection<Turn> GetPlayerTurnsCollection(Guid playerId) => new BindableCollection<Turn>(Match.CurrentLeg.Turns.Where(turn => turn.PlayerId == playerId));
 
-        public void RevertTurn(bool togglePlayerTurnIndicator = true)
+        public void RevertTurn(bool dontTogglePlayerTurnIndicator = false)
         {
+            dontTogglePlayerTurnIndicator = !dontTogglePlayerTurnIndicator;
             if (Match.CurrentLeg != null && Match.CurrentLeg.Turns.Any())
             {
                 var playerId = GetActivePlayerId();
                 Match.CurrentLeg.Turns.TryRemoveLast();
-                if (playerId == Player1.Id && togglePlayerTurnIndicator)
+                if (playerId == Player1.Id && dontTogglePlayerTurnIndicator)
                 {
                     Player1Remainders.TryRemoveLast();
                     Player1Turns.TryRemoveLast();
+                    PlayerTurnIndicator = !PlayerTurnIndicator;
                 }
-                else if (togglePlayerTurnIndicator)
+                else if (dontTogglePlayerTurnIndicator)
                 {
                     Player2Remainders.TryRemoveLast();
                     Player2Turns.TryRemoveLast();
                     PlayerTurnIndicator = !PlayerTurnIndicator;
                 }
+
+                if (!Match.CurrentLeg.Turns.Any())
+                    Match.CurrentSet.Legs.RemoveAt(Match.CurrentSet.Legs.Count - 1);
             }
-            else if (togglePlayerTurnIndicator)
+            else if (dontTogglePlayerTurnIndicator)
             {
                 if (MessageBoxEnabled)
                     MessageBox.Show(Resources.NoTurnToRevertMessage, Resources.NoTurnToRevertTitle, MessageBoxButton.OK);
@@ -495,7 +503,7 @@ namespace Dartin.ViewModels
 
             if ((currentTurn.Tosses.Count != 3 && !currentTurn.WinningTurn) || (currentTurn.Tosses.Any(toss => toss == null) && !currentTurn.WinningTurn))
             {
-                RevertTurn(togglePlayerTurnIndicator: false);
+                RevertTurn(dontTogglePlayerTurnIndicator: true);
 
                 if (MessageBoxEnabled)
                     MessageBox.Show(Resources.InvalidTurnMessage, Resources.InvalidTurnTitle, MessageBoxButton.OK);

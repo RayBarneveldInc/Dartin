@@ -6,6 +6,7 @@ using System.Text;
 using Dartin.Extensions;
 using System.Linq;
 using System.Windows;
+using Newtonsoft.Json;
 
 namespace Dartin.Models
 {
@@ -46,6 +47,7 @@ namespace Dartin.Models
             Turns = turns;
         }
 
+        [JsonIgnore]
         public Guid StartingPlayerId => Turns.Any() ? Turns.First().PlayerId : Guid.Empty;
     }
 }

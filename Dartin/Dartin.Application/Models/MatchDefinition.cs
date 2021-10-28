@@ -11,7 +11,9 @@ namespace Dartin.Models
 {
     public class MatchDefinition : AHasWinner
     {
+        [JsonIgnore]
         public string BestOfDescription => GetBestOfDescription();
+
         private DateTime _date;
         public Guid Id { get; }
 
@@ -126,11 +128,14 @@ namespace Dartin.Models
         public double GetTurnAverage() => Sets.Sum(set => set.Legs.Sum(leg => leg.Turns.Where(turn => turn.Valid).Average(turn => turn.Score)));
         public double GetAverageForPlayer(Guid playerId)
         {
-            if (Players.Contains(playerId) && Sets.Any())
+            try
             {
                 return Sets.Average(set => set.Legs.Average(leg => leg.Turns.Where(turn => turn.PlayerId == playerId && turn.Valid).Average(turn => turn.Score)));
             }
-            return -1;
+            catch
+            {
+                return 0;
+            }
         }
         public int GetAmountOfLegsWonOnCurrentSet(Guid playerId) => Sets.Last().Legs.Count(leg => leg.WinnerId == playerId);
         public int GetAmountOfSetsWon(Guid playerId) => Sets.Count(set => set.WinnerId.Equals(playerId));
@@ -147,7 +152,10 @@ namespace Dartin.Models
             return false;
         }
 
+        [JsonIgnore]
         public Set CurrentSet => Sets.Any() ? Sets.Last() : null;
+
+        [JsonIgnore]
         public Leg CurrentLeg => CurrentSet != null && CurrentSet.Legs.Any() ? CurrentSet.Legs.Last() : null;
     }
 }

@@ -16,6 +16,7 @@ namespace Dartin.Models
         private Guid _playerId;
         private BindingList<Toss> _tosses;
 
+        [JsonIgnore]
         public int Score => Tosses.Sum(toss => toss.TotalScore);
         public bool Valid {
             get => _valid;

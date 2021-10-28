@@ -52,6 +52,7 @@ namespace Dartin.Models
             }
         }
 
+        [JsonIgnore]
         public string Name => FirstName + " " + LastName;
 
         public Player()
