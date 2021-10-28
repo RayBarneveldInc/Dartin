@@ -13,6 +13,8 @@ namespace Dartin.Models
     public class Leg : AHasWinner
     {
         private BindingList<Turn> _turns;
+        private Guid _startingPlayerId;
+
         public int GetTotalScoreForPlayer(Player player) => _turns.Where(turn => turn.PlayerId == player.Id && turn.Valid).Sum(turn => turn.Score);
         public List<int> GetRemaindersForPlayer(Player player, int maxScore, bool onlyValid = false)
         {
@@ -47,7 +49,14 @@ namespace Dartin.Models
             Turns = turns;
         }
 
-        [JsonIgnore]
-        public Guid StartingPlayerId => Turns.Any() ? Turns.First().PlayerId : Guid.Empty;
+        public Guid StartingPlayerId
+        {
+            get => _startingPlayerId;
+            set
+            {
+                _startingPlayerId = value;
+                NotifyPropertyChanged();
+            }
+        }
     }
 }

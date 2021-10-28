@@ -61,8 +61,8 @@ namespace Dartin.ViewModels
             CurrentObject = new MatchDefinition
             {
                 Date = match.Date,
-                SetsToWin = match.SetsToWin,
-                LegsToWinSet = match.LegsToWinSet,
+                TotalSets = match.TotalSets,
+                LegsPerSet = match.LegsPerSet,
                 ScoreToWinLeg = match.ScoreToWinLeg
             };
 
@@ -140,8 +140,8 @@ namespace Dartin.ViewModels
             }
 
             OriginalMatch.Date = CurrentObject.Date;
-            OriginalMatch.LegsToWinSet = CurrentObject.LegsToWinSet;
-            OriginalMatch.SetsToWin = CurrentObject.SetsToWin;
+            OriginalMatch.LegsPerSet = CurrentObject.LegsPerSet;
+            OriginalMatch.TotalSets = CurrentObject.TotalSets;
 
             if (IsChecked501)
                 OriginalMatch.ScoreToWinLeg = 501;

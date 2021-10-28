@@ -32,26 +32,29 @@ namespace Dartin.Models
                 NotifyPropertyChanged();
             }
         }
-        private int _setsToWin;
-        public int SetsToWin
+        private int _totalSets;
+        public int TotalSets
         {
             get
             {
-                return _setsToWin;
+                return _totalSets;
             }
             set
             {
-                _setsToWin = value;
+                _totalSets = value;
                 NotifyPropertyChanged();
             }
         }
-        private int _legsToWinSet;
-        public int LegsToWinSet
+        private int _legsPerSet;
+        public int LegsPerSet
         {
-            get => _legsToWinSet;
+            get
+            {
+                return _legsPerSet;
+            }
             set
             {
-                _legsToWinSet = value;
+                _legsPerSet = value;
                 NotifyPropertyChanged();
             }
         }
@@ -103,15 +106,16 @@ namespace Dartin.Models
         }
         private string GetBestOfDescription()
         {
-            if (SetsToWin > 1)
+            if (TotalSets > 1)
             {
-                return string.Format(CultureInfo.CurrentCulture, Resources.BestOfSetsFormat, SetsToWin);
+                return string.Format(CultureInfo.CurrentCulture, Resources.BestOfSetsFormat, TotalSets);
             }
             else
             {
-                return string.Format(CultureInfo.CurrentCulture, Resources.BestOfLegsFormat, LegsToWinSet);
+                return string.Format(CultureInfo.CurrentCulture, Resources.BestOfLegsFormat, LegsPerSet);
             }
         }
+
         public string GetMatchName()
         {
             if (Players.Count > 0)
@@ -159,9 +163,7 @@ namespace Dartin.Models
         public int GetAmountOfSetsWon(Guid playerId) => Sets.Count(set => set.WinnerId == playerId);
         public bool CheckWinner(Guid playerId)
         {
-            //Math.Ceiling((decimal)Match.SetsAmount / 2) Best of?
-
-            if (SetsToWin == GetAmountOfSetsWon(playerId))
+            if (Math.Ceiling((decimal)TotalSets / 2) == GetAmountOfSetsWon(playerId))
             {
                 WinnerId = playerId;
                 return true;
