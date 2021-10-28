@@ -44,7 +44,6 @@ namespace UnitTests
         {
             ClearState();
             var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
-            vm.AddLeg();
 
             Assert.Single(vm.Match.CurrentSet.Legs);
         }
@@ -124,7 +123,6 @@ namespace UnitTests
             // This test should also test for turn after set or leg is won.
 
             var vm = new ScoreboardViewModel(TestUtility.CreateExampleMatchDefinition());
-            vm.AddLeg();
 
             Player playerOne = vm.Player1;
             Player playerTwo = vm.Player2;
