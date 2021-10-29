@@ -109,7 +109,7 @@
                 </Grid.ColumnDefinitions>
 
 
-                <TextBlock VerticalAlignment="Center" TextAlignment="Center" Text="Are you sure, this will also remove the associated matches with this player" Grid.Row="0" Grid.ColumnSpan="2" />
+                <TextBlock VerticalAlignment="Center" TextAlignment="Center" Text="Are you sure? This will also remove the associated matches with this player." Grid.Row="0" Grid.ColumnSpan="2" />
                 <!--Apply-->
                 <Button Content="No"  x:Name="CancelDelete"  Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="1" Background="Red" Grid.Column="0" />
                 <Button Content="Yes" x:Name="ConfirmDelete" Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="1" Background="Green" Grid.Column="1"/>
