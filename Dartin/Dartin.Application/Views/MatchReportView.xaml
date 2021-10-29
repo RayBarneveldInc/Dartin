@@ -78,6 +78,7 @@
                                                         <Binding Path="Winner.Id" />
                                                         <Binding Source="{StaticResource playeroneint}"/>
                                                         <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
+                                                        <Binding Path="Legs" Converter="{conv:AverageScoreConverter}"/>
                                                     </MultiBinding>
                                                 </TextBlock.Text>
                                             </TextBlock>
@@ -91,8 +92,8 @@
                                                                 <Binding Path="Winner.Id" />
                                                                 <Binding Source="{StaticResource playeroneint}"/>
                                                                 <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
+                                                                <Binding Path="Turns" Converter="{conv:AverageScoreConverter}"/>
                                                                 <Binding Path="StartingPlayerId"></Binding>
-
                                                             </MultiBinding>
                                                         </TextBlock.Text>
                                                     </TextBlock>
@@ -102,10 +103,11 @@
                                                         <Label>
                                                             <TextBlock>
                                                                 <TextBlock.Text>
-                                                                    <MultiBinding StringFormat="{} Turn {0} - Throws {1} - Score {2}">
+                                                                    <MultiBinding StringFormat="{} Turn {0} - Throws {1} - Score {2} - Average Throw {3}">
                                                                         <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
                                                                         <Binding Path="Tosses.Count"></Binding>
                                                                         <Binding Path="Score"></Binding>
+                                                                        <Binding Path="Tosses" Converter="{conv:AverageScoreConverter}"/>
                                                                     </MultiBinding>
                                                                 </TextBlock.Text>
                                                             </TextBlock>
@@ -159,6 +161,7 @@
                                                         <Binding Path="Winner.Id" />
                                                         <Binding Source="{StaticResource playertwoint}"/>
                                                         <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
+                                                        <Binding Path="Legs" Converter="{conv:AverageScoreConverter}"/>
                                                     </MultiBinding>
                                                 </TextBlock.Text>
                                             </TextBlock>
@@ -173,6 +176,7 @@
                                                                 <Binding Source="{StaticResource playertwoint}"/>
                                                                 <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
                                                                 <Binding Path="StartingPlayerId"></Binding>
+                                                                <Binding Path="Turns" Converter="{conv:AverageScoreConverter}"/>
                                                             </MultiBinding>
                                                         </TextBlock.Text>
                                                     </TextBlock>
@@ -182,10 +186,11 @@
                                                         <Label>
                                                             <TextBlock>
                                                                 <TextBlock.Text>
-                                                                    <MultiBinding StringFormat="{} Turn {0} - Throws {1} - Score {2}">
+                                                                    <MultiBinding StringFormat="{} Turn {0} - Throws {1} - Score {2} - Average Throw {3}">
                                                                         <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
                                                                         <Binding Path="Tosses.Count"></Binding>
                                                                         <Binding Path="Score"></Binding>
+                                                                        <Binding Path="Tosses" Converter="{conv:AverageScoreConverter}"/>
                                                                     </MultiBinding>
                                                                 </TextBlock.Text>
                                                             </TextBlock>
