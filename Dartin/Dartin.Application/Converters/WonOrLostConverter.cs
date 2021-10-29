@@ -19,13 +19,13 @@ namespace Dartin.Converters
             Guid winnerID = (Guid)values[0];
             Guid playerID;
             string text = $"{values[2]}";
-
+            text += $" - Avg {values[3]}";
             if ((int)values[1] == 1) 
                 playerID = (Guid)App.Current.Properties["playeroneID"];
             else 
                 playerID = (Guid)App.Current.Properties["playertwoID"];
 
-            //if (values.Length >= 4 && playerID == (Guid)values[3]) 
+            //if (values.Length >= 5 && playerID == (Guid)values[4]) 
             //    text += " - Started";
 
             if (playerID == winnerID) 

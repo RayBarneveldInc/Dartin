@@ -222,6 +222,6 @@ Obull/obull	= Outer Bullseye
     <value>t</value>
   </data>
   <data name="WonFormat" xml:space="preserve">
-    <value>- Won</value>
+    <value> - Won</value>
   </data>
 </root>
