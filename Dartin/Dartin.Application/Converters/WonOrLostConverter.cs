@@ -19,7 +19,7 @@ namespace Dartin.Converters
             Guid winnerID = (Guid)values[0];
             Guid playerID;
             string text = $"{values[2]}";
-            text += $" Average Throw {values[3]}";
+            text += $" - Avg {values[3]}";
             if ((int)values[1] == 1) 
                 playerID = (Guid)App.Current.Properties["playeroneID"];
             else 

@@ -22,7 +22,7 @@ namespace UnitTests
         {
             MatchDefinition testMatch = MatchDef();
             MatchStatsPlayer player1Stats = PlayerStats(testMatch);
-            Assert.Equal(55, (int)player1Stats.AvgScore);
+            Assert.Equal(167, (int)player1Stats.AvgScore);
         }
 
         [Fact]

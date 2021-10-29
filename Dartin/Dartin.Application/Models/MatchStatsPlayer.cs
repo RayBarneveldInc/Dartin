@@ -31,46 +31,40 @@
         }
         public void SetMatchAverages(MatchDefinition match)
         {
-            DartsThrown = 0;
-            NineDarters = 0;
+            int totalTurns = 0;
             int totalScore = 0;
             int firstNineDartsTotal = 0;
             int legCount = 0;
-            
-            foreach (Set set in match.Sets) foreach (Leg leg in set.Legs)
+
+            foreach (Set set in match.Sets)
+            {
+                legCount += set.Legs.Count;
+                foreach (Leg leg in set.Legs)
                 {
-                    legCount += set.Legs.Count;
-                    int legScoreForNineDarter = 0;
                     foreach (Turn turn in leg.Turns)
                     {
-                        int turnTotal = 0;
-                        foreach (Toss toss in turn.Tosses)
-                        {
-                            DartsThrown++;
-                            turnTotal += toss.TotalScore;
-                            totalScore += toss.TotalScore;
-                        }
-
+                        totalScore += turn.Score;
+                        totalTurns++;
+                        DartsThrown += turn.Tosses.Count;
+                        
                         if (leg.Turns.IndexOf(turn) <= 2)
                         {
-                            firstNineDartsTotal += turnTotal;
+                            firstNineDartsTotal += turn.Score;
+                            if (firstNineDartsTotal == 501)
+                                NineDarters++;
                         }
 
-                        legScoreForNineDarter += turnTotal;
-                        if (leg.Turns.Count == 3 && legScoreForNineDarter == 501) NineDarters++;
-
-                        TotalThreeDartValues(turnTotal);
+                        TotalThreeDartValues(turn.Score);
                     }
                 }
-            if (legCount == 0)
-                AvgScoreFirstNineDarts = 0;
-            else
+                
                 AvgScoreFirstNineDarts = firstNineDartsTotal / legCount;
 
-            if (DartsThrown == 0)
-                AvgScore = 0;
-            else
-                AvgScore = totalScore / DartsThrown;
+                if (totalTurns == 0)
+                    AvgScore = 0;
+                else
+                    AvgScore = totalScore / totalTurns;
+            }
         }
 
         public void TotalThreeDartValues(int turnTotal)

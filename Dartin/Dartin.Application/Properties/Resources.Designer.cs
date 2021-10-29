@@ -345,7 +345,7 @@ namespace Dartin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to - Won.
+        ///   Looks up a localized string similar to  - Won.
         /// </summary>
         public static string WonFormat {
             get {

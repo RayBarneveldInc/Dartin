@@ -18,20 +18,33 @@ namespace Dartin.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            int score = 0;
             switch (value)
             {
                 case BindingList<Leg> legs:
-                    return legs.Sum(leg => leg.Turns.Sum(turn => turn.Score)) / legs.Sum(leg => leg.Turns.Sum(turn => turn.Tosses.Count()));
+                    score = legs.Sum(leg => leg.Turns.Sum(turn => turn.Score));
+                    int legCount = legs.Sum(leg => leg.Turns.Count);
+                    if (legCount == 0)
+                        return 0;
+                    return score / legCount;
                     //return SetScore(legs) / legs.Sum(leg => leg.Turns.Sum(turn => turn.Tosses.Count()));
 
                 case BindingList<Turn> turns:
-                    return turns.Sum(turn => turn.Score) / turns.Sum(turn => turn.Tosses.Count());
-                    //return LegScore(turns) / turns.Sum(turn => turn.Tosses.Count());
+
+                    score = turns.Sum(turn => turn.Score);
+                    int turnCount = turns.Count;
+                    if (turnCount == 0)
+                        return 0;
+                    return score / turnCount;
+                //return LegScore(turns) / turns.Sum(turn => turn.Tosses.Count());
 
                 case BindingList<Toss> tosses:
-                    return tosses.Sum(toss => toss.Score) / tosses.Count;
-                    //return TurnScore(tosses) / tosses.Count;
-
+                    score = tosses.Sum(toss => toss.TotalScore);
+                    int tossCount = tosses.Count;
+                    if (tossCount == 0)
+                        return 0;
+                    return score / tossCount;
+                //return TurnScore(tosses) / tosses.Count;
                 default:
                     return 0;
             }
