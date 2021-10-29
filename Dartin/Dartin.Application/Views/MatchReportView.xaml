@@ -21,15 +21,6 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" HorizontalAlignment="Left">
-            <Button Width="100" Content="Back"/>
-        </Grid>
-
-        <Grid Grid.Row="0" HorizontalAlignment="Left">
-
-            <Button Width="100" Content="Back"/>
-        </Grid>
-
         <Grid Grid.Row="0" HorizontalAlignment="Center">
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Match.Date}" FontSize="28"/>
         </Grid>

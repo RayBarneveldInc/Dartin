@@ -68,8 +68,15 @@ namespace Dartin.Models
                         TotalThreeDartValues(turnTotal);
                     }
                 }
-            AvgScoreFirstNineDarts = firstNineDartsTotal / legCount; 
-            AvgScore = totalScore / DartsThrown;
+            if (legCount == 0)
+                AvgScoreFirstNineDarts = 0;
+            else
+                AvgScoreFirstNineDarts = firstNineDartsTotal / legCount;
+
+            if (DartsThrown == 0)
+                AvgScore = 0;
+            else
+                AvgScore = totalScore / DartsThrown;
         }
 
         public void TotalThreeDartValues(int turnTotal)

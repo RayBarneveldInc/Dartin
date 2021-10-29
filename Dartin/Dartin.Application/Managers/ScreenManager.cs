@@ -15,7 +15,8 @@ namespace Dartin.Managers
 
         private void ShowBackButtonIfScoreboardViewModel()
         {
-            if (_shellViewModel.ActiveItem.GetType() == typeof(ScoreboardViewModel))
+            var currentViewModel = _shellViewModel.ActiveItem.GetType();
+            if (currentViewModel == typeof(ScoreboardViewModel) || currentViewModel == typeof(MatchReportViewModel))
                 _shellViewModel.IsBackVisible = true;
             else
                 _shellViewModel.IsBackVisible = false;

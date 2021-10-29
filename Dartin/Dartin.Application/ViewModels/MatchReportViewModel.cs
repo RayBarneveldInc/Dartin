@@ -11,6 +11,7 @@ using System.Windows.Input;
 using Newtonsoft.Json;
 using System.Windows;
 using Dartin.Extensions;
+using Dartin.Managers;
 
 namespace Dartin.ViewModels
 {
@@ -46,6 +47,11 @@ namespace Dartin.ViewModels
                 }
             }
             return deepcopy;
+        }
+
+        public void Back()
+        {
+            ScreenManager.GetInstance().SwitchViewModel(new MatchesViewModel(State.Instance.Matches));
         }
 
         public MatchReportViewModel(MatchDefinition match)
