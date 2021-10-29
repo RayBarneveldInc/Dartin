@@ -17,35 +17,33 @@
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-
-
         <Grid Grid.Row="0" HorizontalAlignment="Left">
-            <Button Width="100" Content="Back"></Button>
+            <Button Width="100" Content="Back"/>
         </Grid>
 
         <Grid Grid.Row="0" HorizontalAlignment="Left">
 
-            <Button Width="100" Content="Back"></Button>
+            <Button Width="100" Content="Back"/>
         </Grid>
 
         <Grid Grid.Row="0" HorizontalAlignment="Center">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Match.Date}" FontSize="28"></TextBlock>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Match.Date}" FontSize="28"/>
         </Grid>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="auto" MinWidth="200"></ColumnDefinition>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto" MinWidth="200"/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
@@ -53,18 +51,18 @@
 
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
                     <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
                         </Grid.RowDefinitions>
 
                         <Grid Grid.Row="0">
-                            <TextBlock Text="{Binding PlayerOne.Name}" FontSize="20"></TextBlock>
+                            <TextBlock Text="{Binding PlayerOne.Name}" FontSize="20"/>
                         </Grid>
 
                         <Grid Grid.Row="1">
@@ -91,8 +89,7 @@
                                                                 <Binding Path="Winner.Id" />
                                                                 <Binding Source="{StaticResource playeroneint}"/>
                                                                 <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
-                                                                <Binding Path="StartingPlayerId"></Binding>
-
+                                                                <Binding Path="StartingPlayerId"/>
                                                             </MultiBinding>
                                                         </TextBlock.Text>
                                                     </TextBlock>
@@ -104,8 +101,8 @@
                                                                 <TextBlock.Text>
                                                                     <MultiBinding StringFormat="{} Turn {0} - Throws {1} - Score {2}">
                                                                         <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
-                                                                        <Binding Path="Tosses.Count"></Binding>
-                                                                        <Binding Path="Score"></Binding>
+                                                                        <Binding Path="Tosses.Count"/>
+                                                                        <Binding Path="Score"/>
                                                                     </MultiBinding>
                                                                 </TextBlock.Text>
                                                             </TextBlock>
@@ -117,8 +114,8 @@
                                                                         <TextBlock.Text>
                                                                             <MultiBinding StringFormat="{} Throw {0} - {1}x{2}">
                                                                                 <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
-                                                                                <Binding Path="Multiplier"></Binding>
-                                                                                <Binding Path="Score"></Binding>
+                                                                                <Binding Path="Multiplier"/>
+                                                                                <Binding Path="Score"/>
                                                                             </MultiBinding>
                                                                         </TextBlock.Text>
                                                                     </TextBlock>
@@ -139,12 +136,12 @@
 
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
                         </Grid.RowDefinitions>
 
                         <Grid Grid.Row="0">
-                            <TextBlock Text="{Binding PlayerTwo.Name}" FontSize="20"></TextBlock>
+                            <TextBlock Text="{Binding PlayerTwo.Name}" FontSize="20"/>
                         </Grid>
 
                         <Grid Grid.Row="1">
@@ -172,7 +169,7 @@
                                                                 <Binding Path="Winner.Id" />
                                                                 <Binding Source="{StaticResource playertwoint}"/>
                                                                 <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
-                                                                <Binding Path="StartingPlayerId"></Binding>
+                                                                <Binding Path="StartingPlayerId"/>
                                                             </MultiBinding>
                                                         </TextBlock.Text>
                                                     </TextBlock>
@@ -184,8 +181,8 @@
                                                                 <TextBlock.Text>
                                                                     <MultiBinding StringFormat="{} Turn {0} - Throws {1} - Score {2}">
                                                                         <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
-                                                                        <Binding Path="Tosses.Count"></Binding>
-                                                                        <Binding Path="Score"></Binding>
+                                                                        <Binding Path="Tosses.Count"/>
+                                                                        <Binding Path="Score"/>
                                                                     </MultiBinding>
                                                                 </TextBlock.Text>
                                                             </TextBlock>
@@ -197,8 +194,8 @@
                                                                         <TextBlock.Text>
                                                                             <MultiBinding StringFormat="{} Throw {0} - {1}x{2}">
                                                                                 <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}" Converter="{conv:PlusOneConverter}"/>
-                                                                                <Binding Path="Multiplier"></Binding>
-                                                                                <Binding Path="Score"></Binding>
+                                                                                <Binding Path="Multiplier"/>
+                                                                                <Binding Path="Score"/>
                                                                             </MultiBinding>
                                                                         </TextBlock.Text>
                                                                     </TextBlock>
@@ -212,114 +209,112 @@
                                     </HierarchicalDataTemplate>
                                 </TreeView.ItemTemplate>
                             </TreeView>
-
                         </Grid>
                     </Grid>
-
                 </Grid>
             </Grid>
 
             <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <!-- row 1 -->
                 <Grid Grid.Row="0" Grid.Column="0">
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding PlayerOne.LastName}" FontSize="16"></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding PlayerOne.LastName}" FontSize="16"/>
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="2">
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding PlayerTwo.LastName}" FontSize="16"></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding PlayerTwo.LastName}" FontSize="16"/>
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="{Binding player1Stats.SetsWon}" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="{Binding player1Stats.LegsWon}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="2" Text="{Binding player1Stats.AvgScore}" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="3" Text="{Binding player1Stats.NineDarters}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="4" Text="{Binding player1Stats.AvgScoreFirstNineDarts}" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="5" Text="{Binding player1Stats.DartsThrown}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="6" Text="{Binding player1Stats.HundredPlus}" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="7" Text="{Binding player1Stats.HundredTwentyPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="8" Text="{Binding player1Stats.HundredFourtyPlus}" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="9" Text="{Binding player1Stats.HundredSixtyPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="10" Text="{Binding player1Stats.HundredEighty}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="0" Text="{Binding player1Stats.SetsWon}" HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="1" Text="{Binding player1Stats.LegsWon}"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="2" Text="{Binding player1Stats.AvgScore}" HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="3" Text="{Binding player1Stats.NineDarters}"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="4" Text="{Binding player1Stats.AvgScoreFirstNineDarts}" HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="5" Text="{Binding player1Stats.DartsThrown}"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="6" Text="{Binding player1Stats.HundredPlus}" HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="7" Text="{Binding player1Stats.HundredTwentyPlus}"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="8" Text="{Binding player1Stats.HundredFourtyPlus}" HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="9" Text="{Binding player1Stats.HundredSixtyPlus}"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="10" Text="{Binding player1Stats.HundredEighty}"  HorizontalAlignment="Center" FontSize="14"/>
                 </Grid>
                 <Grid Grid.Row="1" Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Sets Won"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="Legs Won"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="2" Text="Match Avg" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="3" Text="Nine Darters" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="4" Text="First 9 avg" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="5" Text="Total darts"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="6" Text="100+ scores"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="7" Text="120+ scores" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="8" Text="140+ scores" HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="9" Text="160+ scores"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="10" Text="180's"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="0" Text="Sets Won"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="1" Text="Legs Won"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="2" Text="Match Avg" HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="3" Text="Nine Darters" HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="4" Text="First 9 avg" HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="5" Text="Total darts"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="6" Text="100+ scores"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="7" Text="120+ scores" HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="8" Text="140+ scores" HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="9" Text="160+ scores"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="10" Text="180's"  HorizontalAlignment="Center" FontSize="14"/>
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="{Binding player2Stats.SetsWon}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="1" Text="{Binding player2Stats.LegsWon}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="2" Text="{Binding player2Stats.AvgScore}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="3" Text="{Binding player2Stats.NineDarters}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="4" Text="{Binding player2Stats.AvgScoreFirstNineDarts}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="5" Text="{Binding player2Stats.DartsThrown}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="6" Text="{Binding player2Stats.HundredPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="7" Text="{Binding player2Stats.HundredTwentyPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="8" Text="{Binding player2Stats.HundredFourtyPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="9" Text="{Binding player2Stats.HundredSixtyPlus}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
-                    <TextBlock Grid.Row="10" Text="{Binding player2Stats.HundredEighty}"  HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    <TextBlock Grid.Row="0" Text="{Binding player2Stats.SetsWon}"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="1" Text="{Binding player2Stats.LegsWon}"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="2" Text="{Binding player2Stats.AvgScore}"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="3" Text="{Binding player2Stats.NineDarters}"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="4" Text="{Binding player2Stats.AvgScoreFirstNineDarts}"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="5" Text="{Binding player2Stats.DartsThrown}"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="6" Text="{Binding player2Stats.HundredPlus}"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="7" Text="{Binding player2Stats.HundredTwentyPlus}"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="8" Text="{Binding player2Stats.HundredFourtyPlus}"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="9" Text="{Binding player2Stats.HundredSixtyPlus}"  HorizontalAlignment="Center" FontSize="14"/>
+                    <TextBlock Grid.Row="10" Text="{Binding player2Stats.HundredEighty}"  HorizontalAlignment="Center" FontSize="14"/>
                 </Grid>
             </Grid>
         </Grid>

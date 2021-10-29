@@ -3,30 +3,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:flags="clr-namespace:FamFamFam.Flags.Wpf;assembly=FamFamFam.Flags.Wpf"
+             xmlns:conv="clr-namespace:Dartin.Converters"
              xmlns:local="clr-namespace:Dartin.Views"
              xmlns:models="clr-namespace:Dartin.Models"
              mc:Ignorable="d" 
              Background="White"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
 
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"></RowDefinition>
-            <RowDefinition Height="29*"></RowDefinition>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="29*"/>
             <RowDefinition Height="10*"/>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <!--PlayerList-->
-        <TextBox Text="{Binding SearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Text="{Binding SearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
         <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Players}" SelectedIndex="{Binding SelectedIndex}" Grid.RowSpan="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Path=Name}" />
-                    </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                            <Image Source="{Binding Nationality, Converter={conv:CountryIdToFlagImageConverter}}" RenderOptions.BitmapScalingMode="HighQuality" Grid.Column="0"/>
+                            <Label Content="{Binding Name}" Grid.Column="1"/>
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -34,44 +41,57 @@
         <!--Buttons-->
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="Back" Grid.Column="0" Content="Back"></Button>
-            <Button x:Name="Add" Grid.Column="1" Content="Add"></Button>
-            <Button x:Name="Edit" Grid.Column="2" Content="Edit"></Button>
-            <Button x:Name="Delete" Grid.Column="3" Content="Delete"></Button>
-            <Button x:Name="History" Grid.Column="4" Content="History"></Button>
+            <Button x:Name="Back" Grid.Column="0" Content="Back"/>
+            <Button x:Name="Add" Grid.Column="1" Content="Add"/>
+            <Button x:Name="Edit" Grid.Column="2" Content="Edit"/>
+            <Button x:Name="Delete" Grid.Column="3" Content="Delete"/>
+            <Button x:Name="History" Grid.Column="4" Content="History"/>
         </Grid>
 
         <!--edit-->
         <Grid Visibility="{Binding CrudModalVisibility, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="4" Opacity=".9"  Background="#111111">
             <Grid Margin="100" Background="White">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="25"></RowDefinition>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Foreground="White" FontSize="15" Background="Black" Grid.ColumnSpan="2" Content="{Binding Title}"></Label>
+                <Label Foreground="White" FontSize="15" Background="Black" Grid.ColumnSpan="2" Content="{Binding Title}"/>
                 <!--First name-->
-                <Label FontStyle="Oblique" Background="LightBlue" Grid.Row="1" Content="First Name"></Label>
-                <TextBox Text="{Binding FirstName, Mode=TwoWay}" Grid.Row="1" Grid.Column="1"></TextBox>
+                <Label FontStyle="Oblique" Background="LightBlue" Grid.Row="1" Content="First Name"/>
+                <TextBox Text="{Binding FirstName, Mode=TwoWay}" Grid.Row="1" Grid.Column="1"/>
                 <!--Last Name-->
-                <Label FontStyle="Oblique" Background="LightBlue" Grid.Row="2" Content="Last Name"></Label>
-                <TextBox Text="{Binding LastName, Mode=TwoWay}" Grid.Row="2" Grid.Column="1"></TextBox>
+                <Label FontStyle="Oblique" Background="LightBlue" Grid.Row="2" Content="Last Name"/>
+                <TextBox Text="{Binding LastName, Mode=TwoWay}" Grid.Row="2" Grid.Column="1"/>
+                <!--Nationality-->
+                <Label FontStyle="Oblique" Background="LightBlue" Grid.Row="3" Content="Nationality"/>
+                <ComboBox ItemsSource="{Binding Source={x:Static flags:CountryData.AllCountries}}" SelectedItem="{Binding Nationality}" Grid.Row="3" Grid.Column="1">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="Flags:CountryData">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Path=Iso2, Converter={conv:CountryIdToFlagImageConverter}}" Stretch="None" Width="23" Height="18" RenderOptions.BitmapScalingMode="HighQuality" />
+                                <TextBlock Text="{Binding Path=Name}" Margin="5,0,0,0" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
                 <!--Apply-->
-                <Button x:Name="ToggleModal" Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="4" Background="Red" Grid.Column="0" Content="Back"></Button>
-                <Button Content="{Binding ModalButtonText}" x:Name="EditAddButtonClick" Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="4" Background="Green" Grid.Column="1"></Button>
+                <Button x:Name="ToggleModal" Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="4" Background="Red" Grid.Column="0" Content="Back"/>
+                <Button Content="{Binding ModalButtonText}" x:Name="EditAddButtonClick" Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="4" Background="Green" Grid.Column="1"/>
             </Grid>
         </Grid>
 
@@ -80,19 +100,19 @@
         <Grid Visibility="{Binding DeleteModalVisibility, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="4" Opacity=".9"  Background="#111111">
             <Grid Margin="140" Background="White">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="25"></RowDefinition>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-             
-                <TextBlock VerticalAlignment="Center" TextAlignment="Center" Text="Are you sure, this will also remove the associated matches with this player" Grid.Row="0" Grid.ColumnSpan="2" ></TextBlock>
+
+                <TextBlock VerticalAlignment="Center" TextAlignment="Center" Text="Are you sure, this will also remove the associated matches with this player" Grid.Row="0" Grid.ColumnSpan="2" />
                 <!--Apply-->
-                <Button Content="No"  x:Name="CancelDelete"  Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="1" Background="Red" Grid.Column="0" ></Button>
-                <Button Content="Yes" x:Name="ConfirmDelete" Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="1" Background="Green" Grid.Column="1"></Button>
+                <Button Content="No"  x:Name="CancelDelete"  Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="1" Background="Red" Grid.Column="0" />
+                <Button Content="Yes" x:Name="ConfirmDelete" Foreground="White" FontWeight="Bold" FontSize="15" Grid.Row="1" Background="Green" Grid.Column="1"/>
             </Grid>
         </Grid>
 
