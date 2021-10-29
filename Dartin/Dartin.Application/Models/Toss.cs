@@ -1,7 +1,5 @@
 ﻿using Dartin.Abstracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Newtonsoft.Json;
 
 namespace Dartin.Models
 {
@@ -29,6 +27,7 @@ namespace Dartin.Models
             }
         }
 
+        [JsonIgnore]
         public int TotalScore => _score * _multiplier;
 
         public Toss(int score, int multiplier)

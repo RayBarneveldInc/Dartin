@@ -1,15 +1,8 @@
-﻿using Dartin.Models;
-using Dartin.Properties;
+﻿using Dartin.Properties;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Markup;
-using System.Windows.Media;
-
 
 namespace Dartin.Converters
 {
@@ -28,7 +21,7 @@ namespace Dartin.Converters
             string text = $"{values[2]}";
             text += $" Average Throw {values[3]}";
             if ((int)values[1] == 1) 
-                playerID = (Guid)App.Current.Properties["playeroneID"]; 
+                playerID = (Guid)App.Current.Properties["playeroneID"];
             else 
                 playerID = (Guid)App.Current.Properties["playertwoID"];
 

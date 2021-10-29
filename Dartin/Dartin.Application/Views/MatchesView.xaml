@@ -18,9 +18,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
         <RadioButton Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="Filter op speler" GroupName="Filter" IsChecked="{Binding PlayerFilterSelected}"/>
@@ -36,10 +36,18 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="{Binding Name}" Grid.Column="0"/>
-                        <Label Content="{Binding BestOfDescription}" Grid.Column="1"/>
-                        <Label Content="{Binding Date}" Grid.Column="2"/>
+                        <Image DataContext="{Binding Players[0], Converter={conv:GuidToPlayerConverter}}" Source="{Binding Nationality, Converter={conv:CountryIdToFlagImageConverter}}" RenderOptions.BitmapScalingMode="HighQuality" Grid.Column="0"/>
+                        <Label DataContext="{Binding Players[0], Converter={conv:GuidToPlayerConverter}}" Content="{Binding Name}" Grid.Column="1"/>
+                        <Label Content=" vs " Grid.Column="2"/>
+                        <Image DataContext="{Binding Players[1], Converter={conv:GuidToPlayerConverter}}" Source="{Binding Nationality, Converter={conv:CountryIdToFlagImageConverter}}" RenderOptions.BitmapScalingMode="HighQuality" Grid.Column="3"/>
+                        <Label DataContext="{Binding Players[1], Converter={conv:GuidToPlayerConverter}}" Content="{Binding Name}" Grid.Column="4"/>
+                        <Label Content="{Binding BestOfDescription}" Grid.Column="5"/>
+                        <Label Content="{Binding Date}" Grid.Column="6"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -53,11 +61,11 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="OnExit" Grid.Column="0" Content="Back"></Button>
-            <Button x:Name="MoreInfo" Grid.Column="1" Content="More info"></Button>
-            <Button x:Name="Edit" Grid.Column="2" Content="Edit"></Button>
-            <Button x:Name="Add" Grid.Column="3" Content="Add"></Button>
-            <Button x:Name="StartMatch" Grid.Column="4" Content="Start match"></Button>
+            <Button x:Name="OnExit" Grid.Column="0" Content="Back"/>
+            <Button x:Name="MoreInfo" Grid.Column="1" Content="More info"/>
+            <Button x:Name="Edit" Grid.Column="2" Content="Edit"/>
+            <Button x:Name="Add" Grid.Column="3" Content="Add"/>
+            <Button x:Name="StartMatch" Grid.Column="4" Content="Start match"/>
         </Grid>
         
     </Grid>

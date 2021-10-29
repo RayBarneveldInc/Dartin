@@ -11,25 +11,25 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Column="1" Text="Dartin" Foreground="Black" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Column="1" Text="Dartin" Foreground="Black" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
             <Button Grid.Row="1" Grid.Column="1" x:Name="Matches" Width="auto" Height="auto">
                 <Button.Template>
                     <ControlTemplate>
                         <Border x:Name="border" Background="#777" Width="250" Height="100">
-                            <TextBlock Grid.Column="1" Text="Wedstrijden" Foreground="Black" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Grid.Column="1" Text="Wedstrijden" Foreground="Black" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
                 </Button.Template>
@@ -39,7 +39,7 @@
                 <Button.Template>
                     <ControlTemplate>
                         <Border x:Name="border" Background="#777" Width="250" Height="100">
-                            <TextBlock Grid.Column="1" Text="Darters" Foreground="Black" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Grid.Column="1" Text="Darters" Foreground="Black" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
                 </Button.Template>
@@ -49,7 +49,7 @@
                 <Button.Template>
                     <ControlTemplate>
                         <Border x:Name="border" Background="#777" Width="100" Height="75">
-                            <TextBlock Grid.Column="1" Text="Instellingen" Foreground="Black" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Grid.Column="1" Text="Instellingen" Foreground="Black" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
                 </Button.Template>

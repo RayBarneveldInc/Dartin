@@ -7,6 +7,7 @@ using Dartin.Managers;
 using Action = System.Action;
 using System.ComponentModel;
 using Dartin.Properties;
+using FamFamFam.Flags.Wpf;
 
 namespace Dartin.ViewModels
 {
@@ -20,9 +21,10 @@ namespace Dartin.ViewModels
 
         private string _lastName;
         private string _firstName;
+        private CountryData _nationality;
         private string _modalButtonText;
         private string _title;
-        
+
         public Action PlayerAction { get; set; }
         public Action DeleteAction { get; set; }
 
@@ -36,8 +38,6 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => Title);
             }
         }
-
-        
 
         public string FirstName
         {
@@ -56,6 +56,16 @@ namespace Dartin.ViewModels
             {
                 _lastName = value;
                 NotifyOfPropertyChange(() => LastName);
+            }
+        }
+
+        public CountryData Nationality
+        {
+            get => _nationality;
+            set
+            {
+                _nationality = value;
+                NotifyOfPropertyChange(() => Nationality);
             }
         }
 
@@ -78,7 +88,7 @@ namespace Dartin.ViewModels
                 NotifyOfPropertyChange(() => CrudModalVisibility);
             }
         }
-        
+
         public Visibility DeleteModalVisibility
         {
             get => _deleteModalVisibility;
@@ -167,7 +177,7 @@ namespace Dartin.ViewModels
             {
                 return;
             }
-            
+
             var selectedPlayer = Players[SelectedIndex];
 
             Title = Resources.EditPlayerTitle;
@@ -175,6 +185,7 @@ namespace Dartin.ViewModels
 
             FirstName = selectedPlayer.FirstName;
             LastName = selectedPlayer.LastName;
+            Nationality = CountryData.AllCountries.Where(nationality => nationality.Iso2 == selectedPlayer.Nationality).First();
 
             PlayerAction = () =>
             {
@@ -182,24 +193,26 @@ namespace Dartin.ViewModels
 
                 playerFromState.FirstName = FirstName;
                 playerFromState.LastName = LastName;
+                playerFromState.Nationality = Nationality.Iso2;
             };
-            
+
             ToggleModal();
         }
 
         public void Add()
         {
-            Title = Resources.EditPlayerTitle;
-            ModalButtonText = Resources.EditPlayerButton;
+            Title = Resources.AddPlayerTitle;
+            ModalButtonText = Resources.AddPlayerTitle;
 
             FirstName = string.Empty;
             LastName = string.Empty;
+            Nationality = CountryData.AllCountries.First();
 
             PlayerAction = () =>
             {
-                State.Instance.Players.Add(new Player(FirstName,LastName));
+                State.Instance.Players.Add(new Player(FirstName, LastName, Nationality.Iso2));
             };
-            
+
             ToggleModal();
         }
 
@@ -211,8 +224,8 @@ namespace Dartin.ViewModels
 
             InitializePlayers();
         }
-        
-        
+
+
         public void ToggleModal() => CrudModalVisibility = ~CrudModalVisibility;
 
 
@@ -227,7 +240,7 @@ namespace Dartin.ViewModels
         {
             DeleteModalVisibility = ~DeleteModalVisibility;
         }
-        
+
         public void Delete()
         {
             if (SelectedIndex < 0 || SelectedIndex >= Players.Count)
@@ -239,27 +252,27 @@ namespace Dartin.ViewModels
 
             DeleteAction = () =>
             {
-               
+
                 State.Instance.Players.Remove(player);
 
                 var newMatchList = new BindingList<MatchDefinition>();
 
                 foreach (var match in State.Instance.Matches)
                 {
-                    if (!match.Players.Contains(player))
+                    if (!match.Players.Contains(player.Id))
                     {
                         newMatchList.Add(match);
                     }
                 }
 
                 State.Instance.Matches = newMatchList;
-                
+
                 InitializePlayers();
 
             };
 
             DeleteModalVisibility = ~DeleteModalVisibility;
-            
+
         }
 
         public void History()
@@ -268,7 +281,7 @@ namespace Dartin.ViewModels
             {
                 return;
             }
-            
+
             var player = Players[SelectedIndex];
 
             ScreenManager.GetInstance().SwitchViewModel(new MatchesViewModel(State.Instance.Matches)

@@ -13,13 +13,14 @@ namespace UnitTests
     {
         public static MatchDefinition CreateExampleMatchDefinition()
         {
-            State.Instance.Players.Add(new Player("Henk", "de Vries"));
-            State.Instance.Players.Add(new Player("Jan", "Jansma"));
+            State.Instance.Players.Add(new Player("Henk", "de Vries", "NL"));
+            State.Instance.Players.Add(new Player("Jan", "Jansma", "NL"));
             MatchDefinition matchDefinition = new MatchDefinition();
-            matchDefinition.Players = new BindingList<Player>() { State.Instance.Players.Last(), State.Instance.Players.ElementAt(State.Instance.Players.Count - 2) };
+            matchDefinition.Players = new BindingList<Guid>() { State.Instance.Players.Last().Id, State.Instance.Players.ElementAt(State.Instance.Players.Count - 2).Id };
             matchDefinition.ScoreToWinLeg = 501;
-            matchDefinition.SetsToWin = 3;
-            matchDefinition.LegsToWinSet = 3;
+            matchDefinition.TotalSets = 5;
+            matchDefinition.LegsPerSet = 5;
+            State.Instance.Matches.Add(matchDefinition);
             return matchDefinition;
         }
 

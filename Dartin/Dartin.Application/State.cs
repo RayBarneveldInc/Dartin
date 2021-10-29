@@ -14,9 +14,19 @@ namespace Dartin
         private static object _locker = new();
         private BindingList<MatchDefinition> _matches;
         private BindingList<Player> _players;
+        private static State _instance = null; 
+        public static State Instance {
+            get
+            {
+                lock (_locker)
+                {
+                    if (_instance == null)
+                        _instance = CreateStateOrLoadSaved();
 
-        private static readonly Lazy<State> _lazy = new(() => CreateStateOrLoadSaved());
-        public static State Instance => _lazy.Value;
+                    return _instance;
+                }
+            }
+        }
         public BindingList<MatchDefinition> Matches
         {
             get => _matches;

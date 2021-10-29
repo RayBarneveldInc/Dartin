@@ -3,34 +3,176 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Dartin.Views"
              xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
-             xmlns:custom="clr-namespace:Dartin.Controls"
              xmlns:conv="clr-namespace:Dartin.Converters"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d" >
 
-<UserControl.Resources>
-    <conv:BrushColorConverter x:Key="BrushColorConverterKey"></conv:BrushColorConverter>
-    <conv:ValueSumConverter x:Key="ValueSumConverterKey"></conv:ValueSumConverter>
-</UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-<Border Background="#ffffff" >
-        <Grid>
+        <!--Title-->
+        <Grid Grid.Row="0">
+            <Label Content="{Binding BestOf}" HorizontalAlignment="Center" Padding="12" FontSize="16" FontWeight="Bold"/>
+        </Grid>
+        <!--Player section-->
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
+            <!--Player One-->
+            <Grid Grid.Column="0" HorizontalAlignment="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
+                <!--PlayerInfo-->
+                <Image Grid.Row="0" Grid.Column="0" Source="{Binding Player1.Nationality, Converter={conv:CountryIdToFlagImageConverter}}" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" HorizontalAlignment="Left"/>
+                <Label Grid.Row="0" Grid.Column="1" Content="{Binding Player1.Name}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left"/>
+                <Image Grid.Row="0" Grid.Column="2" Visibility="{Binding Player1StartingThisTurn, Converter={conv:BoolToVisibilityConverter}}" Source="/Resources/indicator.png" Height="10" HorizontalAlignment="Right"/>
+                <Image Grid.Row="0" Grid.Column="3" Visibility="{Binding Player1StartingThisLeg, Converter={conv:BoolToVisibilityConverter}}" Source="/Resources/turnindicator-left.png" Height="10" HorizontalAlignment="Right" />
+                <!--PlayerScore-->
+                <Grid Grid.Row="1" Grid.ColumnSpan="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="Sets won:"/>
+                    <Label Grid.Column="1" Content="{Binding Player1SetScore}"/>
 
+                    <Label Grid.Column="2" Content="Legs won: "/>
+                    <Label Grid.Column="3" Content="{Binding Player1LegScore}"/>
+
+                    <Label Grid.Column="4" Content="Average: "/>
+                    <Label Grid.Column="5" Content="{Binding Player1Average}"/>
+
+                    <Label Grid.Column="6" Content="180's: "/>
+                    <Label Grid.Column="7" Content="{Binding Player1Counter180}"/>
+                </Grid>
+                <!--PlayerThrows-->
+                <Grid Grid.Row="2" Grid.ColumnSpan="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ListView ItemsSource="{Binding Player1Turns}" HorizontalAlignment="Center" BorderThickness="0" MinWidth="256" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="0">
+                        <ListView.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Foreground" Value="{Binding Path=Valid, Converter={conv:BrushColorConverter}}"/>
+                            </Style>
+                        </ListView.Resources>
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="False">
+                                <GridViewColumn Header="1" Width="64" DisplayMemberBinding="{Binding Tosses[0].TotalScore}"/>
+                                <GridViewColumn Header="2" Width="64" DisplayMemberBinding="{Binding Tosses[1].TotalScore}"/>
+                                <GridViewColumn Header="3" Width="64" DisplayMemberBinding="{Binding Tosses[2].TotalScore}"/>
+                                <GridViewColumn Header="Total" Width="64" DisplayMemberBinding="{Binding Score}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ListView ItemsSource="{Binding Player1Remainders}" BorderThickness="0" Grid.Column="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="False">
+                                <GridViewColumn Header="Remainder" Width="64" DisplayMemberBinding="{Binding}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </Grid>
+            <!--Player Two-->
+            <Grid Grid.Column="2" HorizontalAlignment="Right">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Row="0" Grid.Column="0" Visibility="{Binding Player1StartingThisLeg, Converter={conv:InverseBoolToVisibilityConverter}}" Source="/Resources/turnindicator-right.png" Height="10" HorizontalAlignment="Left" />
+                <Image Grid.Row="0" Grid.Column="1" Visibility="{Binding Player1StartingThisTurn, Converter={conv:InverseBoolToVisibilityConverter}}" Source="/Resources/indicator.png" Height="10" HorizontalAlignment="Left" />
+                <Image Grid.Row="0" Grid.Column="2" Source="{Binding Player2.Nationality, Converter={conv:CountryIdToFlagImageConverter}}" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None"/>
+                <Label Grid.Row="0" Grid.Column="3" Content="{Binding Player2.Name}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Right"/>
+
+                <!--PlayerScore-->
+                <Grid Grid.Row="1" Grid.ColumnSpan="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="Sets won:"/>
+                    <Label Grid.Column="1" Content="{Binding Player2SetScore}"/>
+
+                    <Label Grid.Column="2" Content="Legs won: "/>
+                    <Label Grid.Column="3" Content="{Binding Player2LegScore}"/>
+
+                    <Label Grid.Column="4" Content="Average: "/>
+                    <Label Grid.Column="5" Content="{Binding Player2Average}"/>
+                    
+                    <Label Grid.Column="6" Content="180's: "/>
+                    <Label Grid.Column="7" Content="{Binding Player2Counter180}"/>
+                </Grid>
+                <!--PlayerThrows-->
+                <Grid Grid.Row="2" Grid.ColumnSpan="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ListView ItemsSource="{Binding Player2Remainders}" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="False">
+                                <GridViewColumn Header="Remainder" Width="64" DisplayMemberBinding="{Binding}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ListView ItemsSource="{Binding Player2Turns}" HorizontalAlignment="Center" BorderThickness="0" MinWidth="256" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="1">
+                        <ListView.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Foreground" Value="{Binding Path=Valid, Converter={conv:BrushColorConverter}}"/>
+                            </Style>
+                        </ListView.Resources>
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="False">
+                                <GridViewColumn Header="Total" Width="64" DisplayMemberBinding="{Binding Score}"/>
+                                <GridViewColumn Header="3" Width="64" DisplayMemberBinding="{Binding Tosses[2].TotalScore}"/>
+                                <GridViewColumn Header="2" Width="64" DisplayMemberBinding="{Binding Tosses[1].TotalScore}"/>
+                                <GridViewColumn Header="1" Width="64" DisplayMemberBinding="{Binding Tosses[0].TotalScore}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </Grid>
+        </Grid>
+        <!--Input-->
+        <Grid Grid.Row="2" VerticalAlignment="Bottom">
             <Grid.Style>
                 <Style>
                     <Style.Triggers>
@@ -39,193 +181,24 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
+                    
             </Grid.Style>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" Content="{Binding Match.Name}" HorizontalAlignment="Left" Padding="12" FontSize="16" FontWeight="Bold"></Label>
-            <Label Grid.Row="0" Grid.Column="2" Content="{Binding BestOf}" HorizontalAlignment="Right" Padding="12" FontSize="16" FontWeight="Bold"></Label>
-
-            <Label Grid.Row="2" Grid.Column="0" Content="{Binding Player1.Name}" HorizontalAlignment="Left" Padding="12" FontSize="16" FontWeight="Bold"></Label>
-            <Image Grid.Row="2" Grid.Column="0" Visibility="{Binding PlayerTurnIndicator, Converter={conv:BoolToVisibilityConverter}}" Source="/Resources/indicator.png" Height="10" Width="10" HorizontalAlignment="Right" />
-            <Image Grid.Row="2" Grid.Column="0" Visibility="{Binding PlayerLegStartIndicator, Converter={conv:BoolToVisibilityConverter}}" Source="/Resources/turnindicator-left.png" Height="10" Width="10" HorizontalAlignment="Right" Margin="0,0,30,0"/>
-
-            <Grid Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0" Grid.Column="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Padding="12" FontSize="16" FontWeight="Bold">
-                        <Run Text="Sets:"/>
-                        <Run Text="{Binding Player1SetScore}"/>
-                    </TextBlock>
-                    <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Padding="12" FontSize="16" FontWeight="Bold">
-                        <Run Text="Legs:"/>
-                        <Run Text="{Binding Player1LegScore}"/>
-                    </TextBlock>
-
-                    <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Padding="12" FontSize="16" FontWeight="Bold">
-                        <Run Text="Sets:"/>
-                        <Run Text="{Binding Player2SetScore}"/>
-                    </TextBlock>
-                    <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Padding="12" FontSize="16" FontWeight="Bold">
-                        <Run Text="Legs:"/>
-                        <Run Text="{Binding Player2LegScore}"/>
-                    </TextBlock>
-                </Grid>
-            </Grid>
-
-            <TextBlock Grid.Row="1" Grid.Column="0" Margin="12,12,12,12" HorizontalAlignment="Left" FontSize="14">
-                <Run Text="Average: "/>
-                <Run Text="{Binding Player1Average}"/>
-            </TextBlock>
-
-            <TextBlock Grid.Row="1" Grid.Column="2" Margin="12,12,12,12" HorizontalAlignment="Right" FontSize="14">
-                <Run Text="Average: "/>
-                <Run Text="{Binding Player2Average}"/>
-            </TextBlock>
-            
-            <Label Grid.Row="2" Grid.Column="2" Content="{Binding Player2.Name}" HorizontalAlignment="Right" Padding="12" FontSize="16" FontWeight="Bold"></Label>
-            <Image Grid.Row="2" Grid.Column="2" Visibility="{Binding PlayerTurnIndicator, Converter={conv:InverseBoolToVisibilityConverter}}" Source="/Resources/indicator.png" Height="10" Width="10" HorizontalAlignment="Left" />
-            <Image Grid.Row="2" Grid.Column="2" Visibility="{Binding PlayerLegStartIndicator, Converter={conv:InverseBoolToVisibilityConverter}}" Source="/Resources/turnindicator-right.png" Height="10" Width="10" HorizontalAlignment="Left" Margin="30,0,0,0"/>
-
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center">
-                <Grid MinWidth="320">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <ListView ItemsSource="{Binding Player1Turns}" Grid.Row="0" Grid.ColumnSpan="4" Grid.Column="0" HorizontalAlignment="Center" BorderThickness="0" MinWidth="256" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                        <ListView.Resources>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Foreground" Value="{Binding Path=Valid, Converter={conv:BrushColorConverter}}"/>
-                            </Style>
-                        </ListView.Resources>
-                        <ListView.View>
-                            <GridView AllowsColumnReorder="False">
-                                <GridViewColumn Header="1" Width="64" DisplayMemberBinding="{Binding Tosses[0].TotalScore}"/>
-                                <GridViewColumn Header="2" Width="64" DisplayMemberBinding="{Binding Tosses[1].TotalScore}"/>
-                                <GridViewColumn Header="3" Width="64" DisplayMemberBinding="{Binding Tosses[2].TotalScore}"/>
-                                <GridViewColumn Header="Total" Width="64" DisplayMemberBinding="{Binding Score}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                    <ListView ItemsSource="{Binding Player1Remainders}" Grid.Row="0" Grid.Column="4" Margin="0" MinWidth="64" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                        <ListView.View>
-                            <GridView AllowsColumnReorder="False">
-                                <GridViewColumn Header="Remainder" Width="64" DisplayMemberBinding="{Binding}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </Grid>
-            </Border>
-
-            <Grid Grid.Row="3" Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-                <Label Grid.Row="0" Grid.Column="0" Content="180s" HorizontalAlignment="Center"/>
-                <Label Grid.Row="0" Grid.Column="1" Content="Total" HorizontalAlignment="Center"/>
-                <Label Grid.Row="0" Grid.Column="2" Content="180s" HorizontalAlignment="Center"/>
-
-                <Label Grid.Row="1" Grid.Column="0" Content="{Binding Player1Counter180}" HorizontalAlignment="Center"/>
-                <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
-                    <Label.Content>
-                        <MultiBinding Converter="{StaticResource ValueSumConverterKey}">
-                            <Binding Path="Player1Counter180"/>
-                            <Binding Path="Player2Counter180"/>
-                        </MultiBinding>
-                    </Label.Content>
-                </Label>
-                <Label Grid.Row="1" Grid.Column="2" Content="{Binding Player2Counter180}" HorizontalAlignment="Center"/>
-
-            </Grid>
-
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center">
-                <Grid MinWidth="320">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <ListView ItemsSource="{Binding Player2Remainders}" Grid.Row="0" Grid.Column="0" Margin="0" MinWidth="64" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                        <ListView.View>
-                            <GridView AllowsColumnReorder="False">
-                                <GridViewColumn Header="Remainder" Width="64" DisplayMemberBinding="{Binding}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                    <ListView  ItemsSource="{Binding Player2Turns}" Grid.Row="0" Grid.ColumnSpan="4" Grid.Column="1" HorizontalAlignment="Center" BorderThickness="0" MinWidth="256" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                        <ListView.Resources>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Foreground" Value="{Binding Path=Valid, Converter={conv:BrushColorConverter}}"/>
-                            </Style>
-                        </ListView.Resources>
-                        <ListView.View>
-                            <GridView AllowsColumnReorder="False" >
-                                <GridViewColumn Header="Total" Width="64" DisplayMemberBinding="{Binding Score}"/>
-                                <GridViewColumn Header="3" Width="64" DisplayMemberBinding="{Binding Tosses[2].TotalScore}"/>
-                                <GridViewColumn Header="2" Width="64" DisplayMemberBinding="{Binding Tosses[1].TotalScore}"/>
-                                <GridViewColumn Header="1" Width="64" DisplayMemberBinding="{Binding Tosses[0].TotalScore}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </Grid>
-            </Border>
-
-            <Button Grid.Row="4" Grid.Column="0" x:Name="RevertTurn" Content="Revert turn" Padding="12" Margin="0" IsEnabled="{Binding InputIsDisabled, Converter={conv:InverseBoolToVisibilityConverter}}"></Button>
-            
-            <Grid Grid.Row="4" Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <TextBox Name="FirstTextBox" Grid.Row="0" Grid.Column="0" Text="{Binding TossOneInput, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InputIsDisabled}" HorizontalAlignment="Center" Padding="0,12,0,12" Margin="0" Width="40" MaxLength="3" FontSize="20" TextAlignment="Center" cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding TossTwoInput, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InputIsDisabled}" HorizontalAlignment="Center" Padding="0,12,0,12" Margin="0" Width="40" MaxLength="3" FontSize="20" TextAlignment="Center" cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]"/>
-                <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding TossThreeInput, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InputIsDisabled}" HorizontalAlignment="Center" Padding="0,12,0,12" Margin="0" Width="40" MaxLength="3" FontSize="20" TextAlignment="Center" cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]"/>
-            </Grid>
-
-            <Button Grid.Row="4" Grid.Column="2" x:Name="Submit" Content="Submit" Padding="12" Margin="0" IsEnabled="{Binding InputIsDisabled, Converter={conv:InverseBoolToVisibilityConverter}}"></Button>
+            <Button Grid.Column="0" x:Name="RevertTurn" Content="Revert turn" IsEnabled="{Binding InputIsDisabled, Converter={conv:InverseBoolToVisibilityConverter}}"/>
+            <TextBox Grid.Column="1" Text="{Binding TossOneInput, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InputIsDisabled}" cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]" Name="FirstTextBox"/>
+            <TextBox Grid.Column="2" Text="{Binding TossTwoInput, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InputIsDisabled}" cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]"/>
+            <TextBox Grid.Column="3" Text="{Binding TossThreeInput, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InputIsDisabled}" cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]"/>
+            <Button Grid.Column="4" x:Name="Submit" Content="Submit" IsEnabled="{Binding InputIsDisabled, Converter={conv:InverseBoolToVisibilityConverter}}"/>
         </Grid>
-    </Border>
+    </Grid>
 </UserControl>

@@ -100,8 +100,8 @@ namespace UnitTests
 
         public MatchDefinition MatchDef()
         {
-            Player player1 = new Player("Jacco", "Blokje");
-            Player player2 = new Player("Tjeerd", "Geld");
+            Player player1 = new Player("Jacco", "Blokje", "NL");
+            Player player2 = new Player("Tjeerd", "Geld", "NL");
 
             MatchDefinition match = new MatchDefinition();
 
@@ -147,17 +147,16 @@ namespace UnitTests
             BindingList<Leg> legs = new BindingList<Leg>();
             Leg leg = new Leg(turns);
             leg.WinnerId = player1.Id;
-            leg.Winner = player1;
             legs.Add(leg);
 
             BindingList<Set> sets = new BindingList<Set>();
             Set set = new Set(legs);
             set.WinnerId = player1.Id;
-            set.Winner = player1;
             sets.Add(set);
 
             match.Sets = sets;
-            match.Players = players;
+            match.Players.Add(players[0].Id);
+            match.Players.Add(players[1].Id);
             match.Date = new DateTime();
 
             return match;

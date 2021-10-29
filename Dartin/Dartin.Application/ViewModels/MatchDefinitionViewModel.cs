@@ -61,22 +61,22 @@ namespace Dartin.ViewModels
             CurrentObject = new MatchDefinition
             {
                 Date = match.Date,
-                SetsToWin = match.SetsToWin,
-                LegsToWinSet = match.LegsToWinSet,
+                TotalSets = match.TotalSets,
+                LegsPerSet = match.LegsPerSet,
                 ScoreToWinLeg = match.ScoreToWinLeg
             };
 
             OriginalMatch = match;
 
-            if (!match.Players.Count().Equals(0))
+            if (!match.Players.Count.Equals(0))
             {
                 foreach (Player p in Players)
                 {
-                    if (match.Players[0].Id == p.Id)
+                    if (match.Players[0] == p.Id)
                     {
                         SelectedPlayerOne = p;
                     }
-                    if (match.Players[1].Id == p.Id)
+                    if (match.Players[1] == p.Id)
                     {
                         SelectedPlayerTwo = p;
                     }
@@ -130,18 +130,18 @@ namespace Dartin.ViewModels
         {
             if (OriginalMatch.Players.Count.Equals(0))
             {
-                OriginalMatch.Players.Add(SelectedPlayerOne);
-                OriginalMatch.Players.Add(SelectedPlayerTwo);
+                OriginalMatch.Players.Add(SelectedPlayerOne.Id);
+                OriginalMatch.Players.Add(SelectedPlayerTwo.Id);
             }
             else
             {
-                OriginalMatch.Players[0] = SelectedPlayerOne;
-                OriginalMatch.Players[1] = SelectedPlayerTwo;
+                OriginalMatch.Players[0] = SelectedPlayerOne.Id;
+                OriginalMatch.Players[1] = SelectedPlayerTwo.Id;
             }
 
             OriginalMatch.Date = CurrentObject.Date;
-            OriginalMatch.LegsToWinSet = CurrentObject.LegsToWinSet;
-            OriginalMatch.SetsToWin = CurrentObject.SetsToWin;
+            OriginalMatch.LegsPerSet = CurrentObject.LegsPerSet;
+            OriginalMatch.TotalSets = CurrentObject.TotalSets;
 
             if (IsChecked501)
                 OriginalMatch.ScoreToWinLeg = 501;

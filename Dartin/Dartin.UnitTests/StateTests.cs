@@ -26,7 +26,7 @@ namespace UnitTests
         {
             var stateA = State.Instance;
             stateA.Clear();
-            var p = new Player("Player", "One");
+            var p = new Player("Player", "One", "NL");
             stateA.Players.Add(p);
 
             // Serialize stateA to get a duplicate (stateB)
@@ -34,7 +34,7 @@ namespace UnitTests
             var stateB = JsonConvert.DeserializeObject<State>(serialized);
 
             stateA.Clear();
-            stateA.Players.Add(new Player("Player", "Two"));
+            stateA.Players.Add(new Player("Player", "Two", "NL"));
 
             stateA.Merge(stateB);
 

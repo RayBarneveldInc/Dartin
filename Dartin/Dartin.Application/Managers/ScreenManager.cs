@@ -13,6 +13,15 @@ namespace Dartin.Managers
         public IViewModel Previous;
         private ShellViewModel _shellViewModel;
 
+        private void ShowBackButtonIfScoreboardViewModel()
+        {
+            var currentViewModel = _shellViewModel.ActiveItem.GetType();
+            if (currentViewModel == typeof(ScoreboardViewModel) || currentViewModel == typeof(MatchReportViewModel))
+                _shellViewModel.IsBackVisible = true;
+            else
+                _shellViewModel.IsBackVisible = false;
+        }
+
         private ScreenManager()
         {
             _instance = this;
@@ -43,6 +52,8 @@ namespace Dartin.Managers
             Previous = _shellViewModel.ActiveItem;
             
             _shellViewModel.ActivateItemAsync(viewModel);
+
+            ShowBackButtonIfScoreboardViewModel();
         }
     }
 }
