@@ -122,7 +122,7 @@ namespace Dartin.ViewModels
                 CurrentCollection.Clear();
                 foreach (MatchDefinition match in OriginalCollection)
                 {
-                    if (match.Name.Contains(filter, StringComparison.OrdinalIgnoreCase))
+                    if (match.GetMatchName().Contains(filter, StringComparison.OrdinalIgnoreCase))
                     {
                         CurrentCollection.Add(match);
                     }
@@ -176,7 +176,7 @@ namespace Dartin.ViewModels
                 MatchDefinition match = CurrentCollection[SelectedIndex];
                 ScreenManager.GetInstance().SwitchViewModel(new ScoreboardViewModel(match));
             }
-            catch
+            catch (IndexOutOfRangeException)
             {
                 MessageBox.Show(Resources.MatchSelectedErrorText, Resources.MatchSelectedErrorTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             }

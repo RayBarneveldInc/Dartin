@@ -41,11 +41,11 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Image Source="{Binding Players[0].Nationality, Converter={conv:CountryIdToFlagImageConverter}}" RenderOptions.BitmapScalingMode="HighQuality" Grid.Column="0"/>
-                        <Label Content="{Binding Players[0].Name}" Grid.Column="1"/>
+                        <Image DataContext="{Binding Players[0], Converter={conv:GuidToPlayerConverter}}" Source="{Binding Nationality, Converter={conv:CountryIdToFlagImageConverter}}" RenderOptions.BitmapScalingMode="HighQuality" Grid.Column="0"/>
+                        <Label DataContext="{Binding Players[0], Converter={conv:GuidToPlayerConverter}}" Content="{Binding Name}" Grid.Column="1"/>
                         <Label Content=" vs " Grid.Column="2"/>
-                        <Image Source="{Binding Players[1].Nationality, Converter={conv:CountryIdToFlagImageConverter}}" RenderOptions.BitmapScalingMode="HighQuality" Grid.Column="3"/>
-                        <Label Content="{Binding Players[1].Name}" Grid.Column="4"/>
+                        <Image DataContext="{Binding Players[1], Converter={conv:GuidToPlayerConverter}}" Source="{Binding Nationality, Converter={conv:CountryIdToFlagImageConverter}}" RenderOptions.BitmapScalingMode="HighQuality" Grid.Column="3"/>
+                        <Label DataContext="{Binding Players[1], Converter={conv:GuidToPlayerConverter}}" Content="{Binding Name}" Grid.Column="4"/>
                         <Label Content="{Binding BestOfDescription}" Grid.Column="5"/>
                         <Label Content="{Binding Date}" Grid.Column="6"/>
                     </Grid>

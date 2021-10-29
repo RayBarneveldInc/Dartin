@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Dartin.Models
+﻿namespace Dartin.Models
 {
     public class MatchStatsPlayer
     {
@@ -31,8 +25,8 @@ namespace Dartin.Models
             SetsWon = 0;
             foreach (Set s in match.Sets)
             {
-                if (s.WinnerId == match.Players[0].Id) SetsWon++;
-                foreach (Leg l in s.Legs) if (l.Winner.Id == match.Players[0].Id) LegsWon++;
+                if (s.WinnerId == match.Players[0]) SetsWon++;
+                foreach (Leg l in s.Legs) if (l.WinnerId == match.Players[0]) LegsWon++;
             }
         }
         public void SetMatchAverages(MatchDefinition match)
@@ -68,8 +62,15 @@ namespace Dartin.Models
                         TotalThreeDartValues(turnTotal);
                     }
                 }
-            AvgScoreFirstNineDarts = firstNineDartsTotal / legCount; 
-            AvgScore = totalScore / DartsThrown;
+            if (legCount == 0)
+                AvgScoreFirstNineDarts = 0;
+            else
+                AvgScoreFirstNineDarts = firstNineDartsTotal / legCount;
+
+            if (DartsThrown == 0)
+                AvgScore = 0;
+            else
+                AvgScore = totalScore / DartsThrown;
         }
 
         public void TotalThreeDartValues(int turnTotal)

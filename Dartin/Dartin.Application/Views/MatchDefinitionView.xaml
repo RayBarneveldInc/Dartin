@@ -34,10 +34,10 @@
         <ComboBox ItemsSource="{Binding Players}" SelectedItem="{Binding SelectedPlayerTwo}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="2"/>
 
         <Label Content="Sets to win" Grid.Row="2" Grid.Column="0"/>
-        <TextBox Text="{Binding CurrentObject.SetsToWin, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1"/>
+        <TextBox Text="{Binding CurrentObject.TotalSets, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1"/>
 
         <Label Content="Legs to win set" Grid.Row="3" Grid.Column="0"/>
-        <TextBox Text="{Binding CurrentObject.LegsToWinSet, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"/>
+        <TextBox Text="{Binding CurrentObject.LegsPerSet, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"/>
 
         <Label Content="Score to win leg" Grid.Row="4" Grid.Column="0"/>
 

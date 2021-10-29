@@ -1,11 +1,8 @@
 ﻿using Dartin.Abstracts;
-using Dartin.Extensions;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 
 namespace Dartin.Models
 {
@@ -16,13 +13,14 @@ namespace Dartin.Models
         private Guid _playerId;
         private BindingList<Toss> _tosses;
 
+        [JsonIgnore]
         public int Score => Tosses.Sum(toss => toss.TotalScore);
-
         public bool Valid {
             get => _valid;
             set
             {
-                _valid = value; NotifyPropertyChanged();
+                _valid = value;
+                NotifyPropertyChanged();
             }
         }
 
@@ -58,7 +56,12 @@ namespace Dartin.Models
 
         public Turn(Player player, BindingList<Toss> tosses)
         {
-            if (player == null) PlayerId = Guid.Empty; else PlayerId = player.Id;
+            if (player == null)
+                PlayerId = Guid.Empty;
+            else
+                PlayerId = player.Id;
+
+            Tosses = tosses;
         }
 
         [JsonConstructor]

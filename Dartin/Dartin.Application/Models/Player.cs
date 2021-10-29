@@ -1,7 +1,6 @@
 ﻿using Dartin.Abstracts;
 using Newtonsoft.Json;
 using System;
-using System.Globalization;
 
 namespace Dartin.Models
 {
@@ -52,6 +51,7 @@ namespace Dartin.Models
             }
         }
 
+        [JsonIgnore]
         public string Name => FirstName + " " + LastName;
 
         public Player()

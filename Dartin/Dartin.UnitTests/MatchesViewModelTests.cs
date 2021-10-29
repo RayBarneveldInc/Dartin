@@ -32,8 +32,8 @@ namespace UnitTests
                     LastName = "Blok"
                 };
 
-                matchDefinition.Players.Add(player1);
-                matchDefinition.Players.Add(player2);
+                matchDefinition.Players.Add(player1.Id);
+                matchDefinition.Players.Add(player2.Id);
             }
 
             for (int i = 0; i < 5; i++)
@@ -51,8 +51,8 @@ namespace UnitTests
                     LastName = "Boom"
                 };
 
-                matchDefinition.Players.Add(player1);
-                matchDefinition.Players.Add(player2);
+                matchDefinition.Players.Add(player1.Id);
+                matchDefinition.Players.Add(player2.Id);
             }
 
 
