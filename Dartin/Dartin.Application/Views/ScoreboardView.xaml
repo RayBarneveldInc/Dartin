@@ -173,6 +173,16 @@
         </Grid>
         <!--Input-->
         <Grid Grid.Row="2" VerticalAlignment="Bottom">
+            <Grid.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding FirstTextBoxIsFocused}" Value="True">
+                            <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=FirstTextBox}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+                    
+            </Grid.Style>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
@@ -185,9 +195,9 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" x:Name="RevertTurn" Content="Revert turn" IsEnabled="{Binding InputIsDisabled, Converter={conv:InverseBoolToVisibilityConverter}}"/>
-            <TextBox  Grid.Column="1" Text="{Binding TossOneInput, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InputIsDisabled}"  cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]" Name="FirstTextBox"/>
-            <TextBox  Grid.Column="2" Text="{Binding TossTwoInput, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InputIsDisabled}"  cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]"/>
-            <TextBox  Grid.Column="3" Text="{Binding TossThreeInput, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InputIsDisabled}" cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]"/>
+            <TextBox Grid.Column="1" Text="{Binding TossOneInput, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InputIsDisabled}" cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]" Name="FirstTextBox"/>
+            <TextBox Grid.Column="2" Text="{Binding TossTwoInput, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InputIsDisabled}" cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]"/>
+            <TextBox Grid.Column="3" Text="{Binding TossThreeInput, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding InputIsDisabled}" cal:Message.Attach="[Event KeyDown] = [Action Submit($eventArgs)]"/>
             <Button Grid.Column="4" x:Name="Submit" Content="Submit" IsEnabled="{Binding InputIsDisabled, Converter={conv:InverseBoolToVisibilityConverter}}"/>
         </Grid>
     </Grid>

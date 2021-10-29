@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Windows;
 using Dartin.Managers;
 using Dartin.Properties;
-using System.Collections.Generic;
 
 namespace Dartin.ViewModels
 {

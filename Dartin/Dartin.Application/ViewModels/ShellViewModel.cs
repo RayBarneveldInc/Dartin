@@ -1,15 +1,5 @@
 ﻿using Caliburn.Micro;
-using Dartin.Models;
-using Newtonsoft.Json;
-using System;
 using System.Windows;
-using System.Net;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using Dartin.Managers;
 
 namespace Dartin.ViewModels

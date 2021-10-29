@@ -1,15 +1,9 @@
 ﻿using Caliburn.Micro;
 using Dartin.Models;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Input;
 using Newtonsoft.Json;
-using System.Windows;
 using Dartin.Extensions;
 using Dartin.Managers;
 
