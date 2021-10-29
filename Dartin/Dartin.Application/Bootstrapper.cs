@@ -1,10 +1,6 @@
 ﻿using Caliburn.Micro;
 using Dartin.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using Dartin.Views;
 
 namespace Dartin
 {
