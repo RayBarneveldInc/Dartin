@@ -155,9 +155,6 @@ namespace Dartin.ViewModels
 
         public void MoreInfo()
         {
-                MatchDefinition match = CurrentCollection[SelectedIndex];
-                ScreenManager.GetInstance().SwitchViewModel(new MatchReportViewModel(match));
-            /*
             try
             {
                 MatchDefinition match = CurrentCollection[SelectedIndex];
@@ -167,7 +164,6 @@ namespace Dartin.ViewModels
             {
                 MessageBox.Show(Resources.MatchSelectedErrorText, Resources.MatchSelectedErrorTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            */
         }
 
         public void Add()
