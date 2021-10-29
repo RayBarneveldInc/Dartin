@@ -35,11 +35,11 @@
                 </Button.Template>
             </Button>
 
-            <Button Grid.Row="2" Grid.Column="1" x:Name="Players" Width="auto" Height="auto">
+            <Button Grid.Row="2" Grid.Column="1" x:Name="Darters" Width="auto" Height="auto">
                 <Button.Template>
                     <ControlTemplate>
                         <Border x:Name="border" Background="#777" Width="250" Height="100">
-                            <TextBlock Grid.Column="1" Text="Darters" Foreground="Black" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="Players" Foreground="Black" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
                 </Button.Template>
