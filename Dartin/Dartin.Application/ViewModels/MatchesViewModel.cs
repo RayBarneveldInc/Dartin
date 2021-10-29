@@ -176,7 +176,7 @@ namespace Dartin.ViewModels
                 MatchDefinition match = CurrentCollection[SelectedIndex];
                 ScreenManager.GetInstance().SwitchViewModel(new ScoreboardViewModel(match));
             }
-            catch (IndexOutOfRangeException)
+            catch
             {
                 MessageBox.Show(Resources.MatchSelectedErrorText, Resources.MatchSelectedErrorTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
